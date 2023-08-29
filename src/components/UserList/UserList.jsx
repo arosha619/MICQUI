@@ -1,33 +1,22 @@
-import React, { useState,useEffect } from "react";
-import "./UserList.css";
-import pic from "../../Assets/person_one.jpg";
-import pic2 from "../../Assets/person_two.jpg";
-import logo from "../../Assets/micqui_logo.jpg";
-import {getAllUsers} from "../../API/axios"
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import SideBar from "../Sidebar/SideBar";
-
+import Header from "../Header/Header";
+import { getAllUsers } from "../../API/axios";
 
 const UserList = () => {
   const [selectAll, setSelectAll] = useState(false);
   const [filteredData, setFilteredData] = useState([]);
   const [userData, setUserData] = useState([]);
   const navigate = useNavigate();
-
-  var isAuthenticated = localStorage.getItem("isAuthenticated");
+  const isAuthenticated = localStorage.getItem("isAuthenticated");
 
   useEffect(() => {
-
-    var isAuthenticated = localStorage.getItem("isAuthenticated");
-
-  if (!isAuthenticated || isAuthenticated == null) {
-    alert("Need to login first");
-    navigate("/");
-  }
-
-  }, [])
-
-
+    if (!isAuthenticated || isAuthenticated === null) {
+      alert("Need to login first");
+      navigate("/");
+    }
+  }, []);
 
   useEffect(() => {
     const fetchUsers = async () => {
@@ -36,7 +25,7 @@ const UserList = () => {
         setUserData(usersData.data.data);
         setFilteredData(usersData.data.data);
       } catch (error) {
-        console.error('Error fetching user data:', error);
+        console.error("Error fetching user data:", error);
       }
     };
 
@@ -44,13 +33,11 @@ const UserList = () => {
   }, []);
 
   if (!isAuthenticated || isAuthenticated === "false") {
-    return null; // Stop rendering
+    return null;
   }
-  
 
   const handleSelectAll = () => {
     setSelectAll(!selectAll);
-    // Logic to select/deselect all rows
     const updatedData = filteredData.map((item) => ({
       ...item,
       selected: !selectAll,
@@ -59,14 +46,12 @@ const UserList = () => {
   };
 
   const handleCheckboxChange = (index) => {
-    // Logic to handle individual checkbox changes
     const updatedData = [...filteredData];
     updatedData[index].selected = !updatedData[index].selected;
     setFilteredData(updatedData);
   };
 
   const handleSearch = (searchTerm) => {
-    // Logic to filter data based on searchTerm
     const filtered = userData.filter((item) =>
       item.full_name.toLowerCase().includes(searchTerm.toLowerCase())
     );
@@ -74,79 +59,73 @@ const UserList = () => {
   };
 
   return (
-    <>
-     <div className="d-flex flex-row">
-    <div className="col-2">
-      <SideBar/>
-    </div>
-    
-    <div className="col-10">
-    <div className="col-11 user-list-container">
-      <header className="page-header">
-        <img src={logo} alt="Logo" className="logo" />
-        <h2> MICQUI</h2>
-        <h1>User List</h1>
-      </header>
-      <form className="nosubmit">
-        <input
-          className="nosubmit"
-          type="search"
-          placeholder="Search By Name..."
-          onChange={(e) => handleSearch(e.target.value)}
-        />
-      </form>
-      <div className="table-container" >
-        <table className="custom-table">
-          <thead>
-            <tr>
-              <th>
-                <input
-                  type="checkbox"
-                  checked={selectAll}
-                  onChange={handleSelectAll}
-                />
-                Select All
-              </th>
-              <th>Image</th>
-              <th>Name</th>
-              <th>Email</th>
-              <th>Phone</th>
-              <th>Position</th>
-              <th>Status</th>
-            </tr>
-          </thead>
-         
-          <tbody >
-          
-            {filteredData.map((item, index) => (
-              <tr key={index}>
-                <td>
+    <div className="d-flex">
+      <SideBar />
+      <div className="w-100 p-3">
+        <Header />
+        <form className="mb-3">
+          <div className="input-group">
+            <input
+              type="search"
+              className="form-control"
+              placeholder="Search By Name..."
+              onChange={(e) => handleSearch(e.target.value)}
+            />
+          </div>
+        </form>
+        <div className="table-responsive">
+          <table className="table table-borderless">
+            <thead>
+              <tr>
+                <th style={{padding:"10px"}}>
                   <input
                     type="checkbox"
-                    checked={item.selected}
-                    onChange={() => handleCheckboxChange(index)}
+                    checked={selectAll}
+                    onChange={handleSelectAll}
+                    style={{marginRight:"7px"}}
                   />
-                </td>
-                <td>
-                  <img id="image" src={item.profile_pic} alt="image" />
-                </td>
-                <td>{item.full_name}</td>
-                <td>{item.email}</td>
-                <td>{item.phone}</td>
-                <td>{item.role}</td>
-                <td>{item.is_verified === 1 ? 'Verified' : 'Not Verified'}</td>
+                  Select All
+                </th>
+                <th>Image</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Phone</th>
+                <th>Position</th>
+                <th>Status</th>
               </tr>
-            ))}
-            
-          </tbody>
-         
-        </table>
+            </thead>
+            <tbody>
+              {filteredData.map((item, index) => (
+                <tr key={index}>
+                  <td>
+                    <input
+                      type="checkbox"
+                      checked={item.selected}
+                      onChange={() => handleCheckboxChange(index)}
+                    />
+                  </td>
+                  <td>
+                    <img
+                      src={item.profile_pic}
+                      alt="Profile"
+                      className="rounded-circle"
+                      style={{ width: "45px", height: "45px" }}
+                    />
+                  </td>
+                  <td>{item.full_name}</td>
+                  <td>{item.email}</td>
+                  <td>{item.phone}</td>
+                  <td>{item.role}</td>
+                  <td>
+                    {item.is_verified === 1 ? "Verified" : "Not Verified"}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
-    </div>
-  
-     </div>
-    </>
   );
 };
 

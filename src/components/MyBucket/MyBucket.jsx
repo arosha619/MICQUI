@@ -4,6 +4,7 @@ import SideBar from "../Sidebar/SideBar";
 import BucketContains from "../MybucketComponents/BucketContains";
 import { IoIosAddCircle } from "react-icons/io";
 import { useNavigate } from "react-router-dom";
+import Header from "../Header/Header";
 
 const MyBucket = () => {
   
@@ -34,11 +35,13 @@ const MyBucket = () => {
   }
      
   return (
+    
     <div className="d-flex">
       <div>
         <SideBar />
       </div>
       <div className=" w-100" style={{ padding: "20px" }}>
+      <Header/>
         <div className="card">
           <div className="d-flex flex-xl-row flex-lg-row flex-md-row flex-column justify-content-between card-header align-items-center">
             <h5 className="">Buckets(7)</h5>
