@@ -13,9 +13,12 @@ const BucketContains = (props) => {
 
     } else {
 
-      var index = props.deleteBucket.indexOf(props.item);
-      props.deleteBucket.splice(index, 1);
-      props.setDeleteBucket(props.deleteBucket);
+      // var index = props.deleteBucket.indexOf(props.item);
+      // console.log("index : ",index);
+      // props.deleteBucket.splice(index, 1);
+      // props.setDeleteBucket(props.deleteBucket);
+      const updatedDeleteBucket = props.deleteBucket.filter((bucketItem) => bucketItem !== props.item);
+      props.setDeleteBucket(updatedDeleteBucket);
     }
   };
 
@@ -34,7 +37,7 @@ const BucketContains = (props) => {
           />
         </div>
         <div className="card-content col-11 ">
-          <h5 className="card-title">nnnnnnnnn</h5>
+          <h5 className="card-title">{props.item}</h5>
           <p className="card-text">ujgjlikjn</p>
           <div>
             <div className="dropdown ">
@@ -44,7 +47,7 @@ const BucketContains = (props) => {
                 data-bs-toggle="dropdown"
                 aria-expanded="false"
               >
-                User type
+                {props.item}
               </button>
               <ul className="dropdown-menu dropdown-menu-light">
                 <li>
