@@ -1,0 +1,49 @@
+.search-box{
+    width: 50%;
+    height: 40px;
+ }
+
+ .card{
+   max-height: 90vh;
+ }
+
+  .entire {
+    max-height: 75vh;
+  }
+
+  .entire{
+    overflow: auto;
+  }
+
+ .entire {
+   overflow: hidden;
+ }
+ 
+  .entire:hover {
+   overflow: auto;
+ }
+ 
+ 
+ .entire::-webkit-scrollbar {
+   width: 0.5em;
+ }
+ 
+ .entire::-webkit-scrollbar-track {
+   background: transparent;
+ }
+ 
+ .entire::-webkit-scrollbar-thumb {
+   background-color: rgba(0, 0, 0, 0.2);
+   border-radius: 10px;
+ }
+ 
+ .entire::-webkit-scrollbar-thumb:hover {
+   background-color: rgba(0, 0, 0, 0.4);
+ }
+
+
+ @media (max-width: 767px) {
+    .search-box {
+      width: 100%;
+    }
+  }
