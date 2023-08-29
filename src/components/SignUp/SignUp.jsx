@@ -24,7 +24,8 @@ const SignUp = () => {
     noPassword: "Please enter your password",
     invalidEmail: "Invalid email format",
     ComparePassword: "Passwords don't match",
-    PasswordLength:"password should be more than 6 characters"
+    PasswordLength:"password should be more than 6 characters",
+    uploadimage:"Please Upload a image"
 
   };
   const isValidEmail = (email) => {
@@ -60,6 +61,10 @@ const SignUp = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    if (!selectedImage ) {
+      setErrorMessages({ name: "uploadimage", message: errors.uploadimage });
+      return;
+    }
 
     if (!username) {
       setErrorMessages({ name: "noUsername", message: errors.noUsername });
@@ -85,6 +90,7 @@ const SignUp = () => {
       return;
     }
 
+
     if (password !== confirmPassword) {
       setErrorMessages({
         name: "ComparePassword",
@@ -109,7 +115,7 @@ const SignUp = () => {
   return (
     <div className="Outercontainer">
       <div className="Container">
-        <h1 className="title">Sign Up</h1>
+        <h1 className="title">Sign Up Here</h1>
         <form onSubmit={handleSubmit}>
           <div className="inputs_container">
           <label className="image_preview" htmlFor="imageInput">
@@ -132,6 +138,8 @@ const SignUp = () => {
               </div>
             )}
           </label>
+          <p className="imgErr">{renderErrorMsg("uploadimage")}</p>
+         
 
             <input
               type="text"

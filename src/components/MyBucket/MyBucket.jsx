@@ -5,6 +5,7 @@ import BucketContains from "../MybucketComponents/BucketContains";
 import { IoIosAddCircle } from "react-icons/io";
 import { FaTrashCan } from "react-icons/fa6";
 import { useNavigate } from "react-router-dom";
+import Header from "../Header/Header";
 
 const MyBucket = () => {
   const navigate = useNavigate();
@@ -30,11 +31,15 @@ const MyBucket = () => {
   }
 
   return (
+    
     <div className="d-flex">
       <div>
         <SideBar />
       </div>
-      <div className="w-100" style={{ padding: "20px" }}>
+
+      <div className=" w-100" style={{ padding: "20px" }}>
+      <Header/>
+
         <div className="card">
           <div className="card-header">
             <div className="d-flex flex-xl-row flex-lg-row flex-md-row flex-column justify-content-between  align-items-center">

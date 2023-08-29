@@ -7,6 +7,7 @@ import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import SidebarMenu from "./SidebarMenu";
 import { useNavigate } from "react-router-dom";
+import micqui_logo from "../../Assets/micqui_logo.jpg"
 import "./Sidebar.css";
 const routes = [
   {
@@ -93,34 +94,19 @@ const SideBar = ({ children }) => {
                   initial="hidden"
                   animate="show"
                   exit="hidden"
-                  className="logo1"
+                  className="logo_1"
                 >
-                  MICQUI
+              MICQUI
                 </motion.h1>
               )}
             </AnimatePresence>
+            {/* <img src={micqui_logo} alt="logo" className="logo_m"/> */}
 
             <div className="bars">
               <FaBars onClick={toggle} />
             </div>
           </div>
-          <div className="search">
-            <div className="search_icon">
-              <BiSearch />
-            </div>
-            <AnimatePresence>
-              {isOpen && (
-                <motion.input
-                  initial="hidden"
-                  animate="show"
-                  exit="hidden"
-                  variants={inputAnimation}
-                  type="text"
-                  placeholder="Search"
-                />
-              )}
-            </AnimatePresence>
-          </div>
+
           <section className="routes">
             {routes.map((route, index) => {
               if (route.subRoutes) {
