@@ -64,12 +64,12 @@ const Login = () => {
     );
 
   return (
-    <div className="Outercontainer">
-      <div className="Container">
-        <img className="logo" src={logo} alt="logo" />
-        <h1 className="title">Sign In</h1>
+    <div className="Outcontainer">
+      <div className="Container1">
+        <img className="logo1" src={logo} alt="logo" />
+        <h1 className="title1">Sign In</h1>
         <form onSubmit={handleSubmit}>
-          <div className="inputs_container">
+          <div className="inputs_container1">
             <input
               type="text"
               placeholder="Username"
@@ -87,7 +87,7 @@ const Login = () => {
             {renderErrorMsg("password")}
             {renderErrorMsg("noPassword")}
           </div>
-          <input type="submit" value="Log In" className="login_button" />
+          <input type="submit" value="Log In" className="login_button1" />
         </form>
         <div className="link_container">
         <a href="/sign-up" className="signup">
