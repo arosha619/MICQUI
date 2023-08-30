@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 import "./SignUp.css";
 import { useNavigate } from "react-router-dom";
-import profile from "../../Assets/profile.png"
+import profile from "../../Assets/profile.png";
 import { createAdmin } from "../../API/axios";
+import "bootstrap/dist/css/bootstrap.min.css";
+import { Modal, Button } from "react-bootstrap";
 
 const SignUp = () => {
   const [username, setUsername] = useState("");
@@ -11,12 +13,14 @@ const SignUp = () => {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [errorMessages, setErrorMessages] = useState({});
   const [selectedImage, setSelectedImage] = useState(null);
+  const [showModal, setShowModal] = useState(false);
+  const [response, setResponse] = useState("");
 
   const navigate = useNavigate();
 
   const errors = {
     username: "Invalid username",
-    usernameLength:"User name require more than 6 characters",
+    usernameLength: "User name require more than 6 characters",
     email: "Invalid Email",
     noEmail: "Please enter your Email",
     password: "Invalid password",
@@ -24,9 +28,8 @@ const SignUp = () => {
     noPassword: "Please enter your password",
     invalidEmail: "Invalid email format",
     ComparePassword: "Passwords don't match",
-    PasswordLength:"password should be more than 6 characters",
-    uploadimage:"Please Upload a image"
-
+    PasswordLength: "password should be more than 6 characters",
+    uploadimage: "Please Upload a image",
   };
   const isValidEmail = (email) => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -34,7 +37,6 @@ const SignUp = () => {
   };
 
   const sendAdminData = async () => {
-   
     try {
       const formData = new FormData();
       formData.append("admin_name", username);
@@ -43,25 +45,17 @@ const SignUp = () => {
       formData.append("password", confirmPassword);
 
       var response = await createAdmin(formData);
-      console.log(username );
-      console.log(email );
-      console.log(selectedImage );
-      console.log(confirmPassword );
-      console.log(formData);
       console.log(response);
-      alert('successfull')
-   
+      setResponse(response);
+      setShowModal(true);
     } catch (err) {
       alert("Error please try again!");
-     
     }
   };
 
-  
-
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (!selectedImage ) {
+    if (!selectedImage) {
       setErrorMessages({ name: "uploadimage", message: errors.uploadimage });
       return;
     }
@@ -71,7 +65,10 @@ const SignUp = () => {
       return;
     }
     if (username.length < 6) {
-      setErrorMessages({ name: "usernameLength", message: errors.usernameLength });
+      setErrorMessages({
+        name: "usernameLength",
+        message: errors.usernameLength,
+      });
       return;
     }
     if (!email) {
@@ -86,10 +83,12 @@ const SignUp = () => {
       return;
     }
     if (password.length < 6) {
-      setErrorMessages({ name: "PasswordLength", message: errors.PasswordLength });
+      setErrorMessages({
+        name: "PasswordLength",
+        message: errors.PasswordLength,
+      });
       return;
     }
-
 
     if (password !== confirmPassword) {
       setErrorMessages({
@@ -100,7 +99,6 @@ const SignUp = () => {
       setErrorMessages("");
       sendAdminData();
     }
-
   };
 
   // Render error messages
@@ -118,28 +116,27 @@ const SignUp = () => {
         <h1 className="title">Sign Up Here</h1>
         <form onSubmit={handleSubmit}>
           <div className="inputs_container">
-          <label className="image_preview" htmlFor="imageInput">
-            <input
-              id="imageInput"
-              type="file"
-              accept="image/*"
-              onChange={(e) => handleImageUpload(e.target.files[0])}
-              style={{ display: "none" }}
-            />
-            {selectedImage ? (
-              <img
-                src={URL.createObjectURL(selectedImage)}
-                alt="Selected"
-                className="circular_image"
+            <label className="image_preview" htmlFor="imageInput">
+              <input
+                id="imageInput"
+                type="file"
+                accept="image/*"
+                onChange={(e) => handleImageUpload(e.target.files[0])}
+                style={{ display: "none" }}
               />
-            ) : (
-              <div className="circular_image_placeholder">
-               <img src={profile} alt="selected image"/>
-              </div>
-            )}
-          </label>
-          <p className="imgErr">{renderErrorMsg("uploadimage")}</p>
-         
+              {selectedImage ? (
+                <img
+                  src={URL.createObjectURL(selectedImage)}
+                  alt="Selected"
+                  className="circular_image"
+                />
+              ) : (
+                <div className="circular_image_placeholder">
+                  <img src={profile} alt="selected image" />
+                </div>
+              )}
+            </label>
+            <p className="imgErr">{renderErrorMsg("uploadimage")}</p>
 
             <input
               type="text"
@@ -181,6 +178,21 @@ const SignUp = () => {
           <input type="submit" value="Sign Up" className="signup_button" />
         </form>
       </div>
+      {showModal && (
+        <Modal style={{background:"rgba(15, 14, 14, 0.144)"}} show={showModal} onHide={() => setShowModal(false)}>
+          <Modal.Header closeButton>
+          {response.data.success ? (
+        <span className="text-success">Success</span>
+      ) : (
+        <span className="text-warning ">Warning</span>
+      )}
+          </Modal.Header>
+          <Modal.Body className="d-flex justify-content-center ">
+            {response.data.message}
+          </Modal.Body>
+          <Modal.Footer>{/* Add any footer content here */}</Modal.Footer>
+        </Modal>
+      )}
     </div>
   );
 };

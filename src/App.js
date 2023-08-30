@@ -7,6 +7,7 @@ import UserList from "./components/UserList/UserList";
 import MyBucket from "./components/MyBucket/MyBucket";
 import Login from "./components/Login/Login";
 import SignUp from "./components/SignUp/SignUp";
+import ForgotPassword from "./components/ForgotPassword/ForgotPassword";
 function App() {
   return (
       <Routes>
@@ -16,6 +17,7 @@ function App() {
         <Route path="/user-list" element={<UserList />} />
         <Route path="/my-buckets" element={<MyBucket />} />
         <Route path="/settings" element={<Setting />} />
+        <Route path="/forgot-password" element={<ForgotPassword />} />
       </Routes>
     
   );
