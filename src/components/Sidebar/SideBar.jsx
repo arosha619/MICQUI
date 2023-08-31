@@ -10,11 +10,11 @@ import { useNavigate } from "react-router-dom";
 import micqui_logo from "../../Assets/micqui_logo.jpg"
 import "./Sidebar.css";
 const routes = [
-  {
-    path: "/home",
-    name: "Home",
-    icon: <FaHome />,
-  },
+  // {
+  //   path: "/home",
+  //   name: "Home",
+  //   icon: <FaHome />,
+  // },
   {
     path: "/user-list",
     name: "User List",

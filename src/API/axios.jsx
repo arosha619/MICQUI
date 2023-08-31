@@ -19,6 +19,10 @@ export const registerAPI = axios.create({
     const res = await ImageAPI.post(`admin/register`, formData);
     return res;
   };
+  export const updateAdmin = async (formData,id) => {
+    const res = await ImageAPI.put(`admin/update`, formData,id);
+    return res;
+  };
   export const forgotPassword = async (email) => {
     const res = await API.post(`admin/forgotpassword`,email);
     return res;
