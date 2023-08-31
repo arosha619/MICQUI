@@ -81,6 +81,7 @@ const Settings = () => {
       sendAdminUpdateData();
     }
   };
+  const id=1;
   const sendAdminUpdateData = async () => {
     try {
       const formData = new FormData();
@@ -88,7 +89,7 @@ const Settings = () => {
       formData.append("email", email);
       formData.append("profile_pic", selectedImage);
 
-      var response = await updateAdmin(formData);
+      var response = await updateAdmin(formData,id);
       console.log(response);
       setResponse(response);
       setShowModal(true);
