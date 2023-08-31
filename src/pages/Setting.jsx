@@ -22,7 +22,7 @@ const Setting = () => {
     return null; // Stop rendering
   }
 
-  return <div className="title"> Setting</div>;
+  return <div className="title"> </div>;
 };
 
 export default Setting;
