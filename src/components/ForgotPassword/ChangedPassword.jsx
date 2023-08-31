@@ -1,10 +1,25 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./ChangedPassword.css"
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Modal, Button } from "react-bootstrap";
 
 const ChangedPassword = () => {
+
+
+    const location = useLocation();
+  
+    useEffect(() => {
+      const searchParams = new URLSearchParams(location.search);
+      const userId = searchParams.get('id');
+      const token = searchParams.get('token');
+  
+      // Now you can use userId and token for your password reset logic
+      console.log('User ID:', userId);
+      console.log('Token:', token);
+      
+      // Implement your password reset logic here
+    }, [location.search]);
 
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");

@@ -20,6 +20,7 @@ function App() {
         <Route path="/settings" element={<Setting />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="/change-password" element={<ChangedPassword />} />
+        <Route path="/user/reset" element={<ChangedPassword />} />
       </Routes>
     
   );
