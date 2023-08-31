@@ -1,35 +1,40 @@
-import React, { useState } from "react";
-import "./SignUp.css";
-import { useNavigate } from "react-router-dom";
-import profile from "../../Assets/profile.png";
-import { createAdmin } from "../../API/axios";
+import React, { useEffect, useState } from "react";
+import "./ChangedPassword.css"
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Modal, Button } from "react-bootstrap";
 
-const SignUp = () => {
-  const [username, setUsername] = useState("");
-  const [email, setemailname] = useState("");
+const ChangedPassword = () => {
+
+
+    const location = useLocation();
+  
+    useEffect(() => {
+      const searchParams = new URLSearchParams(location.search);
+      const userId = searchParams.get('id');
+      const token = searchParams.get('token');
+  
+      // Now you can use userId and token for your password reset logic
+      console.log('User ID:', userId);
+      console.log('Token:', token);
+      
+      // Implement your password reset logic here
+    }, [location.search]);
+
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [errorMessages, setErrorMessages] = useState({});
-  const [selectedImage, setSelectedImage] = useState(null);
   const [showModal, setShowModal] = useState(false);
   const [response, setResponse] = useState("");
 
   const navigate = useNavigate();
 
   const errors = {
-    username: "Invalid username",
-    usernameLength: "User name require more than 6 characters",
-    email: "Invalid Email",
-    noEmail: "Please enter your Email",
     password: "Invalid password",
     noUsername: "Please enter your username",
     noPassword: "Please enter your password",
-    invalidEmail: "Invalid email format",
     ComparePassword: "Passwords don't match",
     PasswordLength: "password should be more than 6 characters",
-    uploadimage: "Please Upload a image",
   };
   const isValidEmail = (email) => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -38,13 +43,8 @@ const SignUp = () => {
 
   const sendAdminData = async () => {
     try {
-      const formData = new FormData();
-      formData.append("admin_name", username);
-      formData.append("email", email);
-      formData.append("profile_pic", selectedImage);
-      formData.append("password", confirmPassword);
 
-      var response = await createAdmin(formData);
+    
       console.log(response);
       setResponse(response);
       setShowModal(true);
@@ -55,28 +55,6 @@ const SignUp = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (!selectedImage) {
-      setErrorMessages({ name: "uploadimage", message: errors.uploadimage });
-      return;
-    }
-
-    if (!username) {
-      setErrorMessages({ name: "noUsername", message: errors.noUsername });
-      return;
-    }
-    if (username.length < 6) {
-      setErrorMessages({
-        name: "usernameLength",
-        message: errors.usernameLength,
-      });
-      return;
-    }
-    if (!email) {
-      setErrorMessages({ name: "noEmail", message: errors.noEmail });
-      return;
-    } else if (!isValidEmail(email)) {
-      setErrorMessages({ name: "invalidEmail", message: errors.invalidEmail });
-    }
 
     if (!password) {
       setErrorMessages({ name: "noPassword", message: errors.noPassword });
@@ -106,56 +84,13 @@ const SignUp = () => {
     name === errorMessages.name && (
       <p className="error_msg">{errorMessages.message}</p>
     );
-  const handleImageUpload = (file) => {
-    setSelectedImage(file);
-  };
 
   return (
     <div className="Outercontainer">
       <div className="Container">
-        <h1 className="title">Sign Up Here</h1>
+        <h1 className="title">Change Your Password Here!</h1>
         <form onSubmit={handleSubmit}>
           <div className="inputs_container">
-            <label className="image_preview" htmlFor="imageInput">
-              <input
-                id="imageInput"
-                type="file"
-                accept="image/*"
-                onChange={(e) => handleImageUpload(e.target.files[0])}
-                style={{ display: "none" }}
-              />
-              {selectedImage ? (
-                <img
-                  src={URL.createObjectURL(selectedImage)}
-                  alt="Selected"
-                  className="circular_image"
-                />
-              ) : (
-                <div className="circular_image_placeholder">
-                  <img src={profile} alt="selected image" />
-                </div>
-              )}
-            </label>
-            <p className="imgErr">{renderErrorMsg("uploadimage")}</p>
-
-            <input
-              type="text"
-              placeholder="Username"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
-            />
-            {renderErrorMsg("username")}
-            {renderErrorMsg("noUsername")}
-            {renderErrorMsg("usernameLength")}
-            <input
-              type="Email"
-              placeholder="Email"
-              value={email}
-              onChange={(e) => setemailname(e.target.value)}
-            />
-            {renderErrorMsg("email")}
-            {renderErrorMsg("noEmail")}
-            {renderErrorMsg("invalidEmail")}
             <input
               type="password"
               placeholder="Password"
@@ -175,7 +110,7 @@ const SignUp = () => {
             {renderErrorMsg("noPassword")}
             {renderErrorMsg("ComparePassword")}
           </div>
-          <input type="submit" value="Sign Up" className="signup_button" />
+          <input type="submit" value="Change Password" className="password_button" />
         </form>
       </div>
       {showModal && (
@@ -197,4 +132,4 @@ const SignUp = () => {
   );
 };
 
-export default SignUp;
+export default ChangedPassword;
