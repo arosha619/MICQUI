@@ -10,6 +10,7 @@ import SignUp from "./components/SignUp/SignUp";
 import ForgotPassword from "./components/ForgotPassword/ForgotPassword";
 import ChangedPassword from "./components/ForgotPassword/ChangedPassword";
 import Settings from "./components/Settings/Settings";
+import SuccessfullyRegistered from "./components/SignUp/SuccessfullyRegistered";
 function App() {
   return (
       <Routes>
@@ -22,6 +23,7 @@ function App() {
         <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="/change-password" element={<ChangedPassword />} />
         <Route path="/user/reset" element={<ChangedPassword />} />
+        <Route path="/verify" element={<SuccessfullyRegistered/>}/>
       </Routes>
     
   );
