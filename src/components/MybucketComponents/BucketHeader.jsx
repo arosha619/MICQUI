@@ -1,13 +1,59 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { IoIosAddCircle } from "react-icons/io";
 import { FaTrashCan } from "react-icons/fa6";
-import BucketContains from './BucketContains';
 import "./MyBucketComponent.css";
+import { useNavigate } from "react-router-dom";
+import Header from "../Header/Header";
+import { getadminbyID } from "../../API/axios";
+import SideBar from '../Sidebar/SideBar';
 
 const BucketHeader = (props) => {
+  const navigate = useNavigate();
+  const [deleteBucket, setDeleteBucket] = useState([]);
+  const [adminData, setAdminData] = useState([]);
+  var isAuthenticated = localStorage.getItem("isAuthenticated");
+
+  useEffect(() => {
+    var isAuthenticated = localStorage.getItem("isAuthenticated");
+
+    if (!isAuthenticated || isAuthenticated == null) {
+      alert("Need to login first");
+      console.log("not authanticated");
+      navigate("/");
+    }
+  }, []);
+  const id = 1;
+  useEffect(() => {
+    const fetchUsers = async () => {
+      try {
+        const AdminData = await getadminbyID(id);
+        setAdminData(AdminData.data.data);
+        console.log(AdminData);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    fetchUsers();
+  }, [id]);
+
+  const bucketData = [1, 2, 3, 4, 5];
+
+  if (!isAuthenticated || isAuthenticated === "false") {
+    return null;
+  }
+
   return (
+    <div className="d-flex">
 
-
+      <div className=" w-100" style={{ padding: "20px" }}>
+        {/* {adminData.map((item) => (
+          <Header
+            key={item.id}
+            profile_pic={item.profile_pic}
+            admin_name={item.admin_name}
+          />
+        ))} */}
 
     <div>
       <div className="d-flex flex-xl-row flex-lg-row flex-md-row flex-column justify-content-between  align-items-center">
@@ -88,8 +134,6 @@ const BucketHeader = (props) => {
               className="row"
               style={{ paddingLeft: "15px", marginTop: "15px" }}
              > 
-
-
 {
     props.bucketTitle == "bucket" ? (<>{props.deleteBucket.length > 0 ? (
         <>
@@ -112,17 +156,15 @@ const BucketHeader = (props) => {
         <></>
       )}</>):(<></>)
 }
-
-
-
-              
-
-
-
-
-
-
-
+       {deleteBucket.length > 0 ? (
+          <>
+ 
+                </>
+              ) : (
+                <></>
+              )}
+                </div>
+              </div>
             </div>
             <div>
           </div>

@@ -1,7 +1,7 @@
 import { NavLink } from "react-router-dom";
 import { FaBars, FaHome, FaUser } from "react-icons/fa";
 import { MdMessage } from "react-icons/md";
-import {  BiSearch } from "react-icons/bi";
+
 import { BiCog } from "react-icons/bi";
 import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
@@ -31,6 +31,8 @@ const routes = [
     name: "Settings",
     icon: <BiCog />,
   },
+  
+ 
 ];
 
 const SideBar = ({ children }) => {
@@ -146,20 +148,8 @@ const SideBar = ({ children }) => {
             })}
           </section>
           
-          <AnimatePresence className="logout">
-          
-            {isOpen && (
-              <motion.div
-                variants={showAnimation}
-                initial="hidden"
-                animate="show"
-                exit="hidden"
-                className="logout"
-              >
-                Logout
-              </motion.div>
-            )}
-          </AnimatePresence>
+         
+      
         </motion.div>
 
         <main>{children}</main>
