@@ -23,6 +23,7 @@ const Login = () => {
     localStorage.clear();
   }, []);
   const handleSubmit = async (e) => {
+    localStorage.clear();
     // Prevent page from reloading
     e.preventDefault();
 
@@ -48,6 +49,7 @@ const Login = () => {
       if (res.data.success === true) {
         localStorage.setItem("token", res.data.token);
         localStorage.setItem("user_id", res.data.sub.id);
+        localStorage.setItem("isAuthenticated", true);
         alert("login success");
         window.location.href = `/user-list`;
       } else {

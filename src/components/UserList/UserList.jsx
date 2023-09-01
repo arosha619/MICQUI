@@ -24,12 +24,12 @@ const UserList = () => {
   const navigate = useNavigate();
   const isAuthenticated = localStorage.getItem("isAuthenticated");
 
-  // useEffect(() => {
-  //   if (!isAuthenticated || isAuthenticated === null) {
-  //     alert("Need to login first");
-  //     navigate("/");
-  //   }
-  // }, []);
+  useEffect(() => {
+    if (!isAuthenticated || isAuthenticated === null) {
+      alert("Need to login first");
+      navigate("/");
+    }
+  }, []);
 
   useEffect(() => {
     const fetchUsers = async () => {
