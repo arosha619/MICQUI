@@ -2,12 +2,14 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import SideBar from "../Sidebar/SideBar";
 import Header from "../Header/Header";
-import { getAllUsers } from "../../API/axios";
+import { getAllUsers, getadminbyID } from "../../API/axios";
+import "./UserList.css";
 
 const UserList = () => {
   const [selectAll, setSelectAll] = useState(false);
   const [filteredData, setFilteredData] = useState([]);
   const [userData, setUserData] = useState([]);
+  const [adminData, setAdminData] = useState([]);
   const navigate = useNavigate();
   const isAuthenticated = localStorage.getItem("isAuthenticated");
 
@@ -31,6 +33,21 @@ const UserList = () => {
 
     fetchUsers();
   }, []);
+
+  const id = 1;
+  useEffect(() => {
+    const fetchUsers = async () => {
+      try {
+        const AdminData = await getadminbyID(id);
+        setAdminData(AdminData.data.data);
+        console.log(AdminData);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    fetchUsers();
+  }, [id]);
 
   if (!isAuthenticated || isAuthenticated === "false") {
     return null;
@@ -62,7 +79,11 @@ const UserList = () => {
     <div className="d-flex">
       <SideBar />
       <div className="w-100 p-3">
-        <Header />
+        {adminData.map((item) => (
+          <Header key={item.id}
+          profile_pic={item.profile_pic}
+          admin_name={item.admin_name} />
+        ))}
         <form className="mb-3">
           <div className="input-group">
             <input
@@ -73,16 +94,16 @@ const UserList = () => {
             />
           </div>
         </form>
-        <div className="table-responsive">
+        <div className="table-responsive" style={{overflowY:"auto", maxHeight:"540px"}}>
           <table className="table table-borderless">
             <thead>
               <tr>
-                <th style={{padding:"10px"}}>
+                <th style={{ padding: "10px" }}>
                   <input
                     type="checkbox"
                     checked={selectAll}
                     onChange={handleSelectAll}
-                    style={{marginRight:"7px"}}
+                    style={{ marginRight: "7px" }}
                   />
                   Select All
                 </th>
