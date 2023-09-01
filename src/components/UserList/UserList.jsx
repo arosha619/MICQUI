@@ -2,12 +2,23 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import SideBar from "../Sidebar/SideBar";
 import Header from "../Header/Header";
-import { getAllUsers } from "../../API/axios";
+import { getAllUsers, updateUser } from "../../API/axios";
+import editIcon from "../../Assets/Icons/editIcon.svg";
+import deleteIcon from "../../Assets/Icons/deleteIcon.svg";
+import "./UserUpdate.css";
+import UpdateUserModal from "./UpdateUserModal";
 
 const UserList = () => {
   const [selectAll, setSelectAll] = useState(false);
   const [filteredData, setFilteredData] = useState([]);
   const [userData, setUserData] = useState([]);
+  const [openModal, setOpenmodal] = useState(false);
+  const [pro_pic, setPro_pic] = useState(null);
+  const [fullname, setFullname] = useState("");
+  const [role, setRole] = useState("");
+  const [company, setCompany] = useState("");
+  const [userID, setUserId] = useState("");
+
   const navigate = useNavigate();
   const isAuthenticated = localStorage.getItem("isAuthenticated");
 
@@ -58,6 +69,28 @@ const UserList = () => {
     setFilteredData(filtered);
   };
 
+  const handleupdate = async () => {
+    const formData = {
+      full_name: fullname,
+      profile_pic: pro_pic,
+      role: role,
+      company_name: company,
+    };
+
+    try {
+      updateUser(userID, formData)
+        .then((res) => {
+          console.log(res);
+          setOpenmodal(false);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   return (
     <div className="d-flex">
       <SideBar />
@@ -77,12 +110,22 @@ const UserList = () => {
           <table className="table table-borderless">
             <thead>
               <tr>
-                <th style={{padding:"10px"}}>
+                <th
+                  style={{
+                    padding: "10px",
+                    display: "flex",
+                    justifyContent: "center",
+                  }}
+                >
                   <input
+                    style={{
+                      width: "20px",
+                      height: "20px",
+                      marginRight: "7px",
+                    }}
                     type="checkbox"
                     checked={selectAll}
                     onChange={handleSelectAll}
-                    style={{marginRight:"7px"}}
                   />
                   Select All
                 </th>
@@ -92,13 +135,15 @@ const UserList = () => {
                 <th>Phone</th>
                 <th>Position</th>
                 <th>Status</th>
+                <th>Actions</th>
               </tr>
             </thead>
             <tbody>
               {filteredData.map((item, index) => (
                 <tr key={index}>
-                  <td>
+                  <td style={{ display: "flex", justifyContent: "center" }}>
                     <input
+                      style={{ width: "20px", height: "20px" }}
                       type="checkbox"
                       checked={item.selected}
                       onChange={() => handleCheckboxChange(index)}
@@ -119,12 +164,57 @@ const UserList = () => {
                   <td>
                     {item.is_verified === 1 ? "Verified" : "Not Verified"}
                   </td>
+                  <td>
+                    <div style={{ display: "flex" }}>
+                      <img
+                        onClick={() => {
+                          setPro_pic(item.profile_pic);
+                          setFullname(item.full_name);
+                          setRole(item.role);
+                          setCompany(item.company_name);
+                          setUserId(item.id);
+                          setOpenmodal(true);
+                        }}
+                        style={{
+                          display: "flex",
+                          justifyContent: "center",
+                          width: "25px",
+                          height: "25px",
+                          marginRight: "20px",
+                          cursor: "pointer",
+                        }}
+                        src={editIcon}
+                      />
+                      <img
+                        style={{
+                          width: "25px",
+                          height: "25px",
+                          color: "red",
+                          cursor: "pointer",
+                        }}
+                        src={deleteIcon}
+                      />
+                    </div>
+                  </td>
                 </tr>
               ))}
             </tbody>
           </table>
         </div>
       </div>
+      {openModal && (
+        <UpdateUserModal
+          pro_pic={pro_pic}
+          fullname={fullname}
+          setFullname={setFullname}
+          role={role}
+          setRole={setRole}
+          company={company}
+          setCompany={setCompany}
+          setOpenmodal={setOpenmodal}
+          handleupdate={handleupdate}
+        />
+      )}
     </div>
   );
 };
