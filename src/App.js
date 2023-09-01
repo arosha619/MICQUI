@@ -4,16 +4,18 @@ import React, { useState } from "react";
 import Dashboard from "./pages/Dashboard";
 import Setting from "./pages/Setting";
 import UserList from "./components/UserList/UserList";
-import MyBucket from "./components/MyBucket/MyBucket";
+// import MyBucket from "./components/MyBucket/MyBucket";
+import MyBucket from "./pages/MyBucket/MyBucket";
 import Login from "./components/Login/Login";
 import SignUp from "./components/SignUp/SignUp";
 import ForgotPassword from "./components/ForgotPassword/ForgotPassword";
 import ChangedPassword from "./components/ForgotPassword/ChangedPassword";
 import Settings from "./components/Settings/Settings";
+import BucketDetails from "./pages/BucketDetails/BucketDetails.jsx";
 function App() {
   return (
       <Routes>
-        <Route path="/" element={<Login />} />
+        <Route path="/" element={<BucketDetails />} />
         <Route path="/sign-up" element={<SignUp />} />
         <Route path="/home" element={<Dashboard />} />
         <Route path="/user-list" element={<UserList />} />
