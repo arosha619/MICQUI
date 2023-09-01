@@ -1,5 +1,5 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate,useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import SideBar from "../Sidebar/SideBar";
 import profile from "../../Assets/profile.png";
@@ -21,6 +21,7 @@ const Settings = () => {
   const [Logout, setLogout] = useState(false);
   const [DeleteSuccessfull, setDeleteSuccessfull] = useState(false);
   const [response, setResponse] = useState("");
+  const id = localStorage.getItem("user_id");
 
   useEffect(() => {
     var isAuthenticated = localStorage.getItem("isAuthenticated");
@@ -85,7 +86,7 @@ const Settings = () => {
       sendAdminUpdateData();
     }
   };
-  const id = 72;
+
   const sendAdminUpdateData = async () => {
     try {
       const formData = new FormData();
@@ -93,7 +94,10 @@ const Settings = () => {
       formData.append("email", email);
       formData.append("profile_pic", selectedImage);
 
-      var response = await updateAdmin(formData, id);
+console.log(username);
+console.log(email);
+console.log(selectedImage);
+      var response = await updateAdmin(id,formData);
       console.log(response);
       setResponse(response);
       setShowModal(true);
@@ -101,11 +105,12 @@ const Settings = () => {
       alert("Error please try again!");
     }
   };
+  
   const deleteAdmin = () => {
     setDeleteModal(true);
   };
 
-  function deleteConfirmed(id) {
+  function deleteConfirmed() {
     var res = deleteadminbyID(id)
       .then(() => {
         setDeleteSuccessfull(true);
