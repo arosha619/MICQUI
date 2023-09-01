@@ -1,48 +1,16 @@
-import React, { useState, useEffect } from "react";
-import "./MyBucket.css";
-import SideBar from "../Sidebar/SideBar";
-import BucketContains from "../MybucketComponents/BucketContains";
+import React from 'react';
 import { IoIosAddCircle } from "react-icons/io";
 import { FaTrashCan } from "react-icons/fa6";
-import { useNavigate } from "react-router-dom";
-import Header from "../Header/Header";
+import BucketContains from './BucketContains';
+import "./MyBucketComponent.css";
 
-const MyBucket = () => {
-  const navigate = useNavigate();
-  const [deleteBucket, setDeleteBucket] = useState([]);
-  var isAuthenticated = localStorage.getItem("isAuthenticated");
-
-  useEffect(() => {
-    var isAuthenticated = localStorage.getItem("isAuthenticated");
-
-    if (!isAuthenticated || isAuthenticated == null) {
-      alert("Need to login first");
-      console.log("not authanticated");
-      navigate("/");
-    }
-  }, []);
-
-
-
-  const bucketData = [1, 2, 3, 4, 5];
-
-  if (!isAuthenticated || isAuthenticated === "false") {
-    return null;
-  }
-
+const BucketHeader = (props) => {
   return (
-    
-    <div className="d-flex">
-      <div>
-        <SideBar />
-      </div>
 
-      <div className=" w-100" style={{ padding: "20px" }}>
-      <Header/>
 
-        <div className="card">
-          <div className="card-header">
-            <div className="d-flex flex-xl-row flex-lg-row flex-md-row flex-column justify-content-between  align-items-center">
+
+    <div>
+      <div className="d-flex flex-xl-row flex-lg-row flex-md-row flex-column justify-content-between  align-items-center">
               <h5 className="">Buckets(7)</h5>
               <div
                 className="d-flex d-inline-block search-box"
@@ -67,7 +35,14 @@ const MyBucket = () => {
                   }}
                 />
               </div>
-              <div
+
+{
+    props.bucketTitle == "bucket"
+}
+
+{
+    props.bucketTitle == "bucket" ? (<>
+            <div
                 className="dropdown"
                 style={{
                   border: "3px solid ",
@@ -96,7 +71,11 @@ const MyBucket = () => {
                   </li>
                 </ul>
               </div>
-              {
+
+    </>) : (<></>)
+}
+
+{
                 <button type="button" className="btn btn-outline-light">
                   <IoIosAddCircle
                     style={{ color: "green", fontSize: "30px" }}
@@ -104,48 +83,51 @@ const MyBucket = () => {
                 </button>
               }
             </div>
+
             <div
               className="row"
               style={{ paddingLeft: "15px", marginTop: "15px" }}
-            >
-              {deleteBucket.length > 0 ? (
-                <>
-                  <FaTrashCan
-                    className="col-1 "
-                    style={{
-                      color: "red",
-                      fontSize: "30px",
-                      paddingRight: "45px",
-                    }}
-                  />
-                  <p
-                    className="col-11"
-                    style={{ color: "red", fontWeight: "normal" }}
-                  >
-                   <b> Delete {deleteBucket.length} bucket</b>
-                  </p>
-                </>
-              ) : (
-                <></>
-              )}
-            </div>
-          </div>
+             > 
 
-          <div>
-            <div className="entire">
-              {bucketData.map((item, index) => (
-                <BucketContains
-                  deleteBucket={deleteBucket}
-                  setDeleteBucket={setDeleteBucket}
-                  item={item}
-                />
-              ))}
+
+{
+    props.bucketTitle == "bucket" ? (<>{props.deleteBucket.length > 0 ? (
+        <>
+          <FaTrashCan
+            className="col-1 "
+            style={{
+              color: "red",
+              fontSize: "30px",
+              paddingRight: "45px",
+            }}
+          />
+          <p
+            className="col-11"
+            style={{ color: "red", fontWeight: "normal" }}
+          >
+           <b> Delete {props.deleteBucket.length} bucket</b>
+          </p>
+        </>
+      ) : (
+        <></>
+      )}</>):(<></>)
+}
+
+
+
+              
+
+
+
+
+
+
+
             </div>
+            <div>
           </div>
-        </div>
-      </div>
     </div>
   );
-};
+}
 
-export default MyBucket;
+export default BucketHeader;
