@@ -1,14 +1,13 @@
-import React, { useState, useEffect } from "react";
-import "./MyBucket.css";
-import SideBar from "../Sidebar/SideBar";
-import BucketContains from "../MybucketComponents/BucketContains";
+import React, { useEffect, useState } from 'react';
 import { IoIosAddCircle } from "react-icons/io";
 import { FaTrashCan } from "react-icons/fa6";
+import "./MyBucketComponent.css";
 import { useNavigate } from "react-router-dom";
 import Header from "../Header/Header";
 import { getadminbyID } from "../../API/axios";
+import SideBar from '../Sidebar/SideBar';
 
-const MyBucket = () => {
+const BucketHeader = (props) => {
   const navigate = useNavigate();
   const [deleteBucket, setDeleteBucket] = useState([]);
   const [adminData, setAdminData] = useState([]);
@@ -46,22 +45,18 @@ const MyBucket = () => {
 
   return (
     <div className="d-flex">
-      <div>
-        <SideBar />
-      </div>
 
       <div className=" w-100" style={{ padding: "20px" }}>
-        {adminData.map((item) => (
+        {/* {adminData.map((item) => (
           <Header
             key={item.id}
             profile_pic={item.profile_pic}
             admin_name={item.admin_name}
           />
-        ))}
+        ))} */}
 
-        <div className="card">
-          <div className="card-header">
-            <div className="d-flex flex-xl-row flex-lg-row flex-md-row flex-column justify-content-between  align-items-center">
+    <div>
+      <div className="d-flex flex-xl-row flex-lg-row flex-md-row flex-column justify-content-between  align-items-center">
               <h5 className="">Buckets(7)</h5>
               <div
                 className="d-flex d-inline-block search-box"
@@ -86,7 +81,14 @@ const MyBucket = () => {
                   }}
                 />
               </div>
-              <div
+
+{
+    props.bucketTitle == "bucket"
+}
+
+{
+    props.bucketTitle == "bucket" ? (<>
+            <div
                 className="dropdown"
                 style={{
                   border: "3px solid ",
@@ -115,7 +117,11 @@ const MyBucket = () => {
                   </li>
                 </ul>
               </div>
-              {
+
+    </>) : (<></>)
+}
+
+{
                 <button type="button" className="btn btn-outline-light">
                   <IoIosAddCircle
                     style={{ color: "green", fontSize: "30px" }}
@@ -123,48 +129,47 @@ const MyBucket = () => {
                 </button>
               }
             </div>
+
             <div
               className="row"
               style={{ paddingLeft: "15px", marginTop: "15px" }}
-            >
-              {deleteBucket.length > 0 ? (
-                <>
-                  <FaTrashCan
-                    className="col-1 "
-                    style={{
-                      color: "red",
-                      fontSize: "30px",
-                      paddingRight: "45px",
-                    }}
-                  />
-                  <p
-                    className="col-11"
-                    style={{ color: "red", fontWeight: "normal" }}
-                  >
-                    <b> Delete {deleteBucket.length} bucket</b>
-                  </p>
+             > 
+{
+    props.bucketTitle == "bucket" ? (<>{props.deleteBucket.length > 0 ? (
+        <>
+          <FaTrashCan
+            className="col-1 "
+            style={{
+              color: "red",
+              fontSize: "30px",
+              paddingRight: "45px",
+            }}
+          />
+          <p
+            className="col-11"
+            style={{ color: "red", fontWeight: "normal" }}
+          >
+           <b> Delete {props.deleteBucket.length} bucket</b>
+          </p>
+        </>
+      ) : (
+        <></>
+      )}</>):(<></>)
+}
+       {deleteBucket.length > 0 ? (
+          <>
+ 
                 </>
               ) : (
                 <></>
               )}
+                </div>
+              </div>
             </div>
+            <div>
           </div>
-
-          <div>
-            <div className="entire">
-              {bucketData.map((item, index) => (
-                <BucketContains
-                  deleteBucket={deleteBucket}
-                  setDeleteBucket={setDeleteBucket}
-                  item={item}
-                />
-              ))}
-            </div>
-          </div>
-        </div>
-      </div>
     </div>
   );
-};
+}
 
-export default MyBucket;
+export default BucketHeader;

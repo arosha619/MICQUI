@@ -9,6 +9,14 @@
     overflow-y: auto;
     max-height: 30vw;
   }
+  .action-icons{
+    display: flex;
+
+  }
+  .action-icons img{
+    width: 30px;
+    height: 30px;
+  }
   
   .custom-table {
     width: 100%;

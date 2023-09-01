@@ -48,3 +48,11 @@ export const getadminbyID = async (id) => {
   const res = await API.get(`admin/getAdmin/${id}`, id);
   return res;
 };
+  export const updateUser = async (id, formData) => {
+    const res = await registerAPI.put(`/user/update/${id}`, formData);
+    return res;
+  };
+  export const deleteadminbyID = async (id) => {
+    const res = await API.delete(`admin/delete/${id}`,id);
+    return res;
+  };
