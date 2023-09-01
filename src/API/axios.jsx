@@ -31,3 +31,7 @@ export const registerAPI = axios.create({
     const res = await registerAPI.get(`user/getAllUser`);
     return res;
   };
+  export const getadminbyID = async (id) => {
+    const res = await registerAPI.get(`admin/getAdmin/${id}`,id);
+    return res;
+  };

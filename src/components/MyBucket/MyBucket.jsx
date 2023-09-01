@@ -6,10 +6,12 @@ import { IoIosAddCircle } from "react-icons/io";
 import { FaTrashCan } from "react-icons/fa6";
 import { useNavigate } from "react-router-dom";
 import Header from "../Header/Header";
+import { getadminbyID } from "../../API/axios";
 
 const MyBucket = () => {
   const navigate = useNavigate();
   const [deleteBucket, setDeleteBucket] = useState([]);
+  const [adminData, setAdminData] = useState([]);
   var isAuthenticated = localStorage.getItem("isAuthenticated");
 
   useEffect(() => {
@@ -21,8 +23,20 @@ const MyBucket = () => {
       navigate("/");
     }
   }, []);
+  const id = 1;
+  useEffect(() => {
+    const fetchUsers = async () => {
+      try {
+        const AdminData = await getadminbyID(id);
+        setAdminData(AdminData.data.data);
+        console.log(AdminData);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
 
-
+    fetchUsers();
+  }, [id]);
 
   const bucketData = [1, 2, 3, 4, 5];
 
@@ -31,14 +45,19 @@ const MyBucket = () => {
   }
 
   return (
-    
     <div className="d-flex">
       <div>
         <SideBar />
       </div>
 
       <div className=" w-100" style={{ padding: "20px" }}>
-      <Header/>
+        {adminData.map((item) => (
+          <Header
+            key={item.id}
+            profile_pic={item.profile_pic}
+            admin_name={item.admin_name}
+          />
+        ))}
 
         <div className="card">
           <div className="card-header">
@@ -122,7 +141,7 @@ const MyBucket = () => {
                     className="col-11"
                     style={{ color: "red", fontWeight: "normal" }}
                   >
-                   <b> Delete {deleteBucket.length} bucket</b>
+                    <b> Delete {deleteBucket.length} bucket</b>
                   </p>
                 </>
               ) : (
