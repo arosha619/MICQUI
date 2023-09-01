@@ -56,3 +56,14 @@ export const deleteadminbyID = async (id) => {
   const res = await API.delete(`admin/delete/${id}`, id);
   return res;
 };
+
+
+export const getAllBuckets = async () => {
+  const res = await API.get(`bucket/getAllBuckets`);
+  return res;
+};
+
+export const getAllQuestion = async () => {
+  const res = await API.get(`question/getAllQuestion`);
+  return res;
+};

@@ -1,26 +1,29 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import bucketData from "./BucketContains";
 import { useNavigate } from "react-router-dom";
 
 const BucketContains = (props) => {
 
-
+  const navigate = useNavigate();
   const isChecked = (event) => {
-
     if (event.target.checked) {
-      
       props.setDeleteBucket([...props.deleteBucket, props.item]);
-
     } else {
-
-      // var index = props.deleteBucket.indexOf(props.item);
-      // console.log("index : ",index);
-      // props.deleteBucket.splice(index, 1);
-      // props.setDeleteBucket(props.deleteBucket);
-      const updatedDeleteBucket = props.deleteBucket.filter((bucketItem) => bucketItem !== props.item);
+      const updatedDeleteBucket = props.deleteBucket.filter(
+        (bucketItem) => bucketItem !== props.item
+      );
       props.setDeleteBucket(updatedDeleteBucket);
     }
   };
+
+
+
+  const handleClick = async (event) => {
+    event.preventDefault();
+    
+    navigate(`/bucket-data/${props.item.bucket_id}`);
+  };
+  
 
   return (
     <div>
@@ -37,8 +40,14 @@ const BucketContains = (props) => {
           />
         </div>
         <div className="card-content col-11 ">
-          <h5 className="card-title">{props.item}</h5>
-          <p className="card-text">ujgjlikjn</p>
+          <div
+            className="p-2"
+            onClick={handleClick}
+            style={{ cursor: "pointer" }}
+          >
+            <h5 className="card-title">{props.item.name}</h5>
+            <p className="card-text">{props.item.description}</p>
+          </div>
           <div>
             <div className="dropdown ">
               <button
@@ -47,7 +56,7 @@ const BucketContains = (props) => {
                 data-bs-toggle="dropdown"
                 aria-expanded="false"
               >
-                {props.item}
+                {props.item.type}
               </button>
               <ul className="dropdown-menu dropdown-menu-light">
                 <li>
