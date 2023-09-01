@@ -23,6 +23,10 @@ export const registerAPI = axios.create({
     const res = await registerAPI.put(`admin/update/${id}`, formData,id);
     return res;
   };
+  export const updateUser = async (id, formData) => {
+    const res = await registerAPI.put(`/user/update/${id}`, formData);
+    return res;
+  };
   export const forgotPassword = async (email) => {
     const res = await API.post(`admin/forgotpassword`,email);
     return res;
