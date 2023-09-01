@@ -5,11 +5,14 @@ import BucketContains from "./../../components/MybucketComponents/BucketContains
 import { useNavigate } from "react-router-dom";
 import Header from "../../components/Header/Header";
 import BucketHeader from "./../../components/MybucketComponents/BucketHeader"
+import { getadminbyID } from "../../API/axios";
 
 const MyBucket = () => {
   const navigate = useNavigate();
   const [deleteBucket, setDeleteBucket] = useState([]);
+  const [adminData, setAdminData] = useState([]);
   var isAuthenticated = localStorage.getItem("isAuthenticated");
+  const id = localStorage.getItem("user_id");
 
   useEffect(() => {
     var isAuthenticated = localStorage.getItem("isAuthenticated");
@@ -20,6 +23,20 @@ const MyBucket = () => {
       navigate("/");
     }
   }, []);
+
+  useEffect(() => {
+    const fetchUsers = async () => {
+      try {
+        const AdminData = await getadminbyID(id);
+        setAdminData(AdminData.data.data);
+        console.log(AdminData);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    fetchUsers();
+  }, [id]);
 
 
 
@@ -37,7 +54,13 @@ const MyBucket = () => {
       </div>
 
       <div className=" w-100" style={{ padding: "20px" }}>
-      <Header/>
+      {adminData.map((item) => (
+          <Header
+            key={item.id}
+            profile_pic={item.profile_pic}
+            admin_name={item.admin_name}
+          />
+        ))}
 
         <div className="card">
           <div className="card-header">
