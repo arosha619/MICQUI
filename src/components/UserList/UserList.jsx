@@ -24,12 +24,12 @@ const UserList = () => {
   const navigate = useNavigate();
   const isAuthenticated = localStorage.getItem("isAuthenticated");
 
-  useEffect(() => {
-    if (!isAuthenticated || isAuthenticated === null) {
-      alert("Need to login first");
-      navigate("/");
-    }
-  }, []);
+  // useEffect(() => {
+  //   if (!isAuthenticated || isAuthenticated === null) {
+  //     alert("Need to login first");
+  //     navigate("/");
+  //   }
+  // }, []);
 
   useEffect(() => {
     const fetchUsers = async () => {
@@ -113,9 +113,11 @@ const UserList = () => {
       <SideBar />
       <div className="w-100 p-3">
         {adminData.map((item) => (
-          <Header key={item.id}
-          profile_pic={item.profile_pic}
-          admin_name={item.admin_name} />
+          <Header
+            key={item.id}
+            profile_pic={item.profile_pic}
+            admin_name={item.admin_name}
+          />
         ))}
         <form className="mb-3">
           <div className="input-group">
@@ -127,7 +129,10 @@ const UserList = () => {
             />
           </div>
         </form>
-        <div className="table-responsive" style={{overflowY:"auto", maxHeight:"540px"}}>
+        <div
+          className="table-responsive"
+          style={{ overflowY: "auto", maxHeight: "540px" }}
+        >
           <table className="table table-borderless">
             <thead>
               <tr>
