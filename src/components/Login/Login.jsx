@@ -1,13 +1,15 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./Login.css";
 import logo from "../../Assets/micqui_logo.jpg";
 import { database } from "../../Data/Database";
 import { useNavigate } from "react-router-dom";
-import {FaUserAlt} from "react-icons/fa";
+import { FaUserAlt } from "react-icons/fa";
+import { LoginApi } from "../../API/axios";
 
 const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
   const [errorMessages, setErrorMessages] = useState({});
   const navigate = useNavigate();
 
@@ -17,8 +19,10 @@ const Login = () => {
     noUsername: "Please enter your username",
     noPassword: "Please enter your password",
   };
-
-  const handleSubmit = (e) => {
+  useEffect(() => {
+    localStorage.clear();
+  }, []);
+  const handleSubmit = async (e) => {
     // Prevent page from reloading
     e.preventDefault();
 
@@ -33,27 +37,29 @@ const Login = () => {
       setErrorMessages({ name: "noPassword", message: errors.noPassword });
       return;
     }
-
-    // Search for user credentials
-    const currentUser = database.find((user) => user.username === username);
-
-    if (currentUser) {
-      if (currentUser.password !== password) {
-        // Wrong password
-        setErrorMessages({ name: "password", message: errors.password });
+    try {
+      const data = {
+        admin_name: username,
+        password: password,
+      };
+      console.log(data);
+      const res = await LoginApi(data);
+      console.log(res.data.sub.id);
+      if (res.data.success === true) {
+        localStorage.setItem("token", res.data.token);
+        localStorage.setItem("user_id", res.data.sub.id);
+        alert("login success");
+        window.location.href = `/user-list`;
       } else {
-        // Correct password, log in user
-      
-        setErrorMessages({});
-        // setAuthenticated(true);
-
-        localStorage.setItem('isAuthenticated', true);
-      
-        navigate("/user-list");
+        // Authentication failed
+        alert("login failed");
+        const errorData = await res.message;
+        setError(errorData || "Autenticación fallida");
       }
-    } else {
-      // Username doens't exist in the database
-      setErrorMessages({ name: "username", message: errors.username });
+    } catch (error) {
+      alert("login failed");
+      // Handle any network or server errors
+      setError("An error occurred. Please try again later.");
     }
   };
 
@@ -90,7 +96,7 @@ const Login = () => {
           <input type="submit" value="Log In" className="login_button1" />
         </form>
         <div className="link_container">
-        <a href="/sign-up" className="signup">
+          <a href="/sign-up" className="signup">
             Do not have an account? Sign Up Here
           </a>
           <a href="/forgot-password" className="small">
