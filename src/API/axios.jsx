@@ -35,3 +35,7 @@ export const registerAPI = axios.create({
     const res = await registerAPI.get(`admin/getAdmin/${id}`,id);
     return res;
   };
+  export const deleteadminbyID = async (id) => {
+    const res = await API.delete(`admin/delete/${id}`,id);
+    return res;
+  };

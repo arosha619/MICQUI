@@ -3,9 +3,10 @@ import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import SideBar from "../Sidebar/SideBar";
 import profile from "../../Assets/profile.png";
-import { updateAdmin } from "../../API/axios";
+import { updateAdmin, deleteadminbyID } from "../../API/axios";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Modal, Button } from "react-bootstrap";
+import { BiLogOutCircle } from "react-icons/bi";
 import "./Settings.css";
 
 const Settings = () => {
@@ -16,6 +17,9 @@ const Settings = () => {
   const [errorMessages, setErrorMessages] = useState({});
   const [selectedImage, setSelectedImage] = useState(null);
   const [showModal, setShowModal] = useState(false);
+  const [deleteModal, setDeleteModal] = useState(false);
+  const [Logout, setLogout] = useState(false);
+  const [DeleteSuccessfull, setDeleteSuccessfull] = useState(false);
   const [response, setResponse] = useState("");
 
   useEffect(() => {
@@ -81,7 +85,7 @@ const Settings = () => {
       sendAdminUpdateData();
     }
   };
-  const id=73;
+  const id = 72;
   const sendAdminUpdateData = async () => {
     try {
       const formData = new FormData();
@@ -89,7 +93,7 @@ const Settings = () => {
       formData.append("email", email);
       formData.append("profile_pic", selectedImage);
 
-      var response = await updateAdmin(formData,id);
+      var response = await updateAdmin(formData, id);
       console.log(response);
       setResponse(response);
       setShowModal(true);
@@ -97,18 +101,38 @@ const Settings = () => {
       alert("Error please try again!");
     }
   };
+  const deleteAdmin = () => {
+    setDeleteModal(true);
+  };
+
+  function deleteConfirmed(id) {
+    var res = deleteadminbyID(id)
+      .then(() => {
+        setDeleteSuccessfull(true);
+        setDeleteModal(false);
+        localStorage.clear();
+        console.log(res);
+      })
+      .catch((error) => {
+        alert("Error deleting data:");
+      });
+  }
+  function logout(){
+    navigate("/")
+    localStorage.clear();
+  }
 
   return (
     <div className="d-flex">
       <SideBar />
       <div className="w-100 p-3">
-        <div >
+        <div>
           <div>
             <h1 className="title_s">Update Your Profile Here!</h1>
             <form onSubmit={handleSubmit}>
               <div className="inputs_container_s">
                 <label className="image_preview_s" htmlFor="imageInput">
-                  <input 
+                  <input
                     id="imageInput"
                     type="file"
                     accept="image/*"
@@ -148,8 +172,28 @@ const Settings = () => {
                 {renderErrorMsg("noEmail")}
                 {renderErrorMsg("invalidEmail")}
               </div>
-              <input type="submit" value="Update Profile" className="update_button" />
+              <input
+                type="submit"
+                value="Update Profile"
+                className="update_button"
+              />
             </form>
+            <input
+              type="submit"
+              onClick={deleteAdmin}
+              value="Delete Profile"
+              className="delete_button"
+            />
+            <div className="center-container">
+              <div className="logout" onClick={() => setLogout(true)}>
+                <img
+                  className="logout_img"
+                  src={require("../../Assets/logout.png")}
+                  alt="logout"
+                />
+                Log Out
+              </div>
+            </div>
           </div>
           {showModal && (
             <Modal
@@ -168,6 +212,69 @@ const Settings = () => {
                 {response.data.message}
               </Modal.Body>
               <Modal.Footer>{/* Add any footer content here */}</Modal.Footer>
+            </Modal>
+          )}
+          {deleteModal && (
+            <Modal
+              style={{ background: "rgba(15, 14, 14, 0.144)" }}
+              show={deleteModal}
+              onHide={() => setDeleteModal(false)}
+            >
+              <Modal.Header closeButton></Modal.Header>
+              <Modal.Body className="d-flex justify-content-center ">
+                Do You really want to delete this profile ?
+              </Modal.Body>
+              <Modal.Footer>
+                <Button
+                  variant="secondary"
+                  onClick={() => setDeleteModal(false)}
+                >
+                  No
+                </Button>
+                <Button variant="primary" onClick={deleteConfirmed}>
+                  Yes
+                </Button>
+              </Modal.Footer>
+            </Modal>
+          )}
+          {DeleteSuccessfull && (
+            <Modal
+              style={{ background: "rgba(15, 14, 14, 0.144)" }}
+              show={DeleteSuccessfull}
+              onHide={() => setDeleteSuccessfull(false)}
+            >
+              <Modal.Header></Modal.Header>
+              <Modal.Body className="d-flex justify-content-center ">
+                Your Profile is Successfully deleted!
+              </Modal.Body>
+              <Modal.Footer>
+                <Button variant="primary" onClick={() => navigate("/")}>
+                  Ok
+                </Button>
+              </Modal.Footer>
+            </Modal>
+          )}
+          {Logout && (
+            <Modal
+              style={{ background: "rgba(15, 14, 14, 0.144)" }}
+              show={Logout}
+              onHide={() => setLogout(false)}
+            >
+              <Modal.Header></Modal.Header>
+              <Modal.Body className="d-flex justify-content-center ">
+                Are you sure you want to log out ?
+              </Modal.Body>
+              <Modal.Footer>
+              <Button
+                  variant="secondary"
+                  onClick={() => setLogout(false)}
+                >
+                  No
+                </Button>
+                <Button variant="primary" onClick={logout}>
+                  Log Out
+                </Button>
+              </Modal.Footer>
             </Modal>
           )}
         </div>
