@@ -23,6 +23,7 @@ const UserList = () => {
   const [adminData, setAdminData] = useState([]);
   const navigate = useNavigate();
   const isAuthenticated = localStorage.getItem("isAuthenticated");
+  const id = localStorage.getItem("user_id");
 
   useEffect(() => {
     if (!isAuthenticated || isAuthenticated === null) {
@@ -45,7 +46,7 @@ const UserList = () => {
     fetchUsers();
   }, []);
 
-  const id = 1;
+
   useEffect(() => {
     const fetchUsers = async () => {
       try {
