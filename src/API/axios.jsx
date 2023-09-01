@@ -32,8 +32,8 @@ export const createAdmin = async (formData) => {
   const res = await ImageAPI.post(`admin/register`, formData);
   return res;
 };
-export const updateAdmin = async (formData, id) => {
-  const res = await API.put(`admin/update/${id}`, formData, id);
+export const updateAdmin = async (id,formData) => {
+  const res = await API.put(`admin/update/${id}`, formData);
   return res;
 };
 export const forgotPassword = async (email) => {
