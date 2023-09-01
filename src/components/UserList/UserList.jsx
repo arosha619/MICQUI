@@ -7,6 +7,8 @@ import editIcon from "../../Assets/Icons/editIcon.svg";
 import deleteIcon from "../../Assets/Icons/deleteIcon.svg";
 import "./UserUpdate.css";
 import UpdateUserModal from "./UpdateUserModal";
+import { getadminbyID } from "../../API/axios";
+import "./UserList.css";
 
 const UserList = () => {
   const [selectAll, setSelectAll] = useState(false);
@@ -18,7 +20,7 @@ const UserList = () => {
   const [role, setRole] = useState("");
   const [company, setCompany] = useState("");
   const [userID, setUserId] = useState("");
-
+  const [adminData, setAdminData] = useState([]);
   const navigate = useNavigate();
   const isAuthenticated = localStorage.getItem("isAuthenticated");
 
@@ -42,6 +44,21 @@ const UserList = () => {
 
     fetchUsers();
   }, []);
+
+  const id = 1;
+  useEffect(() => {
+    const fetchUsers = async () => {
+      try {
+        const AdminData = await getadminbyID(id);
+        setAdminData(AdminData.data.data);
+        console.log(AdminData);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    fetchUsers();
+  }, [id]);
 
   if (!isAuthenticated || isAuthenticated === "false") {
     return null;
@@ -95,7 +112,11 @@ const UserList = () => {
     <div className="d-flex">
       <SideBar />
       <div className="w-100 p-3">
-        <Header />
+        {adminData.map((item) => (
+          <Header key={item.id}
+          profile_pic={item.profile_pic}
+          admin_name={item.admin_name} />
+        ))}
         <form className="mb-3">
           <div className="input-group">
             <input
@@ -106,17 +127,11 @@ const UserList = () => {
             />
           </div>
         </form>
-        <div className="table-responsive">
+        <div className="table-responsive" style={{overflowY:"auto", maxHeight:"540px"}}>
           <table className="table table-borderless">
             <thead>
               <tr>
-                <th
-                  style={{
-                    padding: "10px",
-                    display: "flex",
-                    justifyContent: "center",
-                  }}
-                >
+                <th style={{ padding: "10px" }}>
                   <input
                     style={{
                       width: "20px",
