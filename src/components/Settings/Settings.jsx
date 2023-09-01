@@ -81,7 +81,7 @@ const Settings = () => {
       sendAdminUpdateData();
     }
   };
-  const id=1;
+  const id=73;
   const sendAdminUpdateData = async () => {
     try {
       const formData = new FormData();
