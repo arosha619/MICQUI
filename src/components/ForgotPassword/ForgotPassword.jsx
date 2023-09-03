@@ -2,8 +2,9 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { forgotPassword } from "../../API/axios";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { Modal } from "react-bootstrap";
+import { Modal,Button } from "react-bootstrap";
 import "./ForgotPassword.css";
+import { FaExclamationCircle, FaCheckCircle } from "react-icons/fa";
 
 const ForgotPassword = () => {
   const [email, setemailname] = useState("");
@@ -81,17 +82,31 @@ const ForgotPassword = () => {
         >
           <Modal.Header closeButton>
             {passwordRes.data.success ? (
-              <span className="text-success">Success</span>
-            ) : (<>
-              <span className="text-warning ">Warning</span>
-              <button onClick={navigate("/change-password")}>test</button>
+              <div className="d-flex justify-content-center align-items-center text-danger">
+                <FaCheckCircle
+                  size={24}
+                  style={{ marginLeft: "220px", color: "green" }}
+                />
+              </div>
+            ) : (
+              <>
+                <div className="d-flex justify-content-center align-items-center text-danger">
+                  <FaExclamationCircle
+                    size={24}
+                    style={{ marginLeft: "220px" }}
+                  />
+                </div>
               </>
             )}
           </Modal.Header>
           <Modal.Body className="d-flex justify-content-center ">
             {passwordRes.data.message}
           </Modal.Body>
-          <Modal.Footer>{/* Add any footer content here */}</Modal.Footer>
+          <Modal.Footer className="d-flex justify-content-center">
+            <Button variant="dark" onClick={() => setShowModal(false)}>
+              Ok
+            </Button>
+          </Modal.Footer>
         </Modal>
       )}
     </div>

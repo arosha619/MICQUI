@@ -7,7 +7,7 @@ import { updateAdmin, deleteadminbyID } from "../../API/axios";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Modal, Button } from "react-bootstrap";
 import { BiLogOutCircle } from "react-icons/bi";
-import { FaExclamationCircle } from "react-icons/fa";
+import { FaExclamationCircle, FaCheckCircle } from "react-icons/fa";
 import "./Settings.css";
 
 const Settings = () => {
@@ -209,9 +209,19 @@ const Settings = () => {
             >
               <Modal.Header closeButton>
                 {response.data.success ? (
-                  <span className="text-success">Success</span>
+                  <div className="d-flex justify-content-center align-items-center text-danger">
+                    <FaCheckCircle
+                      size={24}
+                      style={{ marginLeft: "220px", color: "green" }}
+                    />
+                  </div>
                 ) : (
-                  <span className="text-warning ">Warning</span>
+                  <div className="d-flex justify-content-center align-items-center text-danger">
+                    <FaExclamationCircle
+                      size={24}
+                      style={{ marginLeft: "220px" }}
+                    />
+                  </div>
                 )}
               </Modal.Header>
               <Modal.Body className="d-flex justify-content-center ">
@@ -230,7 +240,7 @@ const Settings = () => {
                 <div className="d-flex justify-content-center align-items-center text-danger">
                   <FaExclamationCircle
                     size={24}
-                    style={{ marginLeft:"220px" }}
+                    style={{ marginLeft: "220px" }}
                   />
                 </div>
               </Modal.Header>
@@ -256,12 +266,19 @@ const Settings = () => {
               show={DeleteSuccessfull}
               onHide={() => setDeleteSuccessfull(false)}
             >
-              <Modal.Header></Modal.Header>
+              <Modal.Header>
+                <div className="d-flex justify-content-center align-items-center text-danger">
+                  <FaCheckCircle
+                    size={24}
+                    style={{ marginLeft: "220px", color: "green" }}
+                  />
+                </div>
+              </Modal.Header>
               <Modal.Body className="d-flex justify-content-center ">
                 Your Profile is Successfully deleted!
               </Modal.Body>
-              <Modal.Footer>
-                <Button variant="primary" onClick={() => navigate("/")}>
+              <Modal.Footer className="d-flex justify-content-center">
+                <Button variant="dark" onClick={() => navigate("/")}>
                   Ok
                 </Button>
               </Modal.Footer>
@@ -273,15 +290,22 @@ const Settings = () => {
               show={Logout}
               onHide={() => setLogout(false)}
             >
-              <Modal.Header></Modal.Header>
+              <Modal.Header closeButton>
+                <div className="d-flex justify-content-center align-items-center text-danger">
+                  <FaExclamationCircle
+                    size={24}
+                    style={{ marginLeft: "220px" }}
+                  />
+                </div>
+              </Modal.Header>
               <Modal.Body className="d-flex justify-content-center ">
                 Are you sure you want to log out ?
               </Modal.Body>
-              <Modal.Footer>
+              <Modal.Footer className="d-flex justify-content-center">
                 <Button variant="secondary" onClick={() => setLogout(false)}>
                   No
                 </Button>
-                <Button variant="primary" onClick={logout}>
+                <Button variant="dark" onClick={logout}>
                   Log Out
                 </Button>
               </Modal.Footer>
