@@ -1,5 +1,5 @@
 import React from "react";
-import { useNavigate,useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import SideBar from "../Sidebar/SideBar";
 import profile from "../../Assets/profile.png";
@@ -7,6 +7,7 @@ import { updateAdmin, deleteadminbyID } from "../../API/axios";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Modal, Button } from "react-bootstrap";
 import { BiLogOutCircle } from "react-icons/bi";
+import { FaExclamationCircle, FaCheckCircle } from "react-icons/fa";
 import "./Settings.css";
 
 const Settings = () => {
@@ -94,10 +95,10 @@ const Settings = () => {
       formData.append("email", email);
       formData.append("profile_pic", selectedImage);
 
-console.log(username);
-console.log(email);
-console.log(selectedImage);
-      var response = await updateAdmin(id,formData);
+      console.log(username);
+      console.log(email);
+      console.log(selectedImage);
+      var response = await updateAdmin(id, formData);
       console.log(response);
       setResponse(response);
       setShowModal(true);
@@ -105,7 +106,7 @@ console.log(selectedImage);
       alert("Error please try again!");
     }
   };
-  
+
   const deleteAdmin = () => {
     setDeleteModal(true);
   };
@@ -122,8 +123,8 @@ console.log(selectedImage);
         alert("Error deleting data:");
       });
   }
-  function logout(){
-    navigate("/")
+  function logout() {
+    navigate("/");
     localStorage.clear();
   }
 
@@ -208,9 +209,19 @@ console.log(selectedImage);
             >
               <Modal.Header closeButton>
                 {response.data.success ? (
-                  <span className="text-success">Success</span>
+                  <div className="d-flex justify-content-center align-items-center text-danger">
+                    <FaCheckCircle
+                      size={24}
+                      style={{ marginLeft: "220px", color: "green" }}
+                    />
+                  </div>
                 ) : (
-                  <span className="text-warning ">Warning</span>
+                  <div className="d-flex justify-content-center align-items-center text-danger">
+                    <FaExclamationCircle
+                      size={24}
+                      style={{ marginLeft: "220px" }}
+                    />
+                  </div>
                 )}
               </Modal.Header>
               <Modal.Body className="d-flex justify-content-center ">
@@ -225,18 +236,25 @@ console.log(selectedImage);
               show={deleteModal}
               onHide={() => setDeleteModal(false)}
             >
-              <Modal.Header closeButton></Modal.Header>
+              <Modal.Header closeButton className="text-center">
+                <div className="d-flex justify-content-center align-items-center text-danger">
+                  <FaExclamationCircle
+                    size={24}
+                    style={{ marginLeft: "220px" }}
+                  />
+                </div>
+              </Modal.Header>
               <Modal.Body className="d-flex justify-content-center ">
                 Do You really want to delete this profile ?
               </Modal.Body>
-              <Modal.Footer>
+              <Modal.Footer className="d-flex justify-content-center">
                 <Button
                   variant="secondary"
                   onClick={() => setDeleteModal(false)}
                 >
                   No
                 </Button>
-                <Button variant="primary" onClick={deleteConfirmed}>
+                <Button variant="dark" onClick={deleteConfirmed}>
                   Yes
                 </Button>
               </Modal.Footer>
@@ -248,12 +266,19 @@ console.log(selectedImage);
               show={DeleteSuccessfull}
               onHide={() => setDeleteSuccessfull(false)}
             >
-              <Modal.Header></Modal.Header>
+              <Modal.Header>
+                <div className="d-flex justify-content-center align-items-center text-danger">
+                  <FaCheckCircle
+                    size={24}
+                    style={{ marginLeft: "220px", color: "green" }}
+                  />
+                </div>
+              </Modal.Header>
               <Modal.Body className="d-flex justify-content-center ">
                 Your Profile is Successfully deleted!
               </Modal.Body>
-              <Modal.Footer>
-                <Button variant="primary" onClick={() => navigate("/")}>
+              <Modal.Footer className="d-flex justify-content-center">
+                <Button variant="dark" onClick={() => navigate("/")}>
                   Ok
                 </Button>
               </Modal.Footer>
@@ -265,18 +290,22 @@ console.log(selectedImage);
               show={Logout}
               onHide={() => setLogout(false)}
             >
-              <Modal.Header></Modal.Header>
+              <Modal.Header closeButton>
+                <div className="d-flex justify-content-center align-items-center text-danger">
+                  <FaExclamationCircle
+                    size={24}
+                    style={{ marginLeft: "220px" }}
+                  />
+                </div>
+              </Modal.Header>
               <Modal.Body className="d-flex justify-content-center ">
                 Are you sure you want to log out ?
               </Modal.Body>
-              <Modal.Footer>
-              <Button
-                  variant="secondary"
-                  onClick={() => setLogout(false)}
-                >
+              <Modal.Footer className="d-flex justify-content-center">
+                <Button variant="secondary" onClick={() => setLogout(false)}>
                   No
                 </Button>
-                <Button variant="primary" onClick={logout}>
+                <Button variant="dark" onClick={logout}>
                   Log Out
                 </Button>
               </Modal.Footer>
