@@ -6,6 +6,7 @@ import { createAdmin } from "../../API/axios";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Modal, Button } from "react-bootstrap";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
+import { FaExclamationCircle, FaCheckCircle } from "react-icons/fa";
 
 const SignUp = () => {
   const [username, setUsername] = useState("");
@@ -167,13 +168,19 @@ const SignUp = () => {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                 />
-                {password ? 
-                <span
-                  className="password-toggle-icon"
-                  onClick={() => setPasswordVisible(!passwordVisible)}
-                >
-                  {passwordVisible ? <FaEye /> : <FaEyeSlash />}
-                </span>: ("")}
+                {renderErrorMsg("password")}
+                {renderErrorMsg("noPassword")}
+                {renderErrorMsg("PasswordLength")}
+                {password ? (
+                  <span
+                    className="password-toggle-icon"
+                    onClick={() => setPasswordVisible(!passwordVisible)}
+                  >
+                    {passwordVisible ? <FaEye /> : <FaEyeSlash />}
+                  </span>
+                ) : (
+                  ""
+                )}
               </div>
             </div>
             <div className="input-container">
@@ -184,15 +191,22 @@ const SignUp = () => {
                   value={confirmPassword}
                   onChange={(e) => setConfirmPassword(e.target.value)}
                 />
-                {confirmPassword ?
-                <span
-                  className="password-toggle-icon"
-                  onClick={() =>
-                    setConfirmPasswordVisible(!confirmPasswordVisible)
-                  }
-                >
-                  {confirmPasswordVisible ? <FaEye /> : <FaEyeSlash />}
-                </span>: ("")}
+                {renderErrorMsg("password")}
+                {renderErrorMsg("noPassword")}
+                {renderErrorMsg("ComparePassword")}
+
+                {confirmPassword ? (
+                  <span
+                    className="password-toggle-icon"
+                    onClick={() =>
+                      setConfirmPasswordVisible(!confirmPasswordVisible)
+                    }
+                  >
+                    {confirmPasswordVisible ? <FaEye /> : <FaEyeSlash />}
+                  </span>
+                ) : (
+                  ""
+                )}
               </div>
             </div>
           </div>
@@ -208,15 +222,29 @@ const SignUp = () => {
         >
           <Modal.Header closeButton>
             {response.data.success ? (
-              <span className="text-success">Success</span>
+              <div className="d-flex justify-content-center align-items-center text-danger">
+                <FaCheckCircle
+                  size={24}
+                  style={{ marginLeft: "220px", color: "green" }}
+                />
+              </div>
             ) : (
-              <span className="text-warning ">Warning</span>
+              <div className="d-flex justify-content-center align-items-center text-danger">
+                <FaExclamationCircle
+                  size={24}
+                  style={{ marginLeft: "220px" }}
+                />
+              </div>
             )}
           </Modal.Header>
           <Modal.Body className="d-flex justify-content-center ">
             {response.data.message}
           </Modal.Body>
-          <Modal.Footer>{/* Add any footer content here */}</Modal.Footer>
+          <Modal.Footer className="d-flex justify-content-center ">
+            <Button variant="dark" onClick={() => setShowModal(false)}>
+              Ok
+            </Button>
+          </Modal.Footer>
         </Modal>
       )}
     </div>
