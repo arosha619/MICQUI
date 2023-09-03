@@ -1,17 +1,21 @@
 import React, { useEffect, useState } from "react";
 import "./Login.css";
 import logo from "../../Assets/micqui_logo.jpg";
-import { database } from "../../Data/Database";
 import { useNavigate } from "react-router-dom";
-import { FaUserAlt } from "react-icons/fa";
 import { LoginApi } from "../../API/axios";
+import { FaEye, FaEyeSlash, FaLock, FaUser } from "react-icons/fa";
+import { Modal, Button } from "react-bootstrap";
+import { FaExclamationCircle, FaCheckCircle } from "react-icons/fa";
 
 const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [errorMessages, setErrorMessages] = useState({});
-  const navigate = useNavigate();
+  const [passwordVisible, setPasswordVisible] = useState(false);
+  const [showModal1, setShowModal1] = useState(false);
+  const [showModal2, setShowModal2] = useState(false);
+  const navigate=useNavigate();
 
   const errors = {
     username: "Invalid username",
@@ -50,16 +54,16 @@ const Login = () => {
         localStorage.setItem("token", res.data.token);
         localStorage.setItem("user_id", res.data.sub.id);
         localStorage.setItem("isAuthenticated", true);
-        alert("login success");
-        window.location.href = `/user-list`;
+        setShowModal1(true);
+        // window.location.href = `/user-list`;
       } else {
         // Authentication failed
-        alert("login failed");
+        setShowModal2(true);
         const errorData = await res.message;
         setError(errorData || "Autenticación fallida");
       }
     } catch (error) {
-      alert("login failed");
+      setShowModal2(true);
       // Handle any network or server errors
       setError("An error occurred. Please try again later.");
     }
@@ -78,22 +82,49 @@ const Login = () => {
         <h1 className="title1">Sign In</h1>
         <form onSubmit={handleSubmit}>
           <div className="inputs_container1">
-            <input
-              type="text"
-              placeholder="Username"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
-            />
+            <div className="input-container">
+              <span className="user-icon">
+                <FaUser />
+              </span>
+              <input
+                type="text"
+                placeholder="Username"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+                style={{ paddingLeft: "30px", marginLeft: "5px" }}
+              />
+            </div>
             {renderErrorMsg("username")}
             {renderErrorMsg("noUsername")}
-            <input
-              type="password"
-              placeholder="Password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-            />
-            {renderErrorMsg("password")}
-            {renderErrorMsg("noPassword")}
+
+            <div className="input-container">
+              <div className="input-field">
+                <span className="password-icon">
+                  <FaLock />
+                </span>
+                <input
+                  type={passwordVisible ? "text" : "password"}
+                  placeholder="Password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  style={{ paddingLeft: "30px", marginLeft: "5px" }}
+                />
+
+                {password ? (
+                  <span
+                    className="password-toggle-icon-login"
+                    onClick={() => setPasswordVisible(!passwordVisible)}
+                  >
+                    {passwordVisible ? <FaEye /> : <FaEyeSlash />}
+                  </span>
+                ) : (
+                  ""
+                )}
+                {renderErrorMsg("password")}
+                {renderErrorMsg("noPassword")}
+                {renderErrorMsg("PasswordLength")}
+              </div>
+            </div>
           </div>
           <input type="submit" value="Log In" className="login_button1" />
         </form>
@@ -105,6 +136,54 @@ const Login = () => {
             Forgot Password?
           </a>
         </div>
+        {showModal1 && (
+          <Modal
+            style={{ background: "rgba(15, 14, 14, 0.144)" }}
+            show={showModal1}
+            onHide={() => setShowModal1(false)}
+          >
+            <Modal.Header closeButton>
+              <div className="d-flex justify-content-center align-items-center text-danger">
+                <FaCheckCircle
+                  size={24}
+                  style={{ marginLeft: "220px", color: "green" }}
+                />
+              </div>
+            </Modal.Header>
+            <Modal.Body className="d-flex justify-content-center ">
+             Login Successfull!
+            </Modal.Body>
+            <Modal.Footer className="d-flex justify-content-center ">
+              <Button variant="dark" onClick={() => navigate("/user-list")}>
+                Ok
+              </Button>
+            </Modal.Footer>
+          </Modal>
+        )}
+        {showModal2 && (
+          <Modal
+            style={{ background: "rgba(15, 14, 14, 0.144)" }}
+            show={showModal2}
+            onHide={() => setShowModal2(false)}
+          >
+            <Modal.Header closeButton>
+              <div className="d-flex justify-content-center align-items-center text-danger">
+                <FaExclamationCircle
+                  size={24}
+                  style={{ marginLeft: "220px",  }}
+                />
+              </div>
+            </Modal.Header>
+            <Modal.Body className="d-flex justify-content-center ">
+             Login failed!
+            </Modal.Body>
+            <Modal.Footer className="d-flex justify-content-center ">
+              <Button variant="dark" onClick={() => setShowModal2(false)}>
+                Ok
+              </Button>
+            </Modal.Footer>
+          </Modal>
+        )}
       </div>
     </div>
   );
