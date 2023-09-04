@@ -2,13 +2,15 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import SideBar from "../Sidebar/SideBar";
 import Header from "../Header/Header";
-import { getAllUsers, updateUser } from "../../API/axios";
+import { deleteUser, getAllUsers, updateUser } from "../../API/axios";
 import editIcon from "../../Assets/Icons/editIcon.svg";
 import deleteIcon from "../../Assets/Icons/deleteIcon.svg";
 import "./UserUpdate.css";
 import UpdateUserModal from "./UpdateUserModal";
 import { getadminbyID } from "../../API/axios";
 import "./UserList.css";
+import { Button, Modal } from "react-bootstrap";
+import { FaExclamationCircle } from "react-icons/fa";
 
 const UserList = () => {
   const [selectAll, setSelectAll] = useState(false);
@@ -20,8 +22,13 @@ const UserList = () => {
   const [role, setRole] = useState("");
   const [company, setCompany] = useState("");
   const [userID, setUserId] = useState("");
+  const [deleteid, setDeleteid] = useState("");
   const [adminData, setAdminData] = useState([]);
   const navigate = useNavigate();
+  const [isdelete, setIsdelete] = useState(false);
+  const [confirmdelete, setConfirmdelete] = useState(false);
+  const [confirmupdate, setConfirmupdate] = useState(false);
+
   const isAuthenticated = localStorage.getItem("isAuthenticated");
   const id = localStorage.getItem("user_id");
 
@@ -31,6 +38,10 @@ const UserList = () => {
       navigate("/");
     }
   }, []);
+
+  const handleProfilePictureChange = (file) => {
+    setPro_pic(file);
+  };
 
   useEffect(() => {
     const fetchUsers = async () => {
@@ -45,7 +56,6 @@ const UserList = () => {
 
     fetchUsers();
   }, []);
-
 
   useEffect(() => {
     const fetchUsers = async () => {
@@ -94,12 +104,14 @@ const UserList = () => {
       role: role,
       company_name: company,
     };
+    console.log(formData);
 
     try {
       updateUser(userID, formData)
         .then((res) => {
           console.log(res);
           setOpenmodal(false);
+          setConfirmupdate(true);
         })
         .catch((err) => {
           console.log(err);
@@ -107,6 +119,17 @@ const UserList = () => {
     } catch (err) {
       console.log(err);
     }
+  };
+  const handleDelete = (id) => {
+    setIsdelete(false);
+    deleteUser(id)
+      .then((res) => {
+        console.log(res);
+        setConfirmdelete(true);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   return (
@@ -161,7 +184,7 @@ const UserList = () => {
             </thead>
             <tbody>
               {filteredData.map((item, index) => (
-                <tr key={index}>
+                <tr key={item.id}>
                   <td style={{ display: "flex", justifyContent: "center" }}>
                     <input
                       style={{ width: "20px", height: "20px" }}
@@ -207,6 +230,10 @@ const UserList = () => {
                         src={editIcon}
                       />
                       <img
+                        onClick={() => {
+                          setDeleteid(item.id);
+                          setIsdelete(true);
+                        }}
                         style={{
                           width: "25px",
                           height: "25px",
@@ -234,7 +261,111 @@ const UserList = () => {
           setCompany={setCompany}
           setOpenmodal={setOpenmodal}
           handleupdate={handleupdate}
+          handleProfilePictureChange={handleProfilePictureChange}
         />
+      )}
+      {isdelete && (
+        <Modal
+          show={isdelete}
+          onHide={() => setIsdelete(false)}
+          style={{ background: "rgba(15, 14, 14, 0.144)" }}
+        >
+          <Modal.Header closeButton>
+            <div className="d-flex justify-content-center align-items-center text-danger">
+              <FaExclamationCircle
+                size={24}
+                style={{ marginLeft: "220px" }}
+                onClick={() => setIsdelete(false)}
+              />
+            </div>
+          </Modal.Header>
+          <Modal.Body className="d-flex justify-content-center ">
+            Are you sure to delete this user?
+          </Modal.Body>
+          <Modal.Footer className="d-flex justify-content-center">
+            <Button
+              variant="secondary"
+              style={{ width: "100px" }}
+              onClick={() => setIsdelete(false)}
+            >
+              No
+            </Button>
+            <Button
+              variant="dark"
+              style={{ width: "100px" }}
+              onClick={() => handleDelete(deleteid)}
+            >
+              Yes
+            </Button>
+          </Modal.Footer>
+        </Modal>
+      )}
+      {confirmdelete && (
+        <Modal
+          show={confirmdelete}
+          onHide={() => setConfirmdelete(false)}
+          style={{ background: "rgba(15, 14, 14, 0.144)" }}
+        >
+          <Modal.Header closeButton>
+            <div className="d-flex justify-content-center align-items-center text-danger">
+              <FaExclamationCircle
+                size={24}
+                style={{ marginLeft: "220px" }}
+                onClick={() => setConfirmdelete(false)}
+              />
+            </div>
+          </Modal.Header>
+          <Modal.Body className="d-flex justify-content-center ">
+            User Deleted Successfully?
+          </Modal.Body>
+          <Modal.Footer className="d-flex justify-content-center">
+            <Button
+              variant="dark"
+              style={{ width: "100px" }}
+              onClick={() => {
+                setConfirmdelete(false);
+                window.location.reload();
+              }}
+            >
+              Ok
+            </Button>
+          </Modal.Footer>
+        </Modal>
+      )}
+      {confirmupdate && (
+        <Modal
+          show={confirmupdate}
+          onHide={() => setConfirmupdate(false)}
+          style={{ background: "rgba(15, 14, 14, 0.144)" }}
+        >
+          <Modal.Header closeButton>
+            <div className="d-flex justify-content-center align-items-center text-danger">
+              <FaExclamationCircle
+                size={24}
+                style={{ marginLeft: "220px" }}
+                onClick={() => {
+                  setConfirmupdate(false);
+                  window.location.reload();
+                }}
+              />
+            </div>
+          </Modal.Header>
+          <Modal.Body className="d-flex justify-content-center ">
+            User Update Successfully?
+          </Modal.Body>
+          <Modal.Footer className="d-flex justify-content-center">
+            <Button
+              variant="dark"
+              style={{ width: "100px" }}
+              onClick={() => {
+                setConfirmupdate(false);
+                window.location.reload();
+              }}
+            >
+              Ok
+            </Button>
+          </Modal.Footer>
+        </Modal>
       )}
     </div>
   );
