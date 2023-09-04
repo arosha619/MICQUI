@@ -27,6 +27,7 @@ const UserList = () => {
   const navigate = useNavigate();
   const [isdelete, setIsdelete] = useState(false);
   const [confirmdelete, setConfirmdelete] = useState(false);
+  const [confirmupdate, setConfirmupdate] = useState(false);
 
   const isAuthenticated = localStorage.getItem("isAuthenticated");
   const id = localStorage.getItem("user_id");
@@ -110,6 +111,7 @@ const UserList = () => {
         .then((res) => {
           console.log(res);
           setOpenmodal(false);
+          setConfirmupdate(true);
         })
         .catch((err) => {
           console.log(err);
@@ -119,14 +121,14 @@ const UserList = () => {
     }
   };
   const handleDelete = (id) => {
-    setIsdelete(false)
+    setIsdelete(false);
     deleteUser(id)
       .then((res) => {
         console.log(res);
-        setConfirmdelete(true)
+        setConfirmdelete(true);
       })
       .catch((err) => {
-      console.log(err);
+        console.log(err);
       });
   };
 
@@ -229,7 +231,7 @@ const UserList = () => {
                       />
                       <img
                         onClick={() => {
-                          setDeleteid(item.id)
+                          setDeleteid(item.id);
                           setIsdelete(true);
                         }}
                         style={{
@@ -273,7 +275,7 @@ const UserList = () => {
               <FaExclamationCircle
                 size={24}
                 style={{ marginLeft: "220px" }}
-                onClick={()=>setIsdelete(false)}
+                onClick={() => setIsdelete(false)}
               />
             </div>
           </Modal.Header>
@@ -288,7 +290,11 @@ const UserList = () => {
             >
               No
             </Button>
-            <Button variant="dark" style={{ width: "100px" }} onClick={()=>handleDelete(deleteid)}>
+            <Button
+              variant="dark"
+              style={{ width: "100px" }}
+              onClick={() => handleDelete(deleteid)}
+            >
               Yes
             </Button>
           </Modal.Footer>
@@ -305,7 +311,7 @@ const UserList = () => {
               <FaExclamationCircle
                 size={24}
                 style={{ marginLeft: "220px" }}
-                onClick={()=>setConfirmdelete(false)}
+                onClick={() => setConfirmdelete(false)}
               />
             </div>
           </Modal.Header>
@@ -313,10 +319,49 @@ const UserList = () => {
             User Deleted Successfully?
           </Modal.Body>
           <Modal.Footer className="d-flex justify-content-center">
-            <Button variant="dark" style={{ width: "100px" }} onClick={()=>{
-              setConfirmdelete(false)
-              window.location.reload();
-            }}>
+            <Button
+              variant="dark"
+              style={{ width: "100px" }}
+              onClick={() => {
+                setConfirmdelete(false);
+                window.location.reload();
+              }}
+            >
+              Ok
+            </Button>
+          </Modal.Footer>
+        </Modal>
+      )}
+      {confirmupdate && (
+        <Modal
+          show={confirmupdate}
+          onHide={() => setConfirmupdate(false)}
+          style={{ background: "rgba(15, 14, 14, 0.144)" }}
+        >
+          <Modal.Header closeButton>
+            <div className="d-flex justify-content-center align-items-center text-danger">
+              <FaExclamationCircle
+                size={24}
+                style={{ marginLeft: "220px" }}
+                onClick={() => {
+                  setConfirmupdate(false);
+                  window.location.reload();
+                }}
+              />
+            </div>
+          </Modal.Header>
+          <Modal.Body className="d-flex justify-content-center ">
+            User Update Successfully?
+          </Modal.Body>
+          <Modal.Footer className="d-flex justify-content-center">
+            <Button
+              variant="dark"
+              style={{ width: "100px" }}
+              onClick={() => {
+                setConfirmupdate(false);
+                window.location.reload();
+              }}
+            >
               Ok
             </Button>
           </Modal.Footer>
