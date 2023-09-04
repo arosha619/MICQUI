@@ -181,4 +181,27 @@
     margin-bottom: 3rem;
   }
 }
+.input-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.password-toggle-icon {
+  position: absolute;
+  right: 5px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+}
+
+/* Adjust the icon size as needed */
+.password-toggle-icon svg {
+  font-size: 18px;
+}
+
+
+
+
+
 

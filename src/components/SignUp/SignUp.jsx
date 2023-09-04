@@ -5,6 +5,8 @@ import profile from "../../Assets/profile.png";
 import { createAdmin } from "../../API/axios";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Modal, Button } from "react-bootstrap";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
+import { FaExclamationCircle, FaCheckCircle } from "react-icons/fa";
 
 const SignUp = () => {
   const [username, setUsername] = useState("");
@@ -15,6 +17,8 @@ const SignUp = () => {
   const [selectedImage, setSelectedImage] = useState(null);
   const [showModal, setShowModal] = useState(false);
   const [response, setResponse] = useState("");
+  const [passwordVisible, setPasswordVisible] = useState(false);
+  const [confirmPasswordVisible, setConfirmPasswordVisible] = useState(false);
 
   const navigate = useNavigate();
 
@@ -156,41 +160,91 @@ const SignUp = () => {
             {renderErrorMsg("email")}
             {renderErrorMsg("noEmail")}
             {renderErrorMsg("invalidEmail")}
-            <input
-              type="password"
-              placeholder="Password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-            />
-            {renderErrorMsg("password")}
-            {renderErrorMsg("noPassword")}
-            {renderErrorMsg("PasswordLength")}
-            <input
-              type="password"
-              placeholder="Confirm Password"
-              value={confirmPassword}
-              onChange={(e) => setConfirmPassword(e.target.value)}
-            />
-            {renderErrorMsg("password")}
-            {renderErrorMsg("noPassword")}
-            {renderErrorMsg("ComparePassword")}
+            <div className="input-container">
+              <div className="input-field">
+                <input
+                  type={passwordVisible ? "text" : "password"}
+                  placeholder="Password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                />
+                {renderErrorMsg("password")}
+                {renderErrorMsg("noPassword")}
+                {renderErrorMsg("PasswordLength")}
+                {password ? (
+                  <span
+                    className="password-toggle-icon"
+                    onClick={() => setPasswordVisible(!passwordVisible)}
+                  >
+                    {passwordVisible ? <FaEye /> : <FaEyeSlash />}
+                  </span>
+                ) : (
+                  ""
+                )}
+              </div>
+            </div>
+            <div className="input-container">
+              <div className="input-field">
+                <input
+                  type={confirmPasswordVisible ? "text" : "password"}
+                  placeholder="Confirm Password"
+                  value={confirmPassword}
+                  onChange={(e) => setConfirmPassword(e.target.value)}
+                />
+                {renderErrorMsg("password")}
+                {renderErrorMsg("noPassword")}
+                {renderErrorMsg("ComparePassword")}
+
+                {confirmPassword ? (
+                  <span
+                    className="password-toggle-icon"
+                    onClick={() =>
+                      setConfirmPasswordVisible(!confirmPasswordVisible)
+                    }
+                  >
+                    {confirmPasswordVisible ? <FaEye /> : <FaEyeSlash />}
+                  </span>
+                ) : (
+                  ""
+                )}
+              </div>
+            </div>
           </div>
+
           <input type="submit" value="Sign Up" className="signup_button" />
         </form>
       </div>
       {showModal && (
-        <Modal style={{background:"rgba(15, 14, 14, 0.144)"}} show={showModal} onHide={() => setShowModal(false)}>
+        <Modal
+          style={{ background: "rgba(15, 14, 14, 0.144)" }}
+          show={showModal}
+          onHide={() => setShowModal(false)}
+        >
           <Modal.Header closeButton>
-          {response.data.success ? (
-        <span className="text-success">Success</span>
-      ) : (
-        <span className="text-warning ">Warning</span>
-      )}
+            {response.data.success ? (
+              <div className="d-flex justify-content-center align-items-center text-danger">
+                <FaCheckCircle
+                  size={24}
+                  style={{ marginLeft: "220px", color: "green" }}
+                />
+              </div>
+            ) : (
+              <div className="d-flex justify-content-center align-items-center text-danger">
+                <FaExclamationCircle
+                  size={24}
+                  style={{ marginLeft: "220px" }}
+                />
+              </div>
+            )}
           </Modal.Header>
           <Modal.Body className="d-flex justify-content-center ">
             {response.data.message}
           </Modal.Body>
-          <Modal.Footer>{/* Add any footer content here */}</Modal.Footer>
+          <Modal.Footer className="d-flex justify-content-center ">
+            <Button variant="dark" onClick={() => setShowModal(false)}>
+              Ok
+            </Button>
+          </Modal.Footer>
         </Modal>
       )}
     </div>

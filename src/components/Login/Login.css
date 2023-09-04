@@ -140,3 +140,26 @@
     margin-bottom: 3rem;
   }
 }
+.password-toggle-icon-login {
+  position: absolute;
+  right: 12px;
+  top: 47px;
+  transform: translateY(-50%);
+  cursor: pointer;
+}
+
+.password-toggle-icon-login svg {
+  font-size: 18px;
+}
+.password-icon {
+  position: absolute;
+  left: 12px;
+  top: 46px;
+  transform: translateY(-50%);
+}
+.user-icon {
+  position: absolute;
+  left: 12px;
+  top: 46px;
+  transform: translateY(-50%);
+}

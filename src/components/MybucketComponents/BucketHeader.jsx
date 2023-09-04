@@ -37,7 +37,6 @@ const BucketHeader = (props) => {
     fetchUsers();
   }, [id]);
 
-  const bucketData = [1, 2, 3, 4, 5];
 
   if (!isAuthenticated || isAuthenticated === "false") {
     return null;
@@ -46,18 +45,15 @@ const BucketHeader = (props) => {
   return (
     <div className="d-flex">
 
-      <div className=" w-100" style={{ padding: "20px" }}>
-        {/* {adminData.map((item) => (
-          <Header
-            key={item.id}
-            profile_pic={item.profile_pic}
-            admin_name={item.admin_name}
-          />
-        ))} */}
+      <div className=" w-100" style={{ padding: "13px 20px 4px 20px" }}>
 
     <div>
       <div className="d-flex flex-xl-row flex-lg-row flex-md-row flex-column justify-content-between  align-items-center">
-              <h5 className="">Buckets(7)</h5>
+
+      {
+    props.bucketTitle == "bucket" ? (<><h5 className="">Buckets ({props.bucketData.length})</h5></>):(<><h5 className="">Questions ({props.questionList.length})</h5></>)
+}
+              
               <div
                 className="d-flex d-inline-block search-box"
                 style={{ border: "3px solid ", borderRadius: "10px" }}
@@ -81,10 +77,6 @@ const BucketHeader = (props) => {
                   }}
                 />
               </div>
-
-{
-    props.bucketTitle == "bucket"
-}
 
 {
     props.bucketTitle == "bucket" ? (<>
