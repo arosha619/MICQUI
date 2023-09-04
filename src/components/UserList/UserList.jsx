@@ -10,7 +10,7 @@ import UpdateUserModal from "./UpdateUserModal";
 import { getadminbyID } from "../../API/axios";
 import "./UserList.css";
 import { Button, Modal } from "react-bootstrap";
-import { FaExclamationCircle } from "react-icons/fa";
+import { FaCheckCircle, FaExclamationCircle } from "react-icons/fa";
 
 const UserList = () => {
   const [selectAll, setSelectAll] = useState(false);
@@ -308,9 +308,9 @@ const UserList = () => {
         >
           <Modal.Header closeButton>
             <div className="d-flex justify-content-center align-items-center text-danger">
-              <FaExclamationCircle
+              <FaCheckCircle
                 size={24}
-                style={{ marginLeft: "220px" }}
+                style={{ marginLeft: "220px", color: "green" }}
                 onClick={() => setConfirmdelete(false)}
               />
             </div>
@@ -340,9 +340,9 @@ const UserList = () => {
         >
           <Modal.Header closeButton>
             <div className="d-flex justify-content-center align-items-center text-danger">
-              <FaExclamationCircle
+              <FaCheckCircle
                 size={24}
-                style={{ marginLeft: "220px" }}
+                style={{ marginLeft: "220px", color: "green" }}
                 onClick={() => {
                   setConfirmupdate(false);
                   window.location.reload();
