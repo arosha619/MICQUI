@@ -3,7 +3,12 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import SideBar from "../Sidebar/SideBar";
 import profile from "../../Assets/profile.png";
-import { updateAdmin, deleteadminbyID } from "../../API/axios";
+import {
+  updateAdmin,
+  deleteadminbyID,
+  uppdtadmin,
+  getadminbyID,
+} from "../../API/axios";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Modal, Button } from "react-bootstrap";
 import { BiLogOutCircle } from "react-icons/bi";
@@ -23,8 +28,9 @@ const Settings = () => {
   const [DeleteSuccessfull, setDeleteSuccessfull] = useState(false);
   const [response, setResponse] = useState("");
   const id = localStorage.getItem("user_id");
-
+  const [newProfilePic, setNewProfilePic] = useState("");
   useEffect(() => {
+    getData();
     var isAuthenticated = localStorage.getItem("isAuthenticated");
 
     if (!isAuthenticated || isAuthenticated == null) {
@@ -37,7 +43,19 @@ const Settings = () => {
   if (!isAuthenticated || isAuthenticated === "false") {
     return null; // Stop rendering
   }
-
+  const getData = async () => {
+    getadminbyID(id)
+      .then((response) => {
+        setUsername(response.data.data[0].admin_name);
+        setemailname(response.data.data[0].email);
+        setNewProfilePic(response.data.data[0].profile_pic);
+        console.log(newProfilePic);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+  //console.log(email);
   const errors = {
     username: "Invalid username",
     usernameLength: "User name require more than 6 characters",
@@ -89,21 +107,18 @@ const Settings = () => {
   };
 
   const sendAdminUpdateData = async () => {
+    const formData = new FormData();
+    formData.append("admin_name", username);
+    formData.append("email", email);
+    formData.append("profile_pic", selectedImage);
     try {
-      const formData = new FormData();
-      formData.append("admin_name", username);
-      formData.append("email", email);
-      formData.append("profile_pic", selectedImage);
-
-      console.log(username);
-      console.log(email);
-      console.log(selectedImage);
       var response = await updateAdmin(id, formData);
       console.log(response);
       setResponse(response);
       setShowModal(true);
     } catch (err) {
-      alert("Error please try again!");
+      console.log(err);
+      // alert("Error please try again!");
     }
   };
 
@@ -141,6 +156,7 @@ const Settings = () => {
                   <input
                     id="imageInput"
                     type="file"
+                    //value={newProfilePic}
                     accept="image/*"
                     onChange={(e) => handleImageUpload(e.target.files[0])}
                     style={{ display: "none" }}
@@ -153,7 +169,7 @@ const Settings = () => {
                     />
                   ) : (
                     <div className="circular_image_placeholder">
-                      <img src={profile} alt="selected image" />
+                      <img src={newProfilePic} style={{width:"100%"}} alt="selected image" />
                     </div>
                   )}
                 </label>

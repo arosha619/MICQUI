@@ -12,6 +12,15 @@ export const registerAPI = axios.create({
     "Content-type": "application/json",
   },
 });
+export const ImgAPI = axios.create({
+  baseURL: "http://ec2-3-128-189-68.us-east-2.compute.amazonaws.com:8000/",
+  timeout: 30000,
+  headers: {
+    "Access-Control-Allow-Origin": "*",
+    Authorization: `${token}`,
+    "Content-type": "multipart/form-data",
+  },
+});
 export const ImageAPI = axios.create({
   baseURL: "http://ec2-3-128-189-68.us-east-2.compute.amazonaws.com:8000/",
 });
@@ -22,16 +31,17 @@ export const createAdmin = async (formData) => {
   const res = await ImageAPI.post(`admin/register`, formData);
   return res;
 };
-export const updateAdmin = async (formData, id) => {
-  const res = await registerAPI.put(`admin/update/${id}`, formData, id);
-  return res;
-};
+
 export const updateUser = async (id, formData) => {
   const res = await registerAPI.put(`user/update/${id}`, formData);
   return res;
 };
 export const deleteUser = async (id) => {
   const res = await registerAPI.delete(`user/delete/${id}`);
+  return res;
+};
+export const updateAdmin = async (id, formData) => {
+  const res = await ImgAPI.put(`/admin/update/${id}`, formData);
   return res;
 };
 export const forgotPassword = async (email) => {
@@ -50,11 +60,11 @@ export const deleteadminbyID = async (id) => {
   const res = await API.delete(`admin/delete/${id}`, id);
   return res;
 };
-
 export const LoginApi = async (formData) => {
   const res = await registerAPI.post(`/admin/login`, formData);
   return res;
 };
+
 export const getAllBuckets = async () => {
   const res = await API.get(`bucket/getAllBuckets`);
   return res;
