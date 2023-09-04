@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import SideBar from "../Sidebar/SideBar";
 import Header from "../Header/Header";
-import { getAllUsers, updateUser } from "../../API/axios";
+import { deleteUser, getAllUsers, updateUser } from "../../API/axios";
 import editIcon from "../../Assets/Icons/editIcon.svg";
 import deleteIcon from "../../Assets/Icons/deleteIcon.svg";
 import "./UserUpdate.css";
@@ -30,6 +30,10 @@ const UserList = () => {
       navigate("/");
     }
   }, []);
+
+  const handleProfilePictureChange = (file) => {
+    setPro_pic(file);
+  };
 
   useEffect(() => {
     const fetchUsers = async () => {
@@ -93,6 +97,7 @@ const UserList = () => {
       role: role,
       company_name: company,
     };
+    console.log(formData);
 
     try {
       updateUser(userID, formData)
@@ -107,15 +112,24 @@ const UserList = () => {
       console.log(err);
     }
   };
+  const handleDelete = (id) => {
+    deleteUser(id).then((res)=>{
+      alert("delete success!")
+    }).catch((err)=>{
+      alert(err)
+    })
+  };
 
   return (
     <div className="d-flex">
       <SideBar />
       <div className="w-100 p-3">
         {adminData.map((item) => (
-          <Header key={item.id}
-          profile_pic={item.profile_pic}
-          admin_name={item.admin_name} />
+          <Header
+            key={item.id}
+            profile_pic={item.profile_pic}
+            admin_name={item.admin_name}
+          />
         ))}
         <form className="mb-3">
           <div className="input-group">
@@ -127,7 +141,10 @@ const UserList = () => {
             />
           </div>
         </form>
-        <div className="table-responsive" style={{overflowY:"auto", maxHeight:"540px"}}>
+        <div
+          className="table-responsive"
+          style={{ overflowY: "auto", maxHeight: "540px" }}
+        >
           <table className="table table-borderless">
             <thead>
               <tr>
@@ -201,6 +218,7 @@ const UserList = () => {
                         src={editIcon}
                       />
                       <img
+                        onClick={()=>handleDelete(item.id)}
                         style={{
                           width: "25px",
                           height: "25px",
@@ -228,6 +246,7 @@ const UserList = () => {
           setCompany={setCompany}
           setOpenmodal={setOpenmodal}
           handleupdate={handleupdate}
+          handleProfilePictureChange={handleProfilePictureChange}
         />
       )}
     </div>

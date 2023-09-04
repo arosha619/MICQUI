@@ -24,7 +24,11 @@ export const registerAPI = axios.create({
     return res;
   };
   export const updateUser = async (id, formData) => {
-    const res = await registerAPI.put(`/user/update/${id}`, formData);
+    const res = await registerAPI.put(`user/update/${id}`, formData);
+    return res;
+  };
+  export const deleteUser = async (id) => {
+    const res = await registerAPI.delete(`user/delete/${id}`);
     return res;
   };
   export const forgotPassword = async (email) => {
