@@ -19,6 +19,15 @@ export const API = axios.create({
     "Content-type": "application/json",
   },
 });
+export const ImgAPI = axios.create({
+  baseURL: "http://ec2-3-128-189-68.us-east-2.compute.amazonaws.com:8000/",
+  timeout: 30000,
+  headers: {
+    "Access-Control-Allow-Origin": "*",
+    Authorization: `${token}`,
+    "Content-type": "multipart/form-data",
+  },
+});
 export const ImageAPI = axios.create({
   baseURL: "http://ec2-3-128-189-68.us-east-2.compute.amazonaws.com:8000/",
 });
@@ -32,8 +41,8 @@ export const createAdmin = async (formData) => {
   const res = await ImageAPI.post(`admin/register`, formData);
   return res;
 };
-export const updateAdmin = async (id,formData) => {
-  const res = await API.put(`admin/update/${id}`, formData);
+export const updateAdmin = async (id, formData) => {
+  const res = await ImgAPI.put(`/admin/update/${id}`, formData);
   return res;
 };
 export const forgotPassword = async (email) => {
@@ -56,7 +65,6 @@ export const deleteadminbyID = async (id) => {
   const res = await API.delete(`admin/delete/${id}`, id);
   return res;
 };
-
 
 export const getAllBuckets = async () => {
   const res = await API.get(`bucket/getAllBuckets`);
