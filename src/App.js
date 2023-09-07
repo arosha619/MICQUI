@@ -1,10 +1,7 @@
 import SideBar from "./components/Sidebar/SideBar";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import React, { useState } from "react";
 import Dashboard from "./pages/Dashboard";
-import Setting from "./pages/Setting";
 import UserList from "./components/UserList/UserList";
-// import MyBucket from "./components/MyBucket/MyBucket";
 import MyBucket from "./pages/MyBucket/MyBucket";
 import Login from "./components/Login/Login";
 import SignUp from "./components/SignUp/SignUp";
@@ -13,6 +10,7 @@ import ChangedPassword from "./components/ForgotPassword/ChangedPassword";
 import Settings from "./components/Settings/Settings";
 import SuccessfullyRegistered from "./components/SignUp/SuccessfullyRegistered";
 import BucketDetails from "./pages/BucketDetails/BucketDetails.jsx";
+import Layout from "./components/Layout/Layout";
 
 function App() {
   return (
@@ -28,6 +26,7 @@ function App() {
       <Route path="/change-password" element={<ChangedPassword />} />
       <Route path="/user/reset" element={<ChangedPassword />} />
       <Route path="/verify" element={<SuccessfullyRegistered />} />
+      <Route path="/layout" element={<Layout />} />
     </Routes>
   );
 }
