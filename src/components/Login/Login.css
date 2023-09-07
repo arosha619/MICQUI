@@ -50,8 +50,11 @@
 }
 
 .inputs_container1 {
+  background-color: rgb(16, 16, 16);
   display: flex;
   flex-direction: column;
+  border-radius: 20px;
+  padding: 50px 25px 0px 25px;
 }
 
 .inputs_container1 input {
@@ -67,23 +70,18 @@
 
 .login_button1 {
   display: block;
-  margin: 3rem auto 1rem auto;
   width: 55%;
-  padding: 0.75rem 1rem;
   border-radius: 25px;
-  outline: 0;
-  font-size: 1rem;
+  font-size: 23px;
   font-family: inherit;
   cursor: pointer;
-  background-color: #1a1b19;
-  border-color: #a2910b !important;
-  color: white;
-  border: 2px solid;
+  background-color: black;
+  color: rgba(193, 165, 100, 1) !important;
+  border: none;
+  text-decoration: none;
+  text-align: center;
 }
-.login_button1:hover {
-  border: 2px solid #f3f3f4;
-  background-color: #5b520c;
-}
+
 
 .link_container {
   display: grid;
@@ -91,12 +89,12 @@
 }
 
 .small {
-  color: rgb(218, 218, 218);
+  color: rgba(193, 165, 100, 1) !important;
   text-align: center;
   font-size: 0.85rem;
-  text-decoration: underline;
-  margin-bottom: 5rem;
+  text-decoration: none !important;
   cursor: pointer;
+  padding-right: 15px;
 }
 
 .icons {
@@ -141,10 +139,7 @@
   }
 }
 .password-toggle-icon-login {
-  position: absolute;
-  right: 12px;
-  top: 47px;
-  transform: translateY(-50%);
+  color: rgba(193, 165, 100, 1);
   cursor: pointer;
 }
 
@@ -152,14 +147,44 @@
   font-size: 18px;
 }
 .password-icon {
-  position: absolute;
-  left: 12px;
-  top: 46px;
-  transform: translateY(-50%);
+  color: rgba(193, 165, 100, 1);
+  margin-right: 10px;
 }
 .user-icon {
-  position: absolute;
-  left: 12px;
-  top: 46px;
-  transform: translateY(-50%);
+  color: rgba(193, 165, 100, 1);
+  margin-right: 10px;
+}
+
+.forget_password {
+  height: 69px;
+  display: flex;
+  justify-content: flex-end;
+  margin: 0px;
+}
+
+.login_button{
+  
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+
+}
+ 
+.play-button{width: 23px;
+  height: 23px;
+  display: flex;  /* align-content: center; */
+  align-items: center;
+  background-position: center;
+  background-color: rgba(193, 165, 100, 1);
+  border-radius: 23px;
+  flex-wrap: nowrap;
+  justify-content: center;
+}
+.buttons{
+  padding-top: 70px;
+}
+.footer-msg{
+  padding-top: 50px;
+  text-align: center !important;
 }

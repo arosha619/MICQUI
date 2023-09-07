@@ -6,6 +6,9 @@ import { LoginApi } from "../../API/axios";
 import { FaEye, FaEyeSlash, FaLock, FaUser } from "react-icons/fa";
 import { Modal, Button } from "react-bootstrap";
 import { FaExclamationCircle, FaCheckCircle } from "react-icons/fa";
+import { colors } from "@mui/material";
+import { red } from "@mui/material/colors";
+import { FaPlay } from "react-icons/fa6";
 
 const Login = () => {
   const [username, setUsername] = useState("");
@@ -15,7 +18,7 @@ const Login = () => {
   const [passwordVisible, setPasswordVisible] = useState(false);
   const [showModal1, setShowModal1] = useState(false);
   const [showModal2, setShowModal2] = useState(false);
-  const navigate=useNavigate();
+  const navigate = useNavigate();
 
   const errors = {
     username: "Invalid username",
@@ -96,12 +99,19 @@ const Login = () => {
             </div>
             {renderErrorMsg("username")}
             {renderErrorMsg("noUsername")}
+            {/* //old site - https://micqui.web.app/#/buckets */}
+            {/* Us:  admin@admin.com */}
+            {/* Pw: admin2023						
+						
+Gold color code - Color(0xffc1a564) 
+rgb(193, 165, 100)
+rgba(193, 165, 100, 1) */}
 
             <div className="input-container">
+              <span className="password-icon">
+                <FaLock />
+              </span>
               <div className="input-field">
-                <span className="password-icon">
-                  <FaLock />
-                </span>
                 <input
                   type={passwordVisible ? "text" : "password"}
                   placeholder="Password"
@@ -125,17 +135,35 @@ const Login = () => {
                 {renderErrorMsg("PasswordLength")}
               </div>
             </div>
+            <div class="forget_password">
+              <a href="/forgot-password" className="small">
+                Forgot Password ?
+              </a>
+            </div>
           </div>
-          <input type="submit" value="Log In" className="login_button1" />
-        </form>
-        <div className="link_container">
-          <a href="/sign-up" className="signup">
-            Do not have an account? Sign Up Here
-          </a>
-          <a href="/forgot-password" className="small">
-            Forgot Password?
-          </a>
-        </div>
+
+          <div className="buttons">
+            <div className="login_button">
+              <span className="play-button">
+                <FaPlay></FaPlay>
+              </span>
+              <input type="submit" value="LOGIN" className="login_button1" />
+            </div>
+            <div className="login_button">
+              <span className="play-button">
+                <FaPlay></FaPlay>
+              </span>
+              <a href="/sign-up" className="login_button1">
+                SIGNUP
+              </a>
+            </div>
+            
+            <span className="footer-msg">by clicking Login or Signup , you agree to our privacy policy & terms of services</span>
+        
+          </div>
+
+          </form>
+        <div className="link_container"></div>
         {showModal1 && (
           <Modal
             style={{ background: "rgba(15, 14, 14, 0.144)" }}
@@ -151,7 +179,7 @@ const Login = () => {
               </div>
             </Modal.Header>
             <Modal.Body className="d-flex justify-content-center ">
-             Login Successfull!
+              Login Successfull!
             </Modal.Body>
             <Modal.Footer className="d-flex justify-content-center ">
               <Button variant="dark" onClick={() => navigate("/user-list")}>
@@ -170,12 +198,12 @@ const Login = () => {
               <div className="d-flex justify-content-center align-items-center text-danger">
                 <FaExclamationCircle
                   size={24}
-                  style={{ marginLeft: "220px",  }}
+                  style={{ marginLeft: "220px" }}
                 />
               </div>
             </Modal.Header>
             <Modal.Body className="d-flex justify-content-center ">
-             Login failed!
+              Login failed!
             </Modal.Body>
             <Modal.Footer className="d-flex justify-content-center ">
               <Button variant="dark" onClick={() => setShowModal2(false)}>
