@@ -6,8 +6,6 @@ import { LoginApi } from "../../API/axios";
 import { FaEye, FaEyeSlash, FaLock, FaUser } from "react-icons/fa";
 import { Modal, Button } from "react-bootstrap";
 import { FaExclamationCircle, FaCheckCircle } from "react-icons/fa";
-import { colors } from "@mui/material";
-import { red } from "@mui/material/colors";
 import { FaPlay } from "react-icons/fa6";
 
 const Login = () => {
