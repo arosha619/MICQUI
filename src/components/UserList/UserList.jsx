@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import SideBar from "../Sidebar/SideBar";
-import Header from "../Header/Header";
 import { deleteUser, getAllUsers, updateUser } from "../../API/axios";
 import editIcon from "../../Assets/Icons/editIcon.svg";
 import deleteIcon from "../../Assets/Icons/deleteIcon.svg";
@@ -11,6 +9,10 @@ import { getadminbyID } from "../../API/axios";
 import "./UserList.css";
 import { Button, Modal } from "react-bootstrap";
 import { FaCheckCircle, FaExclamationCircle } from "react-icons/fa";
+import Layout from "../Layout/Layout";
+import pro_pic_default from "../../Assets/person_four.jpg";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPen, faTrash, faUsers } from "@fortawesome/free-solid-svg-icons";
 
 const UserList = () => {
   const [selectAll, setSelectAll] = useState(false);
@@ -133,241 +135,197 @@ const UserList = () => {
   };
 
   return (
-    <div className="d-flex">
-      <SideBar />
-      <div className="w-100 p-3">
-        {adminData.map((item) => (
-          <Header
-            key={item.id}
-            profile_pic={item.profile_pic}
-            admin_name={item.admin_name}
-          />
-        ))}
-        <form className="mb-3">
-          <div className="input-group">
-            <input
-              type="search"
-              className="form-control"
-              placeholder="Search By Name..."
-              onChange={(e) => handleSearch(e.target.value)}
-            />
+    <Layout>
+      <div className="d-flex">
+        <div className="w-100">
+          <form className="mb-3 w-50">
+            <div className="input-group w-100">
+              <input
+              style={{padding:'10px 20px',boxShadow:'0 2px 4px rgba(0, 0, 0, 0.1)'}}
+                type="search"
+                className="form-control"
+                placeholder="Search here..."
+                onChange={(e) => handleSearch(e.target.value)}
+              />
+            </div>
+          </form>
+          <div className="card_header">
+            <p>Image</p>
+            <p>Name</p>
+            <p>Email</p>
+            <p>Phone</p>
+            <p>Position</p>
+            <p>Status</p>
+            <p>Actions</p>
           </div>
-        </form>
-        <div
-          className="table-responsive"
-          style={{ overflowY: "auto", maxHeight: "540px" }}
-        >
-          <table className="table table-borderless">
-            <thead>
-              <tr>
-                <th style={{ padding: "10px" }}>
-                  <input
+          {filteredData.map((item) => {
+            return (
+              <div className="card-wrapper" key={item.id}>
+                <div className="profile-picture">
+                  <img src={item.profile_pic} />
+                </div>
+                <p>{item.full_name}</p>
+                <p>{item.email}</p>
+                <p>077 8126872</p>
+                <p>{item.role}</p>
+                <p>{item.is_verified === 1 ? "Verified" : "Not Verified"}</p>
+                <div className="action-button">
+                  <FontAwesomeIcon
+                    onClick={() => {
+                      setPro_pic(item.profile_pic);
+                      setFullname(item.full_name);
+                      setRole(item.role);
+                      setCompany(item.company_name);
+                      setUserId(item.id);
+                      setOpenmodal(true);
+                    }}
+                    icon={faPen}
                     style={{
+                      color: "#000",
                       width: "20px",
                       height: "20px",
-                      marginRight: "7px",
+                      padding: "2px 10px",
+                      cursor: "pointer",
                     }}
-                    type="checkbox"
-                    checked={selectAll}
-                    onChange={handleSelectAll}
                   />
-                  Select All
-                </th>
-                <th>Image</th>
-                <th>Name</th>
-                <th>Email</th>
-                <th>Phone</th>
-                <th>Position</th>
-                <th>Status</th>
-                <th>Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              {filteredData.map((item, index) => (
-                <tr key={item.id}>
-                  <td style={{ display: "flex", justifyContent: "center" }}>
-                    <input
-                      style={{ width: "20px", height: "20px" }}
-                      type="checkbox"
-                      checked={item.selected}
-                      onChange={() => handleCheckboxChange(index)}
-                    />
-                  </td>
-                  <td>
-                    <img
-                      src={item.profile_pic}
-                      alt="Profile"
-                      className="rounded-circle"
-                      style={{ width: "45px", height: "45px" }}
-                    />
-                  </td>
-                  <td>{item.full_name}</td>
-                  <td>{item.email}</td>
-                  <td>{item.phone}</td>
-                  <td>{item.role}</td>
-                  <td>
-                    {item.is_verified === 1 ? "Verified" : "Not Verified"}
-                  </td>
-                  <td>
-                    <div style={{ display: "flex" }}>
-                      <img
-                        onClick={() => {
-                          setPro_pic(item.profile_pic);
-                          setFullname(item.full_name);
-                          setRole(item.role);
-                          setCompany(item.company_name);
-                          setUserId(item.id);
-                          setOpenmodal(true);
-                        }}
-                        style={{
-                          display: "flex",
-                          justifyContent: "center",
-                          width: "25px",
-                          height: "25px",
-                          marginRight: "20px",
-                          cursor: "pointer",
-                        }}
-                        src={editIcon}
-                      />
-                      <img
-                        onClick={() => {
-                          setDeleteid(item.id);
-                          setIsdelete(true);
-                        }}
-                        style={{
-                          width: "25px",
-                          height: "25px",
-                          color: "red",
-                          cursor: "pointer",
-                        }}
-                        src={deleteIcon}
-                      />
-                    </div>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+                  <FontAwesomeIcon
+                    onClick={() => {
+                      setDeleteid(item.id);
+                      setIsdelete(true);
+                    }}
+                    icon={faTrash}
+                    style={{
+                      color: "red",
+                      width: "20px",
+                      height: "20px",
+                      padding: "2px 10px",
+                      cursor: "pointer",
+                    }}
+                  />
+                </div>
+              </div>
+            );
+          })}
         </div>
-      </div>
-      {openModal && (
-        <UpdateUserModal
-          pro_pic={pro_pic}
-          fullname={fullname}
-          setFullname={setFullname}
-          role={role}
-          setRole={setRole}
-          company={company}
-          setCompany={setCompany}
-          setOpenmodal={setOpenmodal}
-          handleupdate={handleupdate}
-          handleProfilePictureChange={handleProfilePictureChange}
-        />
-      )}
-      {isdelete && (
-        <Modal
-          show={isdelete}
-          onHide={() => setIsdelete(false)}
-          style={{ background: "rgba(15, 14, 14, 0.144)" }}
-        >
-          <Modal.Header closeButton>
-            <div className="d-flex justify-content-center align-items-center text-danger">
-              <FaExclamationCircle
-                size={24}
-                style={{ marginLeft: "220px" }}
+        {openModal && (
+          <UpdateUserModal
+            pro_pic={pro_pic}
+            fullname={fullname}
+            setFullname={setFullname}
+            role={role}
+            setRole={setRole}
+            company={company}
+            setCompany={setCompany}
+            setOpenmodal={setOpenmodal}
+            handleupdate={handleupdate}
+            handleProfilePictureChange={handleProfilePictureChange}
+          />
+        )}
+        {isdelete && (
+          <Modal
+            show={isdelete}
+            onHide={() => setIsdelete(false)}
+            style={{ background: "rgba(15, 14, 14, 0.144)" }}
+          >
+            <Modal.Header closeButton>
+              <div className="d-flex justify-content-center align-items-center text-danger">
+                <FaExclamationCircle
+                  size={24}
+                  style={{ marginLeft: "220px" }}
+                  onClick={() => setIsdelete(false)}
+                />
+              </div>
+            </Modal.Header>
+            <Modal.Body className="d-flex justify-content-center ">
+              Are you sure to delete this user?
+            </Modal.Body>
+            <Modal.Footer className="d-flex justify-content-center">
+              <Button
+                variant="secondary"
+                style={{ width: "100px" }}
                 onClick={() => setIsdelete(false)}
-              />
-            </div>
-          </Modal.Header>
-          <Modal.Body className="d-flex justify-content-center ">
-            Are you sure to delete this user?
-          </Modal.Body>
-          <Modal.Footer className="d-flex justify-content-center">
-            <Button
-              variant="secondary"
-              style={{ width: "100px" }}
-              onClick={() => setIsdelete(false)}
-            >
-              No
-            </Button>
-            <Button
-              variant="dark"
-              style={{ width: "100px" }}
-              onClick={() => handleDelete(deleteid)}
-            >
-              Yes
-            </Button>
-          </Modal.Footer>
-        </Modal>
-      )}
-      {confirmdelete && (
-        <Modal
-          show={confirmdelete}
-          onHide={() => setConfirmdelete(false)}
-          style={{ background: "rgba(15, 14, 14, 0.144)" }}
-        >
-          <Modal.Header closeButton>
-            <div className="d-flex justify-content-center align-items-center text-danger">
-              <FaCheckCircle
-                size={24}
-                style={{ marginLeft: "220px", color: "green" }}
-                onClick={() => setConfirmdelete(false)}
-              />
-            </div>
-          </Modal.Header>
-          <Modal.Body className="d-flex justify-content-center ">
-            User Deleted Successfully?
-          </Modal.Body>
-          <Modal.Footer className="d-flex justify-content-center">
-            <Button
-              variant="dark"
-              style={{ width: "100px" }}
-              onClick={() => {
-                setConfirmdelete(false);
-                window.location.reload();
-              }}
-            >
-              Ok
-            </Button>
-          </Modal.Footer>
-        </Modal>
-      )}
-      {confirmupdate && (
-        <Modal
-          show={confirmupdate}
-          onHide={() => setConfirmupdate(false)}
-          style={{ background: "rgba(15, 14, 14, 0.144)" }}
-        >
-          <Modal.Header closeButton>
-            <div className="d-flex justify-content-center align-items-center text-danger">
-              <FaCheckCircle
-                size={24}
-                style={{ marginLeft: "220px", color: "green" }}
+              >
+                No
+              </Button>
+              <Button
+                variant="dark"
+                style={{ width: "100px" }}
+                onClick={() => handleDelete(deleteid)}
+              >
+                Yes
+              </Button>
+            </Modal.Footer>
+          </Modal>
+        )}
+        {confirmdelete && (
+          <Modal
+            show={confirmdelete}
+            onHide={() => setConfirmdelete(false)}
+            style={{ background: "rgba(15, 14, 14, 0.144)" }}
+          >
+            <Modal.Header closeButton>
+              <div className="d-flex justify-content-center align-items-center text-danger">
+                <FaCheckCircle
+                  size={24}
+                  style={{ marginLeft: "220px", color: "green" }}
+                  onClick={() => setConfirmdelete(false)}
+                />
+              </div>
+            </Modal.Header>
+            <Modal.Body className="d-flex justify-content-center ">
+              User Deleted Successfully?
+            </Modal.Body>
+            <Modal.Footer className="d-flex justify-content-center">
+              <Button
+                variant="dark"
+                style={{ width: "100px" }}
+                onClick={() => {
+                  setConfirmdelete(false);
+                  window.location.reload();
+                }}
+              >
+                Ok
+              </Button>
+            </Modal.Footer>
+          </Modal>
+        )}
+        {confirmupdate && (
+          <Modal
+            show={confirmupdate}
+            onHide={() => setConfirmupdate(false)}
+            style={{ background: "rgba(15, 14, 14, 0.144)" }}
+          >
+            <Modal.Header closeButton>
+              <div className="d-flex justify-content-center align-items-center text-danger">
+                <FaCheckCircle
+                  size={24}
+                  style={{ marginLeft: "220px", color: "green" }}
+                  onClick={() => {
+                    setConfirmupdate(false);
+                    window.location.reload();
+                  }}
+                />
+              </div>
+            </Modal.Header>
+            <Modal.Body className="d-flex justify-content-center ">
+              User Update Successfully?
+            </Modal.Body>
+            <Modal.Footer className="d-flex justify-content-center">
+              <Button
+                variant="dark"
+                style={{ width: "100px" }}
                 onClick={() => {
                   setConfirmupdate(false);
                   window.location.reload();
                 }}
-              />
-            </div>
-          </Modal.Header>
-          <Modal.Body className="d-flex justify-content-center ">
-            User Update Successfully?
-          </Modal.Body>
-          <Modal.Footer className="d-flex justify-content-center">
-            <Button
-              variant="dark"
-              style={{ width: "100px" }}
-              onClick={() => {
-                setConfirmupdate(false);
-                window.location.reload();
-              }}
-            >
-              Ok
-            </Button>
-          </Modal.Footer>
-        </Modal>
-      )}
-    </div>
+              >
+                Ok
+              </Button>
+            </Modal.Footer>
+          </Modal>
+        )}
+      </div>
+    </Layout>
   );
 };
 

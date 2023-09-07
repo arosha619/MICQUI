@@ -1,13 +1,10 @@
 import { NavLink } from "react-router-dom";
 import { FaBars, FaHome, FaUser } from "react-icons/fa";
 import { MdMessage } from "react-icons/md";
-
 import { BiCog } from "react-icons/bi";
 import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import SidebarMenu from "./SidebarMenu";
-import { useNavigate } from "react-router-dom";
-import micqui_logo from "../../Assets/micqui_logo.jpg"
 import "./Sidebar.css";
 const routes = [
   // {
