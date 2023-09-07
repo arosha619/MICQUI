@@ -12,6 +12,7 @@ const BucketDetails = () => {
   const params = useParams();
 
   const [questionList, setQuestionList] = useState([]);
+  const [getQuestion,setGetQuestion] = useState(false)
 
   useEffect(() => {
     const getAllQuestions = async () => {
@@ -21,7 +22,8 @@ const BucketDetails = () => {
         const data = response.data.data;
 
         const filteredData = data.filter(
-          (item) => item.bucket_id == params["bucket_id"]
+          // (item) => item.bucket_id == params["bucket_id"]
+          (item) => item.bucket_id == 1
         );
         setQuestionList(filteredData);
       } catch (error) {
@@ -31,6 +33,26 @@ const BucketDetails = () => {
 
     getAllQuestions();
   }, []);
+
+  useEffect(() => {
+    const getAllQuestions = async () => {
+      try {
+        const response = await getAllQuestion();
+        // Handle the response here
+        const data = response.data.data;
+
+        const filteredData = data.filter(
+          // (item) => item.bucket_id == params["bucket_id"]
+          (item) => item.bucket_id == 1
+        );
+        setQuestionList(filteredData);
+      } catch (error) {
+        console.error("Error fetching bucket data:", error);
+      }
+    };
+
+    getAllQuestions();
+  }, [getQuestion]);
 
   return (
     <div className="d-flex">
@@ -79,10 +101,11 @@ const BucketDetails = () => {
 
           <div className="p-3">
             {questionList.map((item, index) => (
-              <BucketDetailCard item={item} />
+              <BucketDetailCard item={item} setGetQuestion={setGetQuestion} getQuestion={getQuestion}/>
             ))}
           </div>
         </div>
+        
       </div>
     </div>
   );

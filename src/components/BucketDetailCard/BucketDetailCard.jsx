@@ -1,7 +1,18 @@
 import React from "react";
 import { FaTrashCan } from "react-icons/fa6";
+import { deleteQuestionById } from "../../API/axios";
 
 const BucketDetailCard = (props) => {
+  const handleClick = async (event) => {
+    event.preventDefault();
+    const response = await deleteQuestionById(props.item.q_id);
+    console.log("response",response.data.code);
+    if(response.data.code == 200){
+      props.setGetQuestion(!props.getQuestion)
+      alert("question delete successfully")     
+    }
+  };
+
   return (
     <div>
       <div className="d-flex justify-content-between align-items-center">
@@ -16,7 +27,9 @@ const BucketDetailCard = (props) => {
             style={{
               color: "red",
               fontSize: "20px",
+              cursor: "pointer",
             }}
+            onClick={handleClick}
           />
         </div>
       </div>

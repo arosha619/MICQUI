@@ -67,3 +67,13 @@ export const getAllQuestion = async () => {
   const res = await API.get(`question/getAllQuestion`);
   return res;
 };
+
+export const deleteQuestionById = async (id) => {
+  const res = await API.delete(`question/deleteQuestion/${id}`);
+  return res;
+};
+
+export const addBucket = async (formData) => {
+    const res = await API.post(`bucket/addBucket`, formData);
+    return res;
+};

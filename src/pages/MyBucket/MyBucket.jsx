@@ -7,6 +7,7 @@ import Header from "../../components/Header/Header";
 import BucketHeader from "./../../components/MybucketComponents/BucketHeader";
 import { getAllBuckets } from "../../API/axios";
 
+
 const MyBucket = () => {
   const navigate = useNavigate();
   const [deleteBucket, setDeleteBucket] = useState([]);
@@ -26,56 +27,61 @@ const MyBucket = () => {
           const response = await getAllBuckets();
 
           const data = response.data.data;
+          console.log("data : ", data);
 
-            setBucketsData(data);
-
+          setBucketsData(data);
         } catch (error) {
           console.error("Error fetching bucket data:", error);
-          alert("Data fetching faild")
+          alert("Data fetching faild");
         }
       };
 
       fetchBucketData();
     }
   }, []);
-  
 
   if (!isAuthenticated || isAuthenticated === "false") {
     return null;
   }
 
   return (
-    <div className="d-flex">
-      <div>
-        <SideBar />
-      </div>
+    <>
+      <div className="d-flex">
+        <div>
+          <SideBar />
+        </div>
 
-      <div className=" w-100" style={{ padding: "15px 20px 15px 20px" }}>
-        <Header />
+        <div className=" w-100" style={{ padding: "15px 20px 15px 20px" }}>
+          <Header />
 
-        <div className="card">
-          <div className="card-header" style={{paddingTop:"0px",paddingBottom:"0px"}}>
-            <BucketHeader deleteBucket={deleteBucket} bucketTitle={"bucket"} bucketData={bucketsData}/>
-          </div>
+          <div className="card">
+            <div
+              className="card-header"
+              style={{ paddingTop: "0px", paddingBottom: "0px" }}
+            >
+              <BucketHeader
+                deleteBucket={deleteBucket}
+                bucketTitle={"bucket"}
+                bucketData={bucketsData}
+              />
+            </div>
 
-          <div>
-            <div className="entire">
-              
+            <div>
+              <div className="entire">
                 {bucketsData.map((item, index) => (
                   <BucketContains
-                    key = {index}
+                    key={index}
                     deleteBucket={deleteBucket}
                     setDeleteBucket={setDeleteBucket}
                     item={item}
                   />
                 ))}
-              
-              
+              </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 
