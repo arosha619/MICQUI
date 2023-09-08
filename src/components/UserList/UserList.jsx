@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { deleteUser, getAllUsers, updateUser } from "../../API/axios";
-import editIcon from "../../Assets/Icons/editIcon.svg";
-import deleteIcon from "../../Assets/Icons/deleteIcon.svg";
 import "./UserUpdate.css";
 import UpdateUserModal from "./UpdateUserModal";
 import { getadminbyID } from "../../API/axios";
@@ -12,7 +10,7 @@ import { FaCheckCircle, FaExclamationCircle } from "react-icons/fa";
 import Layout from "../Layout/Layout";
 import pro_pic_default from "../../Assets/person_four.jpg";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPen, faTrash, faUsers } from "@fortawesome/free-solid-svg-icons";
+import { faPen, faTrash} from "@fortawesome/free-solid-svg-icons";
 
 const UserList = () => {
   const [selectAll, setSelectAll] = useState(false);
@@ -135,13 +133,16 @@ const UserList = () => {
   };
 
   return (
-    <Layout>
+    <Layout Title={"User List"}>
       <div className="d-flex">
         <div className="w-100">
           <form className="mb-3 w-50">
             <div className="input-group w-100">
               <input
-              style={{padding:'10px 20px',boxShadow:'0 2px 4px rgba(0, 0, 0, 0.1)'}}
+                style={{
+                  padding: "10px 20px",
+                  boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
+                }}
                 type="search"
                 className="form-control"
                 placeholder="Search here..."
@@ -158,54 +159,60 @@ const UserList = () => {
             <p>Status</p>
             <p>Actions</p>
           </div>
-          {filteredData.map((item) => {
-            return (
-              <div className="card-wrapper" key={item.id}>
-                <div className="profile-picture">
-                  <img src={item.profile_pic} />
+          {filteredData.length === 0 ? (
+            <div className="card-emty">
+              <p>No data available.</p>
+            </div>
+          ) : (
+            filteredData.map((item) => {
+              return (
+                <div className="card-wrapper" key={item.id}>
+                  <div className="profile-picture">
+                    <img src={item.profile_pic} />
+                  </div>
+                  <p>{item.full_name}</p>
+                  <p>{item.email}</p>
+                  <p>077 8126872</p>
+                  <p>{item.role}</p>
+                  <p>{item.is_verified === 1 ? "Verified" : "Not Verified"}</p>
+                  <div className="action-button">
+                    <FontAwesomeIcon
+                      onClick={() => {
+                        setPro_pic(item.profile_pic);
+                        setFullname(item.full_name);
+                        setRole(item.role);
+                        setCompany(item.company_name);
+                        setUserId(item.id);
+                        setOpenmodal(true);
+                      }}
+                      icon={faPen}
+                      style={{
+                        color: "#000",
+                        width: "20px",
+                        height: "20px",
+                        padding: "2px 10px",
+                        cursor: "pointer",
+                      }}
+                    />
+                    <FontAwesomeIcon
+                      onClick={() => {
+                        setDeleteid(item.id);
+                        setIsdelete(true);
+                      }}
+                      icon={faTrash}
+                      style={{
+                        color: "red",
+                        width: "20px",
+                        height: "20px",
+                        padding: "2px 10px",
+                        cursor: "pointer",
+                      }}
+                    />
+                  </div>
                 </div>
-                <p>{item.full_name}</p>
-                <p>{item.email}</p>
-                <p>077 8126872</p>
-                <p>{item.role}</p>
-                <p>{item.is_verified === 1 ? "Verified" : "Not Verified"}</p>
-                <div className="action-button">
-                  <FontAwesomeIcon
-                    onClick={() => {
-                      setPro_pic(item.profile_pic);
-                      setFullname(item.full_name);
-                      setRole(item.role);
-                      setCompany(item.company_name);
-                      setUserId(item.id);
-                      setOpenmodal(true);
-                    }}
-                    icon={faPen}
-                    style={{
-                      color: "#000",
-                      width: "20px",
-                      height: "20px",
-                      padding: "2px 10px",
-                      cursor: "pointer",
-                    }}
-                  />
-                  <FontAwesomeIcon
-                    onClick={() => {
-                      setDeleteid(item.id);
-                      setIsdelete(true);
-                    }}
-                    icon={faTrash}
-                    style={{
-                      color: "red",
-                      width: "20px",
-                      height: "20px",
-                      padding: "2px 10px",
-                      cursor: "pointer",
-                    }}
-                  />
-                </div>
-              </div>
-            );
-          })}
+              );
+            })
+          )}
         </div>
         {openModal && (
           <UpdateUserModal

@@ -1,14 +1,11 @@
 import React, { useState, useEffect } from "react";
 import "./MyBucket.css";
-import SideBar from "../../components/Sidebar/SideBar";
 import BucketContains from "./../../components/MybucketComponents/BucketContains";
 import { useNavigate } from "react-router-dom";
-import Header from "../../components/Header/Header";
-
 import BucketHeader from "./../../components/MybucketComponents/BucketHeader";
 import { getAllBuckets } from "../../API/axios";
-
 import { getadminbyID } from "../../API/axios";
+import Layout from "../../components/Layout/Layout";
 
 const MyBucket = () => {
   const navigate = useNavigate();
@@ -64,33 +61,17 @@ const MyBucket = () => {
   }
 
   return (
-    <div className="d-flex">
-      <div>
-        <SideBar />
-      </div>
-
-      <div className=" w-100" style={{ padding: "15px 20px 15px 20px" }}>
-        <div className=" w-100" style={{ padding: "20px" }}>
-          {adminData.map((item) => (
-            <Header
-              key={item.id}
-              profile_pic={item.profile_pic}
-              admin_name={item.admin_name}
+    <Layout Title={"Buckets("+bucketsData.length+")"}>
+      <div className="d-flex">
+        <div className=" w-100">
+          <div className=" w-100">
+          <div className="bucket_header">
+            <BucketHeader
+              deleteBucket={deleteBucket}
+              bucketTitle={"bucket"}
+              bucketData={bucketsData}
             />
-          ))}
-
-          <div className="card">
-            <div
-              className="card-header"
-              style={{ paddingTop: "0px", paddingBottom: "0px" }}
-            >
-              <BucketHeader
-                deleteBucket={deleteBucket}
-                bucketTitle={"bucket"}
-                bucketData={bucketsData}
-              />
             </div>
-
             <div>
               <div className="entire">
                 {bucketsData.map((item, index) => (
@@ -106,7 +87,7 @@ const MyBucket = () => {
           </div>
         </div>
       </div>
-    </div>
+    </Layout>
   );
 };
 

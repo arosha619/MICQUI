@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { getadminbyID } from "../../API/axios";
 import pro_pic_default from "../../Assets/img/propic.jpeg";
 
-function Header() {
+function Header(props) {
   const id = localStorage.getItem("user_id");
   const [admin_propic, setAdmin_propic] = useState(null);
   const [admin_name, setAdmin_name] = useState("");
@@ -25,7 +25,7 @@ function Header() {
     <div className="header">
       <div className="menu">
         <div className="menu-title">
-          <h3>User List</h3>
+          <h3>{props.Title}</h3>
         </div>
       </div>
       <div className="menu-profile">

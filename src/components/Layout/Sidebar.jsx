@@ -80,7 +80,7 @@ function Sidebar() {
       </div>
 
       <div className="menu-wrapper">
-        <NavLink to="/my-buckets" activeClassName="activeLink">
+        <NavLink to="/user-list">
           <div className="menu menu-button">
             <FontAwesomeIcon
               icon={faUsers}
@@ -94,7 +94,7 @@ function Sidebar() {
             {isshow && "User List"}
           </div>
         </NavLink>
-        <NavLink to="/my-buckets" activeClassName="active-link">
+        <NavLink to="/my-buckets">
           <div className="menu menu-button">
             <FontAwesomeIcon
               icon={faBucket}

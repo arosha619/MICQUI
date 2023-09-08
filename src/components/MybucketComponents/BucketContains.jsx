@@ -33,7 +33,7 @@ const BucketContains = (props) => {
       >
         <div className="form-check col-1 d-flex align-items-center">
           <input
-            style={{ scale: "2", marginLeft: "15px" }}
+            style={{ scale: "1.5", marginLeft: "15px" }}
             className="form-check-input"
             type="checkbox"
             onChange={isChecked}
