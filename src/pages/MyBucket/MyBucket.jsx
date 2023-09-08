@@ -15,6 +15,7 @@ const MyBucket = () => {
   
   const navigate = useNavigate();
   const [deleteBucket, setDeleteBucket] = useState([]);
+  const [deleteBucketIds, setDeleteBucketIds] = useState([]);
 
   const [bucketsData, setBucketsData] = useState([]);
 
@@ -105,19 +106,30 @@ const MyBucket = () => {
                 placeHolder={"Enter Bucket Title"}
                 refresh={refresh}
                 setRefresh={setRefresh}
+                setDeleteBucketIds={setDeleteBucketIds}
+                deleteBucketIds={deleteBucketIds}
+                setDeleteBucket={setDeleteBucket}
               />
             </div>
 
             <div>
               <div className="entire">
-                {bucketsData.map((item, index) => (
+                {
+                  bucketsData.length > 0 ? (<>
+                  {bucketsData.map((item, index) => (
                   <BucketContains
                     key={index}
                     deleteBucket={deleteBucket}
                     setDeleteBucket={setDeleteBucket}
+                    setDeleteBucketIds={setDeleteBucketIds}
+                    deleteBucketIds={deleteBucketIds}
                     item={item}
                   />
                 ))}
+                  
+                  </>):(<></>)
+                }
+                
               </div>
             </div>
           </div>

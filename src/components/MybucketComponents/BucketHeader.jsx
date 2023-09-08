@@ -5,7 +5,12 @@ import { AiOutlineCloseCircle } from "react-icons/ai";
 import "./MyBucketComponent.css";
 import { useNavigate } from "react-router-dom";
 import Header from "../Header/Header";
-import { getadminbyID, addBucket, addQuestion } from "../../API/axios";
+import {
+  getadminbyID,
+  addBucket,
+  addQuestion,
+  deleteBucketSet,
+} from "../../API/axios";
 import AddBucket from "../AddBucket/AddBucket";
 import { useParams } from "react-router-dom";
 
@@ -16,9 +21,30 @@ const BucketHeader = (props) => {
   const [showModal, setShowModal] = useState(true);
   const [bucketPropTitle, setBucketPropTitle] = useState("");
   const [description, setDescription] = useState("");
-  const [type, setType] = useState("");
+  const [type, setType] = useState("Employee");
+  const [status, setStatus] = useState("0");
   const { bucket_id } = useParams();
   var isAuthenticated = localStorage.getItem("isAuthenticated");
+
+  const deleteBucketList = async (event) => {
+    event.preventDefault();
+    const formData = {
+      bucketIds: props.deleteBucketIds,
+    };
+
+    try {
+      const response = await deleteBucketSet(formData);
+      if (response.status === 200) {
+        props.setRefresh(!props.refresh);
+        props.setDeleteBucket([]);
+        props.setDeleteBucketIds([]);
+        alert(response.data.message);
+      }
+    } catch (error) {
+      console.log(error);
+      alert("Delete faild")
+    }
+  };
 
   useEffect(() => {
     var isAuthenticated = localStorage.getItem("isAuthenticated");
@@ -56,12 +82,17 @@ const BucketHeader = (props) => {
         name: bucketPropTitle,
         description: description,
         type: type,
+        publish_status: status,
       };
 
       try {
         const response = await addBucket(formdata);
         if (response.status === 200) {
           const button = document.getElementById("myButton");
+          setBucketPropTitle("");
+          setDescription("");
+          setType("Employee");
+          setStatus("0");
           if (button) {
             button.click();
           }
@@ -96,10 +127,12 @@ const BucketHeader = (props) => {
         }
       } catch (error) {
         if (error.response.data.message) {
-
           console.log(error.response.data.message);
-          
-          if (error.response.data.message === "Maximum number of questions reached for this bucket.") {
+
+          if (
+            error.response.data.message ===
+            "Maximum number of questions reached for this bucket."
+          ) {
             const button = document.getElementById("myButton");
             if (button) {
               button.click();
@@ -155,6 +188,7 @@ const BucketHeader = (props) => {
                   setDescription={setDescription}
                   type={type}
                   setType={setType}
+                  setStatus={setStatus}
                 />
               </div>
               <div className="modal-footer">
@@ -281,7 +315,9 @@ const BucketHeader = (props) => {
                           color: "red",
                           fontSize: "30px",
                           paddingRight: "45px",
+                          cursor: "pointer",
                         }}
+                        onClick={deleteBucketList}
                       />
                       <p
                         className="col-11"
