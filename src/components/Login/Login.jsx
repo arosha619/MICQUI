@@ -80,7 +80,7 @@ const Login = () => {
     <div className="Outcontainer">
       <div className="Container1">
         <img className="logo1" src={logo} alt="logo" />
-        <h1 className="title1">Sign In</h1>
+        <h1 className="title1"></h1>
         <form onSubmit={handleSubmit}>
           <div className="inputs_container1">
             <div className="input-container">
@@ -94,7 +94,7 @@ const Login = () => {
                 onChange={(e) => setUsername(e.target.value)}
                 style={{ paddingLeft: "30px", marginLeft: "5px" }}
               />
-            </div>
+            </div>{" "}
             {renderErrorMsg("username")}
             {renderErrorMsg("noUsername")}
             {/* //old site - https://micqui.web.app/#/buckets */}
@@ -104,21 +104,21 @@ const Login = () => {
 Gold color code - Color(0xffc1a564) 
 rgb(193, 165, 100)
 rgba(193, 165, 100, 1) */}
-
             <div className="input-container">
               <span className="password-icon">
                 <FaLock />
               </span>
               <div className="input-field">
                 <input
-                  type={passwordVisible ? "text" : "password"}
+                  // type={passwordVisible ? "text" : "password"}
+                  type="password"
                   placeholder="Password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   style={{ paddingLeft: "30px", marginLeft: "5px" }}
                 />
 
-                {password ? (
+                {/* {password ? (
                   <span
                     className="password-toggle-icon-login"
                     onClick={() => setPasswordVisible(!passwordVisible)}
@@ -127,7 +127,7 @@ rgba(193, 165, 100, 1) */}
                   </span>
                 ) : (
                   ""
-                )}
+                )} */}
                 {renderErrorMsg("password")}
                 {renderErrorMsg("noPassword")}
                 {renderErrorMsg("PasswordLength")}
@@ -139,7 +139,6 @@ rgba(193, 165, 100, 1) */}
               </a>
             </div>
           </div>
-
           <div className="buttons">
             <div className="login_button">
               <span className="play-button">
@@ -147,20 +146,21 @@ rgba(193, 165, 100, 1) */}
               </span>
               <input type="submit" value="LOGIN" className="login_button1" />
             </div>
-            <div className="login_button">
+            {/* <div className="login_button">
               <span className="play-button">
                 <FaPlay></FaPlay>
               </span>
               <a href="/sign-up" className="login_button1">
                 SIGNUP
               </a>
-            </div>
-            
-            <span className="footer-msg">by clicking Login or Signup , you agree to our privacy policy & terms of services</span>
-        
-          </div>
+            </div> */}
 
-          </form>
+            <div className="footer-msg">
+              By clicking Login or Signup , You agree to our privacy policy &
+              terms of services
+            </div>
+          </div>
+        </form>
         <div className="link_container"></div>
         {showModal1 && (
           <Modal
