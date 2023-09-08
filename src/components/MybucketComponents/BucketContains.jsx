@@ -22,6 +22,10 @@ const BucketContains = (props) => {
     navigate(`/bucket-data/${props.item.bucket_id}`);
   };
 
+  const editBucket = () => {
+      
+  };
+
   return (
     <div>
       <div
@@ -46,7 +50,7 @@ const BucketContains = (props) => {
             <p className="card-text">{props.item.description}</p>
           </div>
           <div className="edit" style={{display:"flex", float:"right", color:"blue", fontSize:"20px"}}>
-            <BiSolidEdit />
+            <BiSolidEdit  onClick={editBucket}/>
           </div>
 
           <div>
@@ -79,8 +83,8 @@ const BucketContains = (props) => {
       <div
         className="row"
         style={{
-          paddingLeft: "20px",
-          paddingRight: "20px",
+          paddingLeft: "15px",
+          paddingRight: "40px",
           marginRight: "0px",
           marginLeft: "0px",
         }}

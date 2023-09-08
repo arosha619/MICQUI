@@ -5,13 +5,19 @@ import { AiOutlineCloseCircle } from "react-icons/ai";
 import "./MyBucketComponent.css";
 import { useNavigate } from "react-router-dom";
 import Header from "../Header/Header";
-import { getadminbyID } from "../../API/axios";
+import { getadminbyID, addBucket, addQuestion } from "../../API/axios";
 import AddBucket from "../AddBucket/AddBucket";
+import { useParams } from "react-router-dom";
 
 const BucketHeader = (props) => {
   const navigate = useNavigate();
   const [deleteBucket, setDeleteBucket] = useState([]);
   const [adminData, setAdminData] = useState([]);
+  const [showModal, setShowModal] = useState(true);
+  const [bucketPropTitle, setBucketPropTitle] = useState("");
+  const [description, setDescription] = useState("");
+  const [type, setType] = useState("");
+  const { bucket_id } = useParams();
   var isAuthenticated = localStorage.getItem("isAuthenticated");
 
   useEffect(() => {
@@ -42,54 +48,136 @@ const BucketHeader = (props) => {
     return null;
   }
 
+  const handleClose = async (event) => {
+    event.preventDefault();
+
+    if (props.bucketTitle === "bucket") {
+      const formdata = {
+        name: bucketPropTitle,
+        description: description,
+        type: type,
+      };
+
+      try {
+        const response = await addBucket(formdata);
+        if (response.status === 200) {
+          const button = document.getElementById("myButton");
+          if (button) {
+            button.click();
+          }
+          props.setRefresh(!props.refresh);
+          alert("Successfully add");
+        } else {
+          alert("Something went Wrong");
+        }
+      } catch (error) {
+        alert(error.message);
+      }
+    }
+    if (props.bucketTitle === "question") {
+      const formdata = {
+        bucket_id: bucket_id,
+        question: bucketPropTitle,
+      };
+
+      try {
+        const response = await addQuestion(formdata);
+
+        if (response.data.code === 200) {
+          const button = document.getElementById("myButton");
+          setBucketPropTitle("");
+          if (button) {
+            button.click();
+          }
+          props.setQuestionRefresh(!props.refresh);
+          alert("Success!");
+        } else {
+          alert("Something went Wrong");
+        }
+      } catch (error) {
+        if (error.response.data.message) {
+
+          console.log(error.response.data.message);
+          
+          if (error.response.data.message === "Maximum number of questions reached for this bucket.") {
+            const button = document.getElementById("myButton");
+            if (button) {
+              button.click();
+            }
+          }
+          alert(error.response.data.message);
+        } else {
+          alert(error.message);
+        }
+      }
+    }
+  };
+
   return (
     <>
-      <div
-        className="modal fade"
-        id="exampleModalCenter"
-        tabindex="-1"
-        role="dialog"
-        aria-labelledby="exampleModalCenterTitle"
-        aria-hidden="true"
-      >
-        <div className="modal-dialog modal-dialog-centered" role="document">
-          <div className="modal-content">
-            <div className="modal-header">
-              <h5 className="modal-title" id="exampleModalLongTitle">
-                Add Bucket 
-              </h5>
+      {showModal && (
+        <div
+          className="modal fade"
+          id="exampleModalCenter"
+          tabindex="-1"
+          role="dialog"
+          aria-labelledby="exampleModalCenterTitle"
+          aria-hidden="true"
+        >
+          <div className="modal-dialog modal-dialog-centered" role="document">
+            <div className="modal-content">
+              <div className="modal-header">
+                <h5 className="modal-title" id="exampleModalLongTitle">
+                  Add Bucket
+                </h5>
 
-              <button
-                type="button"
-                class="btn"
-                data-bs-dismiss="modal"
-                aria-label="Close"
-                style={{ outline: "none !important" }}
-                onFocus={(e) => e.target.blur()}
-              >
-                <AiOutlineCloseCircle
-                  style={{ color: "red", fontSize: "30px" }}
+                <button
+                  type="button"
+                  class="btn"
+                  data-bs-dismiss="modal"
+                  aria-label="Close"
+                  style={{ outline: "none !important" }}
+                  onFocus={(e) => e.target.blur()}
+                >
+                  <AiOutlineCloseCircle
+                    style={{ color: "red", fontSize: "30px" }}
+                  />
+                </button>
+              </div>
+              <div className="modal-body">
+                <AddBucket
+                  bucketTitle={props.bucketTitle}
+                  firstField={props.firstField}
+                  placeHolder={props.placeHolder}
+                  bucketPropTitle={bucketPropTitle}
+                  setBucketPropTitle={setBucketPropTitle}
+                  description={description}
+                  setDescription={setDescription}
+                  type={type}
+                  setType={setType}
                 />
-              </button>
-            </div>
-            <div className="modal-body">
-              <AddBucket />
-            </div>
-            <div className="modal-footer">
-              <button
-                type="button"
-                className="btn btn-secondary"
-                data-bs-dismiss="modal"
-              >
-                Close
-              </button>
-              <button type="button" className="btn btn-primary">
-                Save changes
-              </button>
+              </div>
+              <div className="modal-footer">
+                <button
+                  type="button"
+                  className="btn btn-secondary"
+                  data-bs-dismiss="modal"
+                  id="myButton"
+                >
+                  Close
+                </button>
+                <button
+                  type="button"
+                  className="btn btn-primary"
+                  onClick={handleClose}
+                >
+                  Save changes
+                </button>
+              </div>
             </div>
           </div>
         </div>
-      </div>
+      )}
 
       <div className="d-flex">
         <div className=" w-100" style={{ padding: "13px 20px 4px 20px" }}>

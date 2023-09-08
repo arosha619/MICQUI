@@ -32,8 +32,8 @@ export const createAdmin = async (formData) => {
   const res = await ImageAPI.post(`admin/register`, formData);
   return res;
 };
-export const updateAdmin = async (formData, id) => {
-  const res = await API.put(`admin/update/${id}`, formData, id);
+export const updateAdmin = async (id,formData) => {
+  const res = await API.put(`admin/update/${id}`, formData);
   return res;
 };
 export const forgotPassword = async (email) => {
@@ -77,3 +77,14 @@ export const addBucket = async (formData) => {
     const res = await API.post(`bucket/addBucket`, formData);
     return res;
 };
+
+export const editBucket = async (id, formData) => {
+  const res = await API.put(`bucket/editBucket/${id}`, formData);
+  return res;
+};
+
+export const addQuestion = async (formData) => {
+  const res = await API.post(`question/addQuestion`, formData);
+  return res;
+};
+
