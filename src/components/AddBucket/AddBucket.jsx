@@ -12,7 +12,7 @@ const AddBucket = (props) => {
         <div className="card-body">
           <form>
             <div className="form-group w-100">
-              <label for="exampleInputEmail1">{props.firstField}</label>
+              <label htmlFor="exampleInputEmail1">{props.firstField}</label>
               <input
                 type="text"
                 className="form-control"
@@ -29,7 +29,7 @@ const AddBucket = (props) => {
             {props.bucketTitle === "bucket" ? (
               <>
                 <div className="form-group">
-                  <label for="Description">Description</label>
+                  <label htmlFor="Description">Description</label>
                   <input
                     type="textarea"
                     className="form-control"
@@ -41,14 +41,21 @@ const AddBucket = (props) => {
                     }}
                   />
                 </div>
-                <div>
+                
+                <div className="select-container">
+                <label htmlFor="Description">Position</label>
                   <select
+                    className="select-dropdown"
                     onChange={(e) => {
                       props.setType(e.target.value);
                     }}
                   >
-                    <option value="Employee">Employee</option>
-                    <option value="Manager">Manager</option>
+                    <option className="select-option" value="Employee">
+                      Employee
+                    </option>
+                    <option className="select-option" value="Manager">
+                      Manager
+                    </option>
                   </select>
                 </div>
               </>

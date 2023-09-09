@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from "react";
 import "./MyBucketComponent.css";
 import { useNavigate } from "react-router-dom";
-import { FaTrash } from "react-icons/fa";
-import { IoIosAddCircle } from "react-icons/io";
+import { FaCheckCircle, FaTrash } from "react-icons/fa";
 import "./MyBucketComponent.css";
 import { useParams } from "react-router-dom";
 import { AiOutlineCloseCircle } from "react-icons/ai";
 import "./MyBucketComponent.css";
 import { getadminbyID, addBucket, addQuestion } from "../../API/axios";
 import AddBucket from "../AddBucket/AddBucket";
+import { Button, Modal } from "react-bootstrap";
 
 const BucketHeader = (props) => {
   const navigate = useNavigate();
@@ -19,6 +19,7 @@ const BucketHeader = (props) => {
   const [description, setDescription] = useState("");
   const [type, setType] = useState("");
   const { bucket_id } = useParams();
+  const [createConfirms, setCreateConfirms] = useState(false)
   var isAuthenticated = localStorage.getItem("isAuthenticated");
 
   useEffect(() => {
@@ -66,9 +67,9 @@ const BucketHeader = (props) => {
             button.click();
           }
           props.setRefresh(!props.refresh);
-          alert("Successfully add");
+          setCreateConfirms(true)
         } else {
-          alert("Something went Wrong");
+          alert("Something went Wrong. Try again!");
         }
       } catch (error) {
         alert(error.message);
@@ -159,16 +160,28 @@ const BucketHeader = (props) => {
                   setType={setType}
                 />
               </div>
-              <div className="modal-footer">
+              <div className="modal-footer d-flex justify-content-center">
                 <button
+                  style={{
+                    width: "150px",
+                    backgroundColor: "black",
+                    color: "white",
+                    padding:'10px 0'
+                  }}
                   type="button"
-                  className="btn btn-secondary"
+                  className="btn"
                   data-bs-dismiss="modal"
                   id="myButton"
                 >
                   Close
                 </button>
                 <button
+                  style={{
+                    width: "150px",
+                    backgroundColor: "black",
+                    color: "white",
+                    padding:'10px 0',
+                  }}
                   type="button"
                   className="btn btn-primary"
                   onClick={handleClose}
@@ -427,7 +440,7 @@ const BucketHeader = (props) => {
               } */}
             </div>
 
-            <div style={{display:'flex',padding:'0 10px'}}>
+            <div style={{ display: "flex", padding: "0 10px" }}>
               {props.bucketTitle == "bucket" ? (
                 <>
                   {props.deleteBucket.length > 0 ? (
@@ -440,7 +453,13 @@ const BucketHeader = (props) => {
                           cursor: "pointer",
                         }}
                       />
-                      <p style={{ color: "red", fontWeight: "500",paddingLeft:'20px' }}>
+                      <p
+                        style={{
+                          color: "red",
+                          fontWeight: "500",
+                          paddingLeft: "20px",
+                        }}
+                      >
                         Delete {props.deleteBucket.length} bucket
                       </p>
                     </>
@@ -455,7 +474,43 @@ const BucketHeader = (props) => {
             </div>
           </div>
         </div>
-        <div></div>
+        <div>
+        {createConfirms && (
+          <Modal
+            show={createConfirms}
+            onHide={() => setCreateConfirms(false)}
+            style={{ background: "rgba(15, 14, 14, 0.144)" }}
+          >
+            <Modal.Header closeButton>
+              <div className="d-flex justify-content-center align-items-center text-danger">
+                <FaCheckCircle
+                  size={24}
+                  style={{ marginLeft: "220px", color: "green" }}
+                  onClick={() => {
+                    setCreateConfirms(false);
+                    window.location.reload();
+                  }}
+                />
+              </div>
+            </Modal.Header>
+            <Modal.Body className="d-flex justify-content-center ">
+              Bucket Successfully Created.
+            </Modal.Body>
+            <Modal.Footer className="d-flex justify-content-center">
+              <Button
+                variant="dark"
+                style={{ width: "100px" }}
+                onClick={() => {
+                  setCreateConfirms(false);
+                  window.location.reload();
+                }}
+              >
+                Ok
+              </Button>
+            </Modal.Footer>
+          </Modal>
+        )}
+        </div>
       </div>
     </>
   );
