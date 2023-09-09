@@ -8,12 +8,14 @@ import { getadminbyID } from "../../API/axios";
 import Layout from "../../components/Layout/Layout";
 
 const MyBucket = () => {
+  
   const navigate = useNavigate();
   const [deleteBucket, setDeleteBucket] = useState([]);
 
   const [bucketsData, setBucketsData] = useState([]);
 
   const [adminData, setAdminData] = useState([]);
+  const [refresh, setRefresh] = useState(false);
 
   var isAuthenticated = localStorage.getItem("isAuthenticated");
   const id = localStorage.getItem("user_id");
@@ -31,6 +33,7 @@ const MyBucket = () => {
           const response = await getAllBuckets();
 
           const data = response.data.data;
+          console.log("data : ", data);
 
           setBucketsData(data);
         } catch (error) {
@@ -56,6 +59,33 @@ const MyBucket = () => {
     fetchUsers();
   }, [id]);
 
+  useEffect(() => {
+    var isAuthenticated = localStorage.getItem("isAuthenticated");
+
+    if (!isAuthenticated || isAuthenticated == null) {
+      alert("Need to login first");
+      console.log("not authanticated");
+      navigate("/");
+    } else {
+      const fetchBucketData = async () => {
+        try {
+          const response = await getAllBuckets();
+
+          const data = response.data.data;
+          console.log("data : ", data);
+
+          setBucketsData(data);
+
+        } catch (error) {
+          console.error("Error fetching bucket data:", error);
+          alert("Data fetching faild");
+        }
+      };
+
+      fetchBucketData();
+    }
+  }, [refresh]);
+
   if (!isAuthenticated || isAuthenticated === "false") {
     return null;
   }
@@ -67,9 +97,13 @@ const MyBucket = () => {
           <div className=" w-100">
           <div className="bucket_header">
             <BucketHeader
-              deleteBucket={deleteBucket}
-              bucketTitle={"bucket"}
-              bucketData={bucketsData}
+                deleteBucket={deleteBucket}
+                bucketTitle={"bucket"}
+                bucketData={bucketsData}
+                firstField={"Bucket Name"} 
+                placeHolder={"Enter Bucket Title"}
+                refresh={refresh}
+                setRefresh={setRefresh}
             />
             </div>
             <div>

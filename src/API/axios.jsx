@@ -74,3 +74,23 @@ export const getAllQuestion = async () => {
   const res = await API.get(`question/getAllQuestion`);
   return res;
 };
+export const deleteQuestionById = async (id) => {
+  const res = await API.delete(`question/deleteQuestion/${id}`);
+  return res;
+};
+
+export const addBucket = async (formData) => {
+    const res = await API.post(`bucket/addBucket`, formData);
+    return res;
+};
+
+export const editBucket = async (id, formData) => {
+  const res = await API.put(`bucket/editBucket/${id}`, formData);
+  return res;
+};
+
+export const addQuestion = async (formData) => {
+  const res = await API.post(`question/addQuestion`, formData);
+  return res;
+};
+

@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import bucketData from "./BucketContains";
 import { useNavigate } from "react-router-dom";
+import { BiSolidEdit } from "react-icons/bi";
 
 const BucketContains = (props) => {
-
   const navigate = useNavigate();
   const isChecked = (event) => {
     if (event.target.checked) {
@@ -16,14 +16,15 @@ const BucketContains = (props) => {
     }
   };
 
-
-
   const handleClick = async (event) => {
     event.preventDefault();
-    
+
     navigate(`/bucket-data/${props.item.bucket_id}`);
   };
-  
+
+  const editBucket = () => {
+      
+  };
 
   return (
     <div>
@@ -39,7 +40,7 @@ const BucketContains = (props) => {
             onChange={isChecked}
           />
         </div>
-        <div className="card-content col-11 ">
+        <div className="card-content col-10 ">
           <div
             className="p-2"
             onClick={handleClick}
@@ -48,6 +49,10 @@ const BucketContains = (props) => {
             <h5 className="card-title">{props.item.name}</h5>
             <p className="card-text">{props.item.description}</p>
           </div>
+          <div className="edit" style={{display:"flex", float:"right", color:"blue", fontSize:"20px"}}>
+            <BiSolidEdit  onClick={editBucket}/>
+          </div>
+
           <div>
             <div className="dropdown ">
               <button
@@ -72,13 +77,14 @@ const BucketContains = (props) => {
               </ul>
             </div>
           </div>
+          
         </div>
       </div>
       <div
         className="row"
         style={{
-          paddingLeft: "20px",
-          paddingRight: "20px",
+          paddingLeft: "15px",
+          paddingRight: "40px",
           marginRight: "0px",
           marginLeft: "0px",
         }}

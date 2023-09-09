@@ -12,25 +12,34 @@ const BucketDetails = () => {
   const params = useParams();
 
   const [questionList, setQuestionList] = useState([]);
+  const [getQuestion,setGetQuestion] = useState(false);
+  const [questionRefresh, setQuestionRefresh] = useState(false);
+
 
   useEffect(() => {
     const getAllQuestions = async () => {
       try {
         const response = await getAllQuestion();
+        console.log("response : " ,response);
         // Handle the response here
-        const data = response.data.data;
+        if(response.data.code == 400){
+          alert(response.data.message);
+        }else{
+          const data = response.data.data;
 
         const filteredData = data.filter(
           (item) => item.bucket_id == params["bucket_id"]
         );
         setQuestionList(filteredData);
+        }
+        
       } catch (error) {
-        console.error("Error fetching bucket data:", error);
+        alert('data fetch failed..!');
       }
     };
 
     getAllQuestions();
-  }, []);
+  }, [getQuestion, questionRefresh]);
 
   return (
     <div className="d-flex">
@@ -74,15 +83,16 @@ const BucketDetails = () => {
 
         <div className="card">
           <div className="card-header">
-            <BucketHeader questionList={questionList} />
+            <BucketHeader questionList={questionList} bucketTitle = {"question"} firstField={"Question"} placeHolder={"Add Your Question Here.."} refresh={questionRefresh} setQuestionRefresh={setQuestionRefresh}/>
           </div>
 
           <div className="p-3">
             {questionList.map((item, index) => (
-              <BucketDetailCard item={item} />
+              <BucketDetailCard item={item} setGetQuestion={setGetQuestion} getQuestion={getQuestion}/>
             ))}
           </div>
         </div>
+        
       </div>
     </div>
   );

@@ -11,11 +11,14 @@ import Settings from "./components/Settings/Settings";
 import SuccessfullyRegistered from "./components/SignUp/SuccessfullyRegistered";
 import BucketDetails from "./pages/BucketDetails/BucketDetails.jsx";
 import Layout from "./components/Layout/Layout";
+import AddBucket from "./components/AddBucket/AddBucket";
+
 
 function App() {
   return (
     <Routes>
-      <Route path="/" element={<Login />} />
+      {/* <Route path="/" element={<Login />} /> */}
+      <Route path="/" element={<AddBucket />} />
       <Route path="/sign-up" element={<SignUp />} />
       <Route path="/home" element={<Dashboard />} />
       <Route path="/user-list" element={<UserList />} />
