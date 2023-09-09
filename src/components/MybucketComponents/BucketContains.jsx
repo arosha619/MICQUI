@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from "react";
-import bucketData from "./BucketContains";
+import React from "react";
 import { useNavigate } from "react-router-dom";
-import { BiSolidEdit } from "react-icons/bi";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faEye, faPen } from "@fortawesome/free-solid-svg-icons";
 
 const BucketContains = (props) => {
   const navigate = useNavigate();
@@ -22,74 +22,44 @@ const BucketContains = (props) => {
     navigate(`/bucket-data/${props.item.bucket_id}`);
   };
 
-  const editBucket = () => {
-      
-  };
+  const editBucket = () => {};
 
   return (
     <div>
-      <div
-        className="card-body d-flex row"
-        style={{ marginRight: "0px", marginLeft: "0px" }}
-      >
-        <div className="form-check col-1 d-flex align-items-center">
+      <div className="backet-card">
+        <div>
           <input
             style={{ scale: "1.5", marginLeft: "15px" }}
-            className="form-check-input"
             type="checkbox"
             onChange={isChecked}
           />
         </div>
-        <div className="card-content col-10 ">
-          <div
-            className="p-2"
+        <p className="card-title">{props.item.name}</p>
+        <p className="card-text">{props.item.description}</p>
+        <p className="card-text">{props.item.type}</p>
+        <div>
+          <FontAwesomeIcon
             onClick={handleClick}
-            style={{ cursor: "pointer" }}
-          >
-            <h5 className="card-title">{props.item.name}</h5>
-            <p className="card-text">{props.item.description}</p>
-          </div>
-          <div className="edit" style={{display:"flex", float:"right", color:"blue", fontSize:"20px"}}>
-            <BiSolidEdit  onClick={editBucket}/>
-          </div>
-
-          <div>
-            <div className="dropdown ">
-              <button
-                className="btn btn-light dropdown-toggle"
-                type="button"
-                data-bs-toggle="dropdown"
-                aria-expanded="false"
-              >
-                {props.item.type}
-              </button>
-              <ul className="dropdown-menu dropdown-menu-light">
-                <li>
-                  <a className="dropdown-item " href="#">
-                    Manager
-                  </a>
-                </li>
-                <li>
-                  <a className="dropdown-item" href="#">
-                    Employee
-                  </a>
-                </li>
-              </ul>
-            </div>
-          </div>
-          
+            icon={faEye}
+            style={{
+              color: "black",
+              width: "20px",
+              height: "20px",
+              padding: "2px 20px 2px 0",
+              cursor: "pointer",
+            }}
+          />
+          <FontAwesomeIcon
+            icon={faPen}
+            style={{
+              color: "black",
+              width: "20px",
+              height: "20px",
+              padding: "2px 20px",
+              cursor: "pointer",
+            }}
+          />
         </div>
-      </div>
-      <div
-        className="row"
-        style={{
-          paddingLeft: "15px",
-          paddingRight: "40px",
-          marginRight: "0px",
-          marginLeft: "0px",
-        }}
-      >
-        <hr />
       </div>
     </div>
   );

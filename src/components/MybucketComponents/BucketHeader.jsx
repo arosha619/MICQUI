@@ -1,16 +1,14 @@
 import React, { useEffect, useState } from "react";
 import "./MyBucketComponent.css";
 import { useNavigate } from "react-router-dom";
-import { getadminbyID } from "../../API/axios";
 import { FaTrash } from "react-icons/fa";
 import { IoIosAddCircle } from "react-icons/io";
 import "./MyBucketComponent.css";
-import { useNavigate } from "react-router-dom";
-import Header from "../Header/Header";
+import { useParams } from "react-router-dom";
+import { AiOutlineCloseCircle } from "react-icons/ai";
+import "./MyBucketComponent.css";
 import { getadminbyID, addBucket, addQuestion } from "../../API/axios";
 import AddBucket from "../AddBucket/AddBucket";
-import { useParams } from "react-router-dom";
-
 
 const BucketHeader = (props) => {
   const navigate = useNavigate();
@@ -50,8 +48,139 @@ const BucketHeader = (props) => {
   if (!isAuthenticated || isAuthenticated === "false") {
     return null;
   }
+  const handleClose = async (event) => {
+    event.preventDefault();
+
+    if (props.bucketTitle === "bucket") {
+      const formdata = {
+        name: bucketPropTitle,
+        description: description,
+        type: type,
+      };
+
+      try {
+        const response = await addBucket(formdata);
+        if (response.status === 200) {
+          const button = document.getElementById("myButton");
+          if (button) {
+            button.click();
+          }
+          props.setRefresh(!props.refresh);
+          alert("Successfully add");
+        } else {
+          alert("Something went Wrong");
+        }
+      } catch (error) {
+        alert(error.message);
+      }
+    }
+    if (props.bucketTitle === "question") {
+      const formdata = {
+        bucket_id: bucket_id,
+        question: bucketPropTitle,
+      };
+
+      try {
+        const response = await addQuestion(formdata);
+
+        if (response.data.code === 200) {
+          const button = document.getElementById("myButton");
+          setBucketPropTitle("");
+          if (button) {
+            button.click();
+          }
+          props.setQuestionRefresh(!props.refresh);
+          alert("Success!");
+        } else {
+          alert("Something went Wrong");
+        }
+      } catch (error) {
+        if (error.response.data.message) {
+          console.log(error.response.data.message);
+
+          if (
+            error.response.data.message ===
+            "Maximum number of questions reached for this bucket."
+          ) {
+            const button = document.getElementById("myButton");
+            if (button) {
+              button.click();
+            }
+          }
+          alert(error.response.data.message);
+        } else {
+          alert(error.message);
+        }
+      }
+    }
+  };
+
   return (
     <>
+      {showModal && (
+        <div
+          className="modal fade"
+          id="exampleModalCenter"
+          tabindex="-1"
+          role="dialog"
+          aria-labelledby="exampleModalCenterTitle"
+          aria-hidden="true"
+        >
+          <div className="modal-dialog modal-dialog-centered" role="document">
+            <div className="modal-content">
+              <div className="modal-header">
+                <h5 className="modal-title" id="exampleModalLongTitle">
+                  Add Bucket
+                </h5>
+
+                <button
+                  type="button"
+                  class="btn"
+                  data-bs-dismiss="modal"
+                  aria-label="Close"
+                  style={{ outline: "none !important" }}
+                  onFocus={(e) => e.target.blur()}
+                >
+                  <AiOutlineCloseCircle
+                    style={{ color: "red", fontSize: "30px" }}
+                  />
+                </button>
+              </div>
+              <div className="modal-body">
+                <AddBucket
+                  bucketTitle={props.bucketTitle}
+                  firstField={props.firstField}
+                  placeHolder={props.placeHolder}
+                  bucketPropTitle={bucketPropTitle}
+                  setBucketPropTitle={setBucketPropTitle}
+                  description={description}
+                  setDescription={setDescription}
+                  type={type}
+                  setType={setType}
+                />
+              </div>
+              <div className="modal-footer">
+                <button
+                  type="button"
+                  className="btn btn-secondary"
+                  data-bs-dismiss="modal"
+                  id="myButton"
+                >
+                  Close
+                </button>
+                <button
+                  type="button"
+                  className="btn btn-primary"
+                  onClick={handleClose}
+                >
+                  Save changes
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
       <div className="mb-3 w-100 search-header">
         <div className="w-50 ">
           <input
@@ -65,14 +194,15 @@ const BucketHeader = (props) => {
             // onChange={(e) => handleSearch(e.target.value)}
           />
         </div>
-        <button>Add Bucket</button>
+        <button data-bs-toggle="modal" data-bs-target="#exampleModalCenter">
+          Add Bucket
+        </button>
       </div>
       <div className="">
         <div className=" w-100">
           <div>
             <div className="d-flex flex-xl-row flex-lg-row flex-md-row flex-column justify-content-between  align-items-center">
               {/* {props.bucketTitle == "bucket" ? (
-=======
 
   const handleClose = async (event) => {
     event.preventDefault();
@@ -282,7 +412,7 @@ const BucketHeader = (props) => {
                 <></>
 
               )} */}
-
+              {/* 
               {
                 <button
                   type="button"
@@ -294,34 +424,24 @@ const BucketHeader = (props) => {
                     style={{ color: "green", fontSize: "30px" }}
                   />
                 </button>
-              }
+              } */}
             </div>
 
-            <div
-              className="row"
-
-              style={{ paddingLeft: "0px", marginTop: "10px" }}
-            >
+            <div style={{display:'flex',padding:'0 10px'}}>
               {props.bucketTitle == "bucket" ? (
                 <>
                   {props.deleteBucket.length > 0 ? (
                     <>
                       <FaTrash
-                        className="col-1 "
                         style={{
                           color: "red",
                           fontSize: "20px",
                           paddingRight: "5px",
-                          cursor:"pointer"
+                          cursor: "pointer",
                         }}
                       />
-                      <p
-                        className="col-11"
-
-                        style={{ color: "red", fontWeight: "500" }}
-                      >
+                      <p style={{ color: "red", fontWeight: "500",paddingLeft:'20px' }}>
                         Delete {props.deleteBucket.length} bucket
-
                       </p>
                     </>
                   ) : (

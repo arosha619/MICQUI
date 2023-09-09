@@ -80,36 +80,40 @@ function Sidebar() {
       </div>
 
       <div className="menu-wrapper">
-        <NavLink to="/user-list">
-          <div className="menu menu-button">
-            <FontAwesomeIcon
-              icon={faUsers}
-              style={{
-                color: "#fff",
-                width: "20px",
-                height: "20px",
-                paddingRight: "20px",
-              }}
-            />
-            {isshow && "User List"}
-          </div>
+        <NavLink
+          to="/user-list"
+          className="menu-button"
+          activeClassName="activeLink"
+        >
+          <FontAwesomeIcon
+            icon={faUsers}
+            style={{
+              color: "#fff",
+              width: "20px",
+              height: "20px",
+              paddingRight: "20px",
+            }}
+          />
+          {isshow && "User List"}
         </NavLink>
-        <NavLink to="/my-buckets">
-          <div className="menu menu-button">
-            <FontAwesomeIcon
-              icon={faBucket}
-              style={{
-                color: "#fff",
-                width: "20px",
-                height: "20px",
-                paddingRight: "20px",
-              }}
-            />
-            {isshow && "Bucket List"}
-          </div>
+        <NavLink
+          to="/my-buckets"
+          className="menu-button"
+          activeClassName="activeLink"
+        >
+          <FontAwesomeIcon
+            icon={faBucket}
+            style={{
+              color: "#fff",
+              width: "20px",
+              height: "20px",
+              paddingRight: "20px",
+            }}
+          />
+          {isshow && "Bucket List"}
         </NavLink>
         <Link to="/">
-          <div className="menu menu-button logOut">
+          <div className="menu-button logOut">
             <FontAwesomeIcon
               icon={faRightFromBracket}
               style={{

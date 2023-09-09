@@ -8,7 +8,6 @@ import { getadminbyID } from "../../API/axios";
 import Layout from "../../components/Layout/Layout";
 
 const MyBucket = () => {
-  
   const navigate = useNavigate();
   const [deleteBucket, setDeleteBucket] = useState([]);
 
@@ -75,7 +74,6 @@ const MyBucket = () => {
           console.log("data : ", data);
 
           setBucketsData(data);
-
         } catch (error) {
           console.error("Error fetching bucket data:", error);
           alert("Data fetching faild");
@@ -91,23 +89,30 @@ const MyBucket = () => {
   }
 
   return (
-    <Layout Title={"Buckets("+bucketsData.length+")"}>
+    <Layout Title={"Buckets(" + bucketsData.length + ")"}>
       <div className="d-flex">
         <div className=" w-100">
           <div className=" w-100">
-          <div className="bucket_header">
-            <BucketHeader
+            <div className="bucket_header">
+              <BucketHeader
                 deleteBucket={deleteBucket}
                 bucketTitle={"bucket"}
                 bucketData={bucketsData}
-                firstField={"Bucket Name"} 
+                firstField={"Bucket Name"}
                 placeHolder={"Enter Bucket Title"}
                 refresh={refresh}
                 setRefresh={setRefresh}
-            />
+              />
             </div>
             <div>
-              <div className="entire">
+              <div>
+              <div className="bucket-card-header">
+                <p>Check</p>
+                <p>Bucket Name</p>
+                <p>Description</p>
+                <p>position</p>
+                <p>Actions</p>
+              </div>
                 {bucketsData.map((item, index) => (
                   <BucketContains
                     key={index}

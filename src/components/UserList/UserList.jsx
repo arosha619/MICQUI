@@ -133,7 +133,7 @@ const UserList = () => {
   };
 
   return (
-    <Layout Title={"User List"}>
+    <Layout Title={"Users("+filteredData.length+")"}>
       <div className="d-flex">
         <div className="w-100">
           <form className="mb-3 w-50">

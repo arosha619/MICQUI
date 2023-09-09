@@ -1,18 +1,16 @@
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+::-webkit-scrollbar {
+  width: 0.5em;
 }
 
-.main-container {
-  display: flex;
-}
-main {
-  padding: 10px;
+::-webkit-scrollbar-track {
+  background: transparent;
 }
 
-.title {
-  font-size: 3rem;
-  display: grid;
-  place-items: center;
+::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(0, 0, 0, 0.4);
 }
