@@ -36,6 +36,7 @@ const AddBucket = (props) => {
                     id="description"
                     aria-describedby="description"
                     placeholder="Description"
+                    value={props.description}
                     onChange={(e) => {
                       props.setDescription(e.target.value);
                     }}
@@ -49,6 +50,16 @@ const AddBucket = (props) => {
                   >
                     <option value="Employee">Employee</option>
                     <option value="Manager">Manager</option>
+                  </select>
+                </div>
+                <div>
+                  <select
+                    onChange={(e) => {
+                      props.setStatus(e.target.value);
+                    }}
+                  >
+                    <option value="0">Draft</option>
+                    <option value="1">publish</option>
                   </select>
                 </div>
               </>

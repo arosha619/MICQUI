@@ -10,6 +10,7 @@ import Layout from "../../components/Layout/Layout";
 const MyBucket = () => {
   const navigate = useNavigate();
   const [deleteBucket, setDeleteBucket] = useState([]);
+  const [deleteBucketIds, setDeleteBucketIds] = useState([]);
 
   const [bucketsData, setBucketsData] = useState([]);
 
@@ -102,25 +103,36 @@ const MyBucket = () => {
                 placeHolder={"Enter Bucket Title"}
                 refresh={refresh}
                 setRefresh={setRefresh}
+                setDeleteBucketIds={setDeleteBucketIds}
+                deleteBucketIds={deleteBucketIds}
+                setDeleteBucket={setDeleteBucket}
               />
             </div>
             <div>
               <div>
-              <div className="bucket-card-header">
-                <p>Check</p>
-                <p>Bucket Name</p>
-                <p>Description</p>
-                <p>position</p>
-                <p>Actions</p>
-              </div>
-                {bucketsData.map((item, index) => (
-                  <BucketContains
-                    key={index}
-                    deleteBucket={deleteBucket}
-                    setDeleteBucket={setDeleteBucket}
-                    item={item}
-                  />
-                ))}
+                <div className="bucket-card-header">
+                  <p>Check</p>
+                  <p>Bucket Name</p>
+                  <p>Description</p>
+                  <p>position</p>
+                  <p>Actions</p>
+                </div>
+                {bucketsData.length > 0 ? (
+                  <>
+                    {bucketsData.map((item, index) => (
+                      <BucketContains
+                        key={index}
+                        deleteBucket={deleteBucket}
+                        setDeleteBucket={setDeleteBucket}
+                        setDeleteBucketIds={setDeleteBucketIds}
+                        deleteBucketIds={deleteBucketIds}
+                        item={item}
+                      />
+                    ))}
+                  </>
+                ) : (
+                  <></>
+                )}
               </div>
             </div>
           </div>

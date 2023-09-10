@@ -94,3 +94,13 @@ export const addQuestion = async (formData) => {
   return res;
 };
 
+export const getBucketById = async (id) => {
+  const res = await API.get(`bucket/getBucketById/${id}`);
+  return res;
+};
+
+export const deleteBucketSet = async (formData) => {
+  const res = await API.post(`bucket/deleteBuckets`,formData);
+  return res;
+};
+

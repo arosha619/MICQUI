@@ -8,11 +8,17 @@ const BucketContains = (props) => {
   const isChecked = (event) => {
     if (event.target.checked) {
       props.setDeleteBucket([...props.deleteBucket, props.item]);
+      props.setDeleteBucketIds([...props.deleteBucketIds, props.item.bucket_id]);
     } else {
       const updatedDeleteBucket = props.deleteBucket.filter(
         (bucketItem) => bucketItem !== props.item
       );
+
+      const updatedDeleteBucketIds = props.deleteBucketIds.filter(
+        (bucketItemId) => bucketItemId !== props.item.bucket_id
+      );
       props.setDeleteBucket(updatedDeleteBucket);
+      props.setDeleteBucketIds(updatedDeleteBucketIds);
     }
   };
 
