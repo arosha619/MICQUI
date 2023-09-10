@@ -168,26 +168,32 @@ const MyBucket = () => {
                   </>
                 ) : (
                   <>
-                    {bucketsData.length > 0 ? (
+                    {!searchItem ? (
                       <>
-                        {bucketsData.map((item, index) => (
-                          <BucketContains
-                            key={index}
-                            deleteBucket={deleteBucket}
-                            setDeleteBucket={setDeleteBucket}
-                            setDeleteBucketIds={setDeleteBucketIds}
-                            deleteBucketIds={deleteBucketIds}
-                            item={item}
-                            setEditBucketId={setEditBucketId}
-                            setEditTempBucketId={setEditTempBucketId}
-                            setIsAdd={setIsAdd}
-                            setIsBucketEdit={setIsBucketEdit}
-                            setBucketPropTitle={setBucketPropTitle}
-                            setDescription={setDescription}
-                            setType={setType}
-                            setStatus={setStatus}
-                          />
-                        ))}
+                        {bucketsData.length > 0 ? (
+                          <>
+                            {bucketsData.map((item, index) => (
+                              <BucketContains
+                                key={index}
+                                deleteBucket={deleteBucket}
+                                setDeleteBucket={setDeleteBucket}
+                                setDeleteBucketIds={setDeleteBucketIds}
+                                deleteBucketIds={deleteBucketIds}
+                                item={item}
+                                setEditBucketId={setEditBucketId}
+                                setEditTempBucketId={setEditTempBucketId}
+                                setIsAdd={setIsAdd}
+                                setIsBucketEdit={setIsBucketEdit}
+                                setBucketPropTitle={setBucketPropTitle}
+                                setDescription={setDescription}
+                                setType={setType}
+                                setStatus={setStatus}
+                              />
+                            ))}
+                          </>
+                        ) : (
+                          <></>
+                        )}
                       </>
                     ) : (
                       <></>

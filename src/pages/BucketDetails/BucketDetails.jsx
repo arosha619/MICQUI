@@ -14,6 +14,7 @@ const BucketDetails = () => {
   const navigate = useNavigate();
 
   const [questionList, setQuestionList] = useState([]);
+  const [filteredData, setFilteredData] = useState([]);
   const [getQuestion, setGetQuestion] = useState(false);
   const [questionRefresh, setQuestionRefresh] = useState(false);
   const [bucketStatus, setBucketStatus] = useState("draft");
@@ -23,6 +24,7 @@ const BucketDetails = () => {
   const [bucketPropTitle, setBucketPropTitle] = useState("");
   const [isAdd, setIsAdd] = useState(true);
   const [isBucketEdit, setIsBucketEdit] = useState(true);
+  const [searchItem, setSearchItem] = useState("");
 
   useEffect(() => {
     const getAllQuestions = async () => {
@@ -66,6 +68,16 @@ const BucketDetails = () => {
     event.preventDefault();
     navigate("/my-buckets");
   };
+
+  useEffect(() => {
+    if (questionList.length > 0) {
+      const filteredItems = questionList.filter((item) =>
+        item.question.toLowerCase().includes(searchItem.toLowerCase())
+      );
+
+      setFilteredData(filteredItems);
+    }
+  }, [searchItem]);
 
   useEffect(() => {
     if (editTempQuestionId != "") {
@@ -140,22 +152,48 @@ const BucketDetails = () => {
               isBucketEdit={isBucketEdit}
               editQuestionId={editQuestionId}
               setEditQuestionId={setEditQuestionId}
+              setSearchItem={setSearchItem}
             />
           </div>
 
           <div className="p-3">
-            {questionList.map((item, index) => (
-              <BucketDetailCard
-                item={item}
-                setGetQuestion={setGetQuestion}
-                getQuestion={getQuestion}
-                setEditQuestionId={setEditQuestionId}
-                setEditTempQuestionId={setEditTempQuestionId}
-                setBucketPropTitle={setBucketPropTitle}
-                setIsAdd={setIsAdd}
-                setIsBucketEdit={setIsBucketEdit}
-              />
-            ))}
+            {filteredData.length > 0 ? (
+              <>
+                {filteredData.map((item, index) => (
+                  <BucketDetailCard
+                    item={item}
+                    setGetQuestion={setGetQuestion}
+                    getQuestion={getQuestion}
+                    setEditQuestionId={setEditQuestionId}
+                    setEditTempQuestionId={setEditTempQuestionId}
+                    setBucketPropTitle={setBucketPropTitle}
+                    setIsAdd={setIsAdd}
+                    setIsBucketEdit={setIsBucketEdit}
+                  />
+                ))}
+              </>
+            ) : (
+              <>
+                {!searchItem ? (
+                  <>
+                    {questionList.map((item, index) => (
+                      <BucketDetailCard
+                        item={item}
+                        setGetQuestion={setGetQuestion}
+                        getQuestion={getQuestion}
+                        setEditQuestionId={setEditQuestionId}
+                        setEditTempQuestionId={setEditTempQuestionId}
+                        setBucketPropTitle={setBucketPropTitle}
+                        setIsAdd={setIsAdd}
+                        setIsBucketEdit={setIsBucketEdit}
+                      />
+                    ))}
+                  </>
+                ) : (
+                  <></>
+                )}
+              </>
+            )}
           </div>
         </div>
         <div>
