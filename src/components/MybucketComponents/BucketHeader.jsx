@@ -250,6 +250,7 @@ const BucketHeader = (props) => {
                   type="search"
                   placeholder="Search"
                   aria-label="Search"
+                  onChange={(e) => props.setSearchItem(e.target.value)}
                   style={{
                     borderWidth: "0",
                     backgroundColor: "rgba(255,0,0,0)",

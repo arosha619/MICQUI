@@ -12,6 +12,7 @@ const MyBucket = () => {
   const [deleteBucket, setDeleteBucket] = useState([]);
   const [deleteBucketIds, setDeleteBucketIds] = useState([]);
   const [bucketsData, setBucketsData] = useState([]);
+  const [filteredData, setFilteredData] = useState([]);
   const [adminData, setAdminData] = useState([]);
   const [refresh, setRefresh] = useState(false);
   const [editBucketId, setEditBucketId] = useState("");
@@ -22,6 +23,7 @@ const MyBucket = () => {
   const [description, setDescription] = useState("");
   const [type, setType] = useState("Employee");
   const [status, setStatus] = useState("0");
+  const [searchItem, setSearchItem] = useState("");
 
   var isAuthenticated = localStorage.getItem("isAuthenticated");
   const id = localStorage.getItem("user_id");
@@ -49,6 +51,16 @@ const MyBucket = () => {
       fetchBucketData();
     }
   }, []);
+
+  useEffect(() => {
+    if (bucketsData.length > 0) {
+      const filteredItems = bucketsData.filter((item) =>
+        item.name.toLowerCase().includes(searchItem.toLowerCase())
+      );
+
+      setFilteredData(filteredItems);
+    }
+  }, [searchItem]);
 
   useEffect(() => {
     var isAuthenticated = localStorage.getItem("isAuthenticated");
@@ -127,14 +139,15 @@ const MyBucket = () => {
                 setType={setType}
                 status={status}
                 setStatus={setStatus}
+                setSearchItem={setSearchItem}
               />
             </div>
 
             <div>
               <div className="entire">
-                {bucketsData.length > 0 ? (
+                {filteredData.length > 0 ? (
                   <>
-                    {bucketsData.map((item, index) => (
+                    {filteredData.map((item, index) => (
                       <BucketContains
                         key={index}
                         deleteBucket={deleteBucket}
@@ -150,12 +163,36 @@ const MyBucket = () => {
                         setDescription={setDescription}
                         setType={setType}
                         setStatus={setStatus}
-                        satatus={status}
                       />
                     ))}
                   </>
                 ) : (
-                  <></>
+                  <>
+                    {bucketsData.length > 0 ? (
+                      <>
+                        {bucketsData.map((item, index) => (
+                          <BucketContains
+                            key={index}
+                            deleteBucket={deleteBucket}
+                            setDeleteBucket={setDeleteBucket}
+                            setDeleteBucketIds={setDeleteBucketIds}
+                            deleteBucketIds={deleteBucketIds}
+                            item={item}
+                            setEditBucketId={setEditBucketId}
+                            setEditTempBucketId={setEditTempBucketId}
+                            setIsAdd={setIsAdd}
+                            setIsBucketEdit={setIsBucketEdit}
+                            setBucketPropTitle={setBucketPropTitle}
+                            setDescription={setDescription}
+                            setType={setType}
+                            setStatus={setStatus}
+                          />
+                        ))}
+                      </>
+                    ) : (
+                      <></>
+                    )}
+                  </>
                 )}
 
                 <button
