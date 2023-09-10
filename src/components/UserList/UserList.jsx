@@ -13,6 +13,7 @@ import Layout from "../Layout/Layout";
 import pro_pic_default from "../../Assets/person_four.jpg";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPen, faTrash, faUsers } from "@fortawesome/free-solid-svg-icons";
+import Loading from "../Spinner/Spinner";
 
 const UserList = () => {
   const [selectAll, setSelectAll] = useState(false);
@@ -30,9 +31,18 @@ const UserList = () => {
   const [isdelete, setIsdelete] = useState(false);
   const [confirmdelete, setConfirmdelete] = useState(false);
   const [confirmupdate, setConfirmupdate] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const backgroundColor = 'white'; 
+  const height = '100px';
 
   const isAuthenticated = localStorage.getItem("isAuthenticated");
   const id = localStorage.getItem("user_id");
+
+  useEffect(() => {
+    setTimeout(() => {
+      setLoading(false);
+    }, 3000);
+  }, []);
 
   useEffect(() => {
     if (!isAuthenticated || isAuthenticated === null) {
@@ -158,6 +168,7 @@ const UserList = () => {
             <p>Status</p>
             <p>Actions</p>
           </div>
+          {loading ? <Loading backgroundColor={backgroundColor} height={height} /> : (<>
           {filteredData.map((item) => {
             return (
               <div className="card-wrapper" key={item.id}>
@@ -206,6 +217,7 @@ const UserList = () => {
               </div>
             );
           })}
+          </> )}
         </div>
         {openModal && (
           <UpdateUserModal
