@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
-import "./AddBucket.css";
+import "./ModelBody.css";
 import { addBucket, addQuestion } from "../../API/axios";
 import { useParams } from "react-router-dom";
 
-const AddBucket = (props) => {
+const ModelBody = (props) => {
   const { bucket_id } = useParams();
 
   return (
@@ -48,8 +48,23 @@ const AddBucket = (props) => {
                       props.setType(e.target.value);
                     }}
                   >
-                    <option value="Employee">Employee</option>
+
+{props.isAdd ? (
+                      <>
+                        <option value="Employee">Employee</option>
                     <option value="Manager">Manager</option>
+                      </>
+                    ) : (
+                      <>
+
+                            <option value="Employee" selected = {props.type == "Employee"}>
+                            Employee
+                            </option>
+                            <option value="Manager" selected = {props.type == "Manager"}>Manager</option>
+
+                      </>
+                    )}
+
                   </select>
                 </div>
                 <div>
@@ -58,8 +73,21 @@ const AddBucket = (props) => {
                       props.setStatus(e.target.value);
                     }}
                   >
-                    <option value="0">Draft</option>
-                    <option value="1">publish</option>
+                    {props.isAdd ? (
+                      <>
+                        <option value="0">Draft</option>
+                        <option value="1">publish</option>
+                      </>
+                    ) : (
+                      <>
+
+                            <option value="0" selected = {props.status == "0"}>
+                            Draft
+                            </option>
+                            <option value="1" selected = {props.status == "1"}>publish</option>
+
+                      </>
+                    )}
                   </select>
                 </div>
               </>
@@ -73,4 +101,4 @@ const AddBucket = (props) => {
   );
 };
 
-export default AddBucket;
+export default ModelBody;

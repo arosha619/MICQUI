@@ -13,10 +13,6 @@ const ChangedPassword = () => {
       const searchParams = new URLSearchParams(location.search);
       const userId = searchParams.get('id');
       const token = searchParams.get('token');
-  
-      // Now you can use userId and token for your password reset logic
-      console.log('User ID:', userId);
-      console.log('Token:', token);
       
       // Implement your password reset logic here
     }, [location.search]);
@@ -44,8 +40,6 @@ const ChangedPassword = () => {
   const sendAdminData = async () => {
     try {
 
-    
-      console.log(response);
       setResponse(response);
       setShowModal(true);
     } catch (err) {

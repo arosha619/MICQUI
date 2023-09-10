@@ -52,7 +52,6 @@ const UserList = () => {
       try {
         const AdminData = await getadminbyID(id);
         setAdminData(AdminData.data.data);
-        console.log(AdminData);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -98,14 +97,11 @@ const UserList = () => {
     try {
       updateUser(userID, formData)
         .then((res) => {
-          console.log(res);
           setOpenmodal(false);
         })
         .catch((err) => {
-          console.log(err);
         });
     } catch (err) {
-      console.log(err);
     }
   };
 

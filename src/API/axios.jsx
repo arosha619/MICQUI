@@ -79,7 +79,7 @@ export const addBucket = async (formData) => {
 };
 
 export const editBucket = async (id, formData) => {
-  const res = await API.put(`bucket/editBucket/${id}`, formData);
+  const res = await API.put(`bucket/updateBucket/${id}`, formData);
   return res;
 };
 
@@ -97,4 +97,5 @@ export const deleteBucketSet = async (formData) => {
   const res = await API.post(`bucket/deleteBuckets`,formData);
   return res;
 };
+
 

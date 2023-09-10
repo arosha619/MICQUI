@@ -27,7 +27,7 @@ const ForgotPassword = () => {
         email: email,
       };
       var response = await forgotPassword(Email);
-      console.log(response);
+
       setpaswordRes(response);
       setShowModal(true);
     } catch (err) {

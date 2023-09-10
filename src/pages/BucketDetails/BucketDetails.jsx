@@ -23,8 +23,6 @@ const BucketDetails = () => {
     const getAllQuestions = async () => {
       try {
         const response = await getAllQuestion();
-        console.log("response : ", response);
-        // Handle the response here
         if (response.data.code == 400) {
           alert(response.data.message);
         } else {

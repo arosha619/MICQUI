@@ -28,7 +28,6 @@ const Settings = () => {
 
     if (!isAuthenticated || isAuthenticated == null) {
       alert("Need to login first");
-      console.log("not authanticated");
       navigate("/");
     }
   }, []);
@@ -94,11 +93,7 @@ const Settings = () => {
       formData.append("email", email);
       formData.append("profile_pic", selectedImage);
 
-console.log(username);
-console.log(email);
-console.log(selectedImage);
       var response = await updateAdmin(id,formData);
-      console.log(response);
       setResponse(response);
       setShowModal(true);
     } catch (err) {
@@ -116,7 +111,6 @@ console.log(selectedImage);
         setDeleteSuccessfull(true);
         setDeleteModal(false);
         localStorage.clear();
-        console.log(res);
       })
       .catch((error) => {
         alert("Error deleting data:");

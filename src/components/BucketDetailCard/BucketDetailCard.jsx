@@ -6,7 +6,6 @@ const BucketDetailCard = (props) => {
   const handleClick = async (event) => {
     event.preventDefault();
     const response = await deleteQuestionById(props.item.q_id);
-    console.log("response",response.data.code);
     if(response.data.code == 200){
       props.setGetQuestion(!props.getQuestion)
       alert("question delete successfully")     

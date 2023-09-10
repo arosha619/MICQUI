@@ -13,7 +13,7 @@ import ChangedPassword from "./components/ForgotPassword/ChangedPassword";
 import Settings from "./components/Settings/Settings";
 import SuccessfullyRegistered from "./components/SignUp/SuccessfullyRegistered";
 import BucketDetails from "./pages/BucketDetails/BucketDetails.jsx";
-import AddBucket from "./components/AddBucket/AddBucket";
+import AddBucket from "./components/ModelBody/ModelBody";
 
 function App() {
   return (

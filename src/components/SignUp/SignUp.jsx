@@ -45,7 +45,6 @@ const SignUp = () => {
       formData.append("password", confirmPassword);
 
       var response = await createAdmin(formData);
-      console.log(response);
       setResponse(response);
       setShowModal(true);
     } catch (err) {

@@ -11,7 +11,6 @@ const Dashboard = () => {
 
   if (!isAuthenticated || isAuthenticated == null) {
     alert("Need to login first");
-    console.log("not authanticated");
     navigate("/");
   }
 

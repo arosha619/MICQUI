@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
-import bucketData from "./BucketContains";
 import { useNavigate } from "react-router-dom";
 import { BiSolidEdit } from "react-icons/bi";
-
+import { AiOutlineCloseCircle } from "react-icons/ai";
 const BucketContains = (props) => {
+  
   const navigate = useNavigate();
   const isChecked = (event) => {
     if (event.target.checked) {
@@ -28,11 +28,31 @@ const BucketContains = (props) => {
     navigate(`/bucket-data/${props.item.bucket_id}`);
   };
 
-  const editBucket = () => {
-      
-  };
+  const handleEditBucket = (event) => {
+event.preventDefault()
+props.setIsAdd(false)
+props.setIsBucketEdit(true)
+props.setEditQuestionId(props.item.bucket_id)
+props.setBucketPropTitle(props.item.name)
+props.setDescription(props.item.description)
+props.setType(props.item.type)
+if(props.item.publish_status == 1){
+  props.setStatus("1")
+  console.log("status publish");
+}else{
+  console.log("status draft");
+  props.setStatus("0")
+}
+  }
+
+  
 
   return (
+    
+    
+      
+ 
+
     <div>
       <div
         className="card-body d-flex row"
@@ -46,7 +66,7 @@ const BucketContains = (props) => {
             onChange={isChecked}
           />
         </div>
-        <div className="card-content col-10 ">
+        <div className="card-content col-11 ">
           <div
             className="p-2"
             onClick={handleClick}
@@ -55,11 +75,28 @@ const BucketContains = (props) => {
             <h5 className="card-title">{props.item.name}</h5>
             <p className="card-text">{props.item.description}</p>
           </div>
-          <div className="edit" style={{display:"flex", float:"right", color:"blue", fontSize:"20px"}}>
-            <BiSolidEdit  onClick={editBucket}/>
-          </div>
 
-          <div>
+          
+          <div className="edit row" style={{display:"flex", float:"right", color:"blue", fontSize:"20px",cursor:"pointer"}} onClick={handleEditBucket}>
+           <button
+                  type="button"
+                  className="btn btn-warning btn-outline-light"
+                  // data-bs-toggle="modal"
+                  // data-bs-target="#exampleModalCenter"
+                  // buttonID = {props.bucket_id}
+                  
+                  
+                >
+
+                <BiSolidEdit
+                  
+                  style={{color:"blue" , fontSize: "30px"}}
+                />  
+            </button>
+          </div>
+          
+
+          <div className="w-75">
             <div className="dropdown ">
               <button
                 className="btn btn-light dropdown-toggle"
@@ -98,6 +135,7 @@ const BucketContains = (props) => {
         <hr />
       </div>
     </div>
+    
   );
 };
 
