@@ -32,7 +32,7 @@ export const createAdmin = async (formData) => {
   const res = await ImageAPI.post(`admin/register`, formData);
   return res;
 };
-export const updateAdmin = async (id,formData) => {
+export const updateAdmin = async (id, formData) => {
   const res = await API.put(`admin/update/${id}`, formData);
   return res;
 };
@@ -57,7 +57,6 @@ export const deleteadminbyID = async (id) => {
   return res;
 };
 
-
 export const getAllBuckets = async () => {
   const res = await API.get(`bucket/getAllBuckets`);
   return res;
@@ -74,8 +73,8 @@ export const deleteQuestionById = async (id) => {
 };
 
 export const addBucket = async (formData) => {
-    const res = await API.post(`bucket/addBucket`, formData);
-    return res;
+  const res = await API.post(`bucket/addBucket`, formData);
+  return res;
 };
 
 export const editBucket = async (id, formData) => {
@@ -88,14 +87,17 @@ export const addQuestion = async (formData) => {
   return res;
 };
 
+export const editQuestion = async (id, formData) => {
+  const res = await API.put(`question/updateQuestion/${id}`, formData);
+  return res;
+};
+
 export const getBucketById = async (id) => {
   const res = await API.get(`bucket/getBucketById/${id}`);
   return res;
 };
 
 export const deleteBucketSet = async (formData) => {
-  const res = await API.post(`bucket/deleteBuckets`,formData);
+  const res = await API.post(`bucket/deleteBuckets`, formData);
   return res;
 };
-
-

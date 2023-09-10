@@ -4,23 +4,18 @@ import SideBar from "../../components/Sidebar/SideBar";
 import BucketContains from "./../../components/MybucketComponents/BucketContains";
 import { useNavigate } from "react-router-dom";
 import Header from "../../components/Header/Header";
-
 import BucketHeader from "./../../components/MybucketComponents/BucketHeader";
 import { getAllBuckets } from "../../API/axios";
-import { AiOutlineCloseCircle } from "react-icons/ai";
-
-import { getadminbyID } from "../../API/axios";
 
 const MyBucket = () => {
   const navigate = useNavigate();
   const [deleteBucket, setDeleteBucket] = useState([]);
   const [deleteBucketIds, setDeleteBucketIds] = useState([]);
-  const [buttonId, setButtonId] = useState();
   const [bucketsData, setBucketsData] = useState([]);
   const [adminData, setAdminData] = useState([]);
   const [refresh, setRefresh] = useState(false);
   const [editBucketId, setEditBucketId] = useState("");
-  const [editQuestionId, setEditQuestionId] = useState("");
+  const [editTempBucketId, setEditTempBucketId] = useState("");
   const [isAdd, setIsAdd] = useState(true);
   const [isBucketEdit, setIsBucketEdit] = useState(true);
   const [bucketPropTitle, setBucketPropTitle] = useState("");
@@ -80,13 +75,14 @@ const MyBucket = () => {
   }, [refresh]);
 
   useEffect(() => {
-    if (editQuestionId != "") {
+    if (editTempBucketId != "") {
       const button = document.getElementById("hiddenButton");
       if (button) {
         button.click();
       }
     }
-  }, [editQuestionId]);
+    setEditTempBucketId("");
+  }, [editTempBucketId]);
 
   if (!isAuthenticated || isAuthenticated === "false") {
     return null;
@@ -121,7 +117,6 @@ const MyBucket = () => {
                 isAdd={isAdd}
                 setIsAdd={setIsAdd}
                 editBucketId={editBucketId}
-                editQuestionId={editQuestionId}
                 setIsBucketEdit={setIsBucketEdit}
                 isBucketEdit={isBucketEdit}
                 bucketPropTitle={bucketPropTitle}
@@ -147,7 +142,8 @@ const MyBucket = () => {
                         setDeleteBucketIds={setDeleteBucketIds}
                         deleteBucketIds={deleteBucketIds}
                         item={item}
-                        setEditQuestionId={setEditQuestionId}
+                        setEditBucketId={setEditBucketId}
+                        setEditTempBucketId={setEditTempBucketId}
                         setIsAdd={setIsAdd}
                         setIsBucketEdit={setIsBucketEdit}
                         setBucketPropTitle={setBucketPropTitle}

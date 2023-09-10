@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { IoIosAddCircle } from "react-icons/io";
 import { FaTrashCan } from "react-icons/fa6";
-import { AiOutlineCloseCircle } from "react-icons/ai";
 import "./MyBucketComponent.css";
 import { useNavigate } from "react-router-dom";
 import BucketModal from "../Model/BucketModal";
@@ -12,15 +11,14 @@ import {
   editBucket,
   addQuestion,
   deleteBucketSet,
+  editQuestion,
 } from "../../API/axios";
-import ModelBody from "../ModelBody/ModelBody";
 import { useParams } from "react-router-dom";
 
 const BucketHeader = (props) => {
   const navigate = useNavigate();
   const [deleteBucket, setDeleteBucket] = useState([]);
   const [adminData, setAdminData] = useState([]);
-  const [showModal, setShowModal] = useState(true);
   const { bucket_id } = useParams();
   var isAuthenticated = localStorage.getItem("isAuthenticated");
 
@@ -72,8 +70,7 @@ const BucketHeader = (props) => {
   const handleClose = async (event) => {
     event.preventDefault();
 
-    if(props.isAdd){
-
+    if (props.isAdd) {
       if (props.bucketTitle === "bucket") {
         const formdata = {
           name: props.bucketPropTitle,
@@ -81,7 +78,7 @@ const BucketHeader = (props) => {
           type: props.type,
           publish_status: props.status,
         };
-  
+
         try {
           const response = await addBucket(formdata);
           if (response.status === 200) {
@@ -107,10 +104,10 @@ const BucketHeader = (props) => {
           bucket_id: bucket_id,
           question: props.bucketPropTitle,
         };
-  
+
         try {
           const response = await addQuestion(formdata);
-  
+
           if (response.data.code === 200) {
             const button = document.getElementById("myButton");
             props.setBucketPropTitle("");
@@ -118,13 +115,12 @@ const BucketHeader = (props) => {
               button.click();
             }
             props.setQuestionRefresh(!props.refresh);
-            alert("Success!");
+            alert("Question added successfully!");
           } else {
             alert("Something went Wrong");
           }
         } catch (error) {
           if (error.response.data.message) {
-  
             if (
               error.response.data.message ===
               "Maximum number of questions reached for this bucket."
@@ -140,7 +136,7 @@ const BucketHeader = (props) => {
           }
         }
       }
-    }else{
+    } else {
       if (props.bucketTitle === "bucket") {
         const formdata = {
           name: props.bucketPropTitle,
@@ -148,9 +144,9 @@ const BucketHeader = (props) => {
           type: props.type,
           publish_status: props.status,
         };
-  
+
         try {
-          const response = await editBucket(props.editQuestionId,formdata);
+          const response = await editBucket(props.editBucketId, formdata);
           if (response.status === 200) {
             const button = document.getElementById("myButton");
             props.setBucketPropTitle("");
@@ -169,52 +165,38 @@ const BucketHeader = (props) => {
           alert(error.message);
         }
       }
-      // if (props.bucketTitle === "question") {
-      //   const formdata = {
-      //     bucket_id: bucket_id,
-      //     question: props.bucketPropTitle,
-      //   };
-  
-      //   try {
-      //     const response = await addQuestion(formdata);
-  
-      //     if (response.data.code === 200) {
-      //       const button = document.getElementById("myButton");
-      //       props.setBucketPropTitle("");
-      //       if (button) {
-      //         button.click();
-      //       }
-      //       props.setQuestionRefresh(!props.refresh);
-      //       alert("Success!");
-      //     } else {
-      //       alert("Something went Wrong");
-      //     }
-      //   } catch (error) {
-      //     if (error.response.data.message) {
-  
-      //       if (
-      //         error.response.data.message ===
-      //         "Maximum number of questions reached for this bucket."
-      //       ) {
-      //         const button = document.getElementById("myButton");
-      //         if (button) {
-      //           button.click();
-      //         }
-      //       }
-      //       alert(error.response.data.message);
-      //     } else {
-      //       alert(error.message);
-      //     }
-      //   }
-      // }
-    }
+      if (props.bucketTitle === "question") {
+        const formdata = {
+          question: props.bucketPropTitle,
+        };
 
+        try {
+          const response = await editQuestion(props.editQuestionId, formdata);
+
+          if (response.status === 200) {
+            const button = document.getElementById("myButton");
+            props.setBucketPropTitle("");
+            props.setEditQuestionId("");
+            if (button) {
+              button.click();
+            }
+            props.setQuestionRefresh(!props.refresh);
+            alert("Successfully updated!");
+          } else {
+            alert("Something went Wrong");
+          }
+        } catch (error) {
+          alert("Question update faild");
+        }
+      }
+    }
   };
 
   const handleAddBucket = (event) => {
-event.preventDefault();
-props.setIsAdd(true);
-  }
+    event.preventDefault();
+    props.setBucketPropTitle("");
+    props.setIsAdd(true);
+  };
 
   return (
     <>

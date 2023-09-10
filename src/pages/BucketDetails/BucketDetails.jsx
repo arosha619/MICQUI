@@ -18,6 +18,11 @@ const BucketDetails = () => {
   const [questionRefresh, setQuestionRefresh] = useState(false);
   const [bucketStatus, setBucketStatus] = useState("draft");
   const [bucketTopic, setBucketTopic] = useState("No title");
+  const [editQuestionId, setEditQuestionId] = useState("");
+  const [editTempQuestionId, setEditTempQuestionId] = useState("");
+  const [bucketPropTitle, setBucketPropTitle] = useState("");
+  const [isAdd, setIsAdd] = useState(true);
+  const [isBucketEdit, setIsBucketEdit] = useState(true);
 
   useEffect(() => {
     const getAllQuestions = async () => {
@@ -57,11 +62,20 @@ const BucketDetails = () => {
     getBucketByBucketId();
   }, []);
 
-  const handleBack = (event) =>{
-event.preventDefault();
-navigate("/my-buckets")
+  const handleBack = (event) => {
+    event.preventDefault();
+    navigate("/my-buckets");
+  };
 
-  }
+  useEffect(() => {
+    if (editTempQuestionId != "") {
+      const button = document.getElementById("hiddenButton");
+      if (button) {
+        button.click();
+      }
+    }
+    setEditTempQuestionId("");
+  }, [editTempQuestionId]);
 
   return (
     <div className="d-flex">
@@ -73,7 +87,11 @@ navigate("/my-buckets")
         <div>
           <div className="row">
             <div className="col-4 p-3">
-              <div className="d-inline-flex shadow bg-body p-2 rounded" onClick={handleBack} style={{cursor:"pointer"}}>
+              <div
+                className="d-inline-flex shadow bg-body p-2 rounded"
+                onClick={handleBack}
+                style={{ cursor: "pointer" }}
+              >
                 <BiArrowBack
                   style={{ borderRadius: "5px", width: "30px", height: "30px" }}
                 />
@@ -114,6 +132,14 @@ navigate("/my-buckets")
               placeHolder={"Add Your Question Here.."}
               refresh={questionRefresh}
               setQuestionRefresh={setQuestionRefresh}
+              bucketPropTitle={bucketPropTitle}
+              setBucketPropTitle={setBucketPropTitle}
+              isAdd={isAdd}
+              setIsAdd={setIsAdd}
+              setIsBucketEdit={setIsBucketEdit}
+              isBucketEdit={isBucketEdit}
+              editQuestionId={editQuestionId}
+              setEditQuestionId={setEditQuestionId}
             />
           </div>
 
@@ -123,9 +149,25 @@ navigate("/my-buckets")
                 item={item}
                 setGetQuestion={setGetQuestion}
                 getQuestion={getQuestion}
+                setEditQuestionId={setEditQuestionId}
+                setEditTempQuestionId={setEditTempQuestionId}
+                setBucketPropTitle={setBucketPropTitle}
+                setIsAdd={setIsAdd}
+                setIsBucketEdit={setIsBucketEdit}
               />
             ))}
           </div>
+        </div>
+        <div>
+          <button
+            type="button"
+            id="hiddenButton"
+            className="btn btn-warning btn-outline-light d-none"
+            data-bs-toggle="modal"
+            data-bs-target="#exampleModalCenter"
+          >
+            edit question
+          </button>
         </div>
       </div>
     </div>

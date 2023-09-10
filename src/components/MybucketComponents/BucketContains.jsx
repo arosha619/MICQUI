@@ -1,14 +1,15 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { BiSolidEdit } from "react-icons/bi";
-import { AiOutlineCloseCircle } from "react-icons/ai";
 const BucketContains = (props) => {
-  
   const navigate = useNavigate();
   const isChecked = (event) => {
     if (event.target.checked) {
       props.setDeleteBucket([...props.deleteBucket, props.item]);
-      props.setDeleteBucketIds([...props.deleteBucketIds, props.item.bucket_id]);
+      props.setDeleteBucketIds([
+        ...props.deleteBucketIds,
+        props.item.bucket_id,
+      ]);
     } else {
       const updatedDeleteBucket = props.deleteBucket.filter(
         (bucketItem) => bucketItem !== props.item
@@ -29,30 +30,22 @@ const BucketContains = (props) => {
   };
 
   const handleEditBucket = (event) => {
-event.preventDefault()
-props.setIsAdd(false)
-props.setIsBucketEdit(true)
-props.setEditQuestionId(props.item.bucket_id)
-props.setBucketPropTitle(props.item.name)
-props.setDescription(props.item.description)
-props.setType(props.item.type)
-if(props.item.publish_status == 1){
-  props.setStatus("1")
-  console.log("status publish");
-}else{
-  console.log("status draft");
-  props.setStatus("0")
-}
-  }
-
-  
+    event.preventDefault();
+    props.setIsAdd(false);
+    props.setIsBucketEdit(true);
+    props.setEditBucketId(props.item.bucket_id);
+    props.setEditTempBucketId(props.item.bucket_id);
+    props.setBucketPropTitle(props.item.name);
+    props.setDescription(props.item.description);
+    props.setType(props.item.type);
+    if (props.item.publish_status == 1) {
+      props.setStatus("1");
+    } else {
+      props.setStatus("0");
+    }
+  };
 
   return (
-    
-    
-      
- 
-
     <div>
       <div
         className="card-body d-flex row"
@@ -60,7 +53,7 @@ if(props.item.publish_status == 1){
       >
         <div className="form-check col-1 d-flex align-items-center">
           <input
-            style={{ scale: "2", marginLeft: "15px",cursor:"pointer" }}
+            style={{ scale: "2", marginLeft: "15px", cursor: "pointer" }}
             className="form-check-input"
             type="checkbox"
             onChange={isChecked}
@@ -76,25 +69,21 @@ if(props.item.publish_status == 1){
             <p className="card-text">{props.item.description}</p>
           </div>
 
-          
-          <div className="edit row" style={{display:"flex", float:"right", color:"blue", fontSize:"20px",cursor:"pointer"}} onClick={handleEditBucket}>
-           <button
-                  type="button"
-                  className="btn btn-warning btn-outline-light"
-                  // data-bs-toggle="modal"
-                  // data-bs-target="#exampleModalCenter"
-                  // buttonID = {props.bucket_id}
-                  
-                  
-                >
-
-                <BiSolidEdit
-                  
-                  style={{color:"blue" , fontSize: "30px"}}
-                />  
+          <div
+            className="edit row"
+            style={{
+              display: "flex",
+              float: "right",
+              color: "blue",
+              fontSize: "20px",
+              cursor: "pointer",
+            }}
+            onClick={handleEditBucket}
+          >
+            <button type="button" className="btn btn-warning btn-outline-light">
+              <BiSolidEdit style={{ color: "blue", fontSize: "30px" }} />
             </button>
           </div>
-          
 
           <div className="w-75">
             <div className="dropdown ">
@@ -120,7 +109,6 @@ if(props.item.publish_status == 1){
               </ul>
             </div>
           </div>
-          
         </div>
       </div>
       <div
@@ -135,7 +123,6 @@ if(props.item.publish_status == 1){
         <hr />
       </div>
     </div>
-    
   );
 };
 

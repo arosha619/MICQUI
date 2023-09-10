@@ -1,18 +1,17 @@
 import React, { useState, useEffect } from "react";
 import "./ModelBody.css";
-import { addBucket, addQuestion } from "../../API/axios";
 import { useParams } from "react-router-dom";
 
 const ModelBody = (props) => {
-  const { bucket_id } = useParams();
-
   return (
     <div>
       <div className="card">
         <div className="card-body">
           <form>
             <div className="form-group w-100">
-              <label for="exampleInputEmail1">{props.firstField}</label>
+              <label for="exampleInputEmail1" F>
+                {props.firstField}
+              </label>
               <input
                 type="text"
                 className="form-control"
@@ -48,23 +47,27 @@ const ModelBody = (props) => {
                       props.setType(e.target.value);
                     }}
                   >
-
-{props.isAdd ? (
+                    {props.isAdd ? (
                       <>
                         <option value="Employee">Employee</option>
-                    <option value="Manager">Manager</option>
+                        <option value="Manager">Manager</option>
                       </>
                     ) : (
                       <>
-
-                            <option value="Employee" selected = {props.type == "Employee"}>
-                            Employee
-                            </option>
-                            <option value="Manager" selected = {props.type == "Manager"}>Manager</option>
-
+                        <option
+                          value="Employee"
+                          selected={props.type == "Employee"}
+                        >
+                          Employee
+                        </option>
+                        <option
+                          value="Manager"
+                          selected={props.type == "Manager"}
+                        >
+                          Manager
+                        </option>
                       </>
                     )}
-
                   </select>
                 </div>
                 <div>
@@ -80,12 +83,12 @@ const ModelBody = (props) => {
                       </>
                     ) : (
                       <>
-
-                            <option value="0" selected = {props.status == "0"}>
-                            Draft
-                            </option>
-                            <option value="1" selected = {props.status == "1"}>publish</option>
-
+                        <option value="0" selected={props.status == "0"}>
+                          Draft
+                        </option>
+                        <option value="1" selected={props.status == "1"}>
+                          publish
+                        </option>
                       </>
                     )}
                   </select>
