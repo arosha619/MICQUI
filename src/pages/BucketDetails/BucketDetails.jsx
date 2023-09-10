@@ -1,13 +1,12 @@
 import React, { useState, useEffect } from "react";
-import SideBar from "../../components/Sidebar/SideBar";
 import BucketDetailCard from "../../components/BucketDetailCard/BucketDetailCard";
 import BucketHeader from "../../components/MybucketComponents/BucketHeader";
-import { FaQrcode } from "react-icons/fa6";
-import { BiArrowBack } from "react-icons/bi";
 import { GoDotFill } from "react-icons/go";
 import { useParams } from "react-router-dom";
 import { getAllQuestion, getBucketById } from "../../API/axios";
 import { useNavigate } from "react-router-dom";
+import Layout from "../../components/Layout/Layout";
+import "./BucketDetails.css";
 
 const BucketDetails = () => {
   const params = useParams();
@@ -17,7 +16,9 @@ const BucketDetails = () => {
   const [getQuestion, setGetQuestion] = useState(false);
   const [questionRefresh, setQuestionRefresh] = useState(false);
   const [bucketStatus, setBucketStatus] = useState("draft");
-  const [bucketTopic, setBucketTopic] = useState("No title");
+  const [bucketTopic, setBucketTopic] = useState("");
+  const [bucketdescription, setBucketdescription] = useState("");
+  
 
   useEffect(() => {
     const getAllQuestions = async () => {
@@ -47,8 +48,9 @@ const BucketDetails = () => {
     const getBucketByBucketId = async () => {
       try {
         const response = await getBucketById(params["bucket_id"]);
+        setBucketTopic(response.data.data[0].name);
+        setBucketdescription(response.data.data[0].description)
         if (response.data.data[0].publish_status == 1) {
-          setBucketTopic(response.data.data[0].name);
           setBucketStatus("Published");
         }
       } catch (error) {
@@ -59,78 +61,55 @@ const BucketDetails = () => {
     getBucketByBucketId();
   }, []);
 
-  const handleBack = (event) =>{
-event.preventDefault();
-navigate("/my-buckets")
-
-  }
+  const handleBack = (event) => {
+    event.preventDefault();
+    navigate("/my-buckets");
+  };
 
   return (
-    <div className="d-flex">
-      <div>
-        <SideBar />
-      </div>
-
-      <div className=" w-100" style={{ padding: "20px" }}>
-        <div>
-          <div className="row">
-            <div className="col-4 p-3">
-              <div className="d-inline-flex shadow bg-body p-2 rounded" onClick={handleBack} style={{cursor:"pointer"}}>
-                <BiArrowBack
-                  style={{ borderRadius: "5px", width: "30px", height: "30px" }}
-                />
-              </div>
+    <Layout Title="Questions">
+      <div className="d-flex">
+        <div className=" w-100">
+          <div>
+            <div>
+              <BucketHeader
+                questionList={questionList}
+                bucketTitle={"question"}
+                firstField={"Question"}
+                placeHolder={"Add Your Question Here.."}
+                refresh={questionRefresh}
+                setQuestionRefresh={setQuestionRefresh}
+              />
             </div>
-          </div>
-          <div className="row">
-            <div className="col-xl-9 col-lg-9 col-md-8 col-sm-7 col-7">
-              <h2>Bucket</h2>
-              <p>{bucketTopic}</p>
-              <div
-                className="col d-flex flex-row align-items-center"
-                style={{ paddingBottom: "10px" }}
-              >
+            <div className="q-header">
+              <h2>{bucketTopic}</h2>
+              <p style={{margin:'0'}}>{bucketdescription}</p>
+              <div className="q-status">
                 <GoDotFill
-                  style={{ color: bucketStatus == "draft" ? "gray" : "green" }}
+                  style={{
+                    color: bucketStatus == "draft" ? "gray" : "green",
+                  }}
                 />
                 <p style={{ margin: "0px" }}>{bucketStatus}</p>
               </div>
             </div>
-            <div className=" col-xl-3 col-lg-3 col-md-4 col-sm-5 col-5 d-flex flex-xl-row flex-lg-row flex-md-row flex-column text-end align justify-content-end">
-              <h2 className="p-2">4SGB6TN79</h2>
-
-              <FaQrcode
-                className="p-2"
-                style={{ color: "yellow", width: "60px", height: "60px" }}
-              />
+            <div className="q-container">
+              {questionList.map((item, index) => (
+                <>
+                  <BucketDetailCard
+                    index={index}
+                    item={item}
+                    setGetQuestion={setGetQuestion}
+                    getQuestion={getQuestion}
+                  />
+                  <hr style={{margin:'0',padding:'0'}} />
+                </>
+              ))}
             </div>
           </div>
         </div>
-
-        <div className="card">
-          <div className="card-header">
-            <BucketHeader
-              questionList={questionList}
-              bucketTitle={"question"}
-              firstField={"Question"}
-              placeHolder={"Add Your Question Here.."}
-              refresh={questionRefresh}
-              setQuestionRefresh={setQuestionRefresh}
-            />
-          </div>
-
-          <div className="p-3">
-            {questionList.map((item, index) => (
-              <BucketDetailCard
-                item={item}
-                setGetQuestion={setGetQuestion}
-                getQuestion={getQuestion}
-              />
-            ))}
-          </div>
-        </div>
       </div>
-    </div>
+    </Layout>
   );
 };
 

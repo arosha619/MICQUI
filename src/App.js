@@ -24,7 +24,7 @@ function App() {
       <Route path="/home" element={<Dashboard />} />
       <Route path="/user-list" element={<UserList />} />
       <Route path="/my-buckets" element={<MyBucket />} />
-      <Route path="/bucket-data/:bucket_id" element={<BucketDetails />} />
+      <Route path="/my-buckets/bucket-data/:bucket_id" element={<BucketDetails />} />
       <Route path="/settings" element={<Settings />} />
       <Route path="/forgot-password" element={<ForgotPassword />} />
       <Route path="/change-password" element={<ChangedPassword />} />

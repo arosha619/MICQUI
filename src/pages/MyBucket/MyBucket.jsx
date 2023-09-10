@@ -11,9 +11,7 @@ const MyBucket = () => {
   const navigate = useNavigate();
   const [deleteBucket, setDeleteBucket] = useState([]);
   const [deleteBucketIds, setDeleteBucketIds] = useState([]);
-
   const [bucketsData, setBucketsData] = useState([]);
-
   const [adminData, setAdminData] = useState([]);
   const [refresh, setRefresh] = useState(false);
 
@@ -115,6 +113,7 @@ const MyBucket = () => {
                   <p>Bucket Name</p>
                   <p>Description</p>
                   <p>position</p>
+                  <p>Status</p>
                   <p>Actions</p>
                 </div>
                 {bucketsData.length > 0 ? (

@@ -1,6 +1,5 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import "./AddBucket.css";
-import { addBucket, addQuestion } from "../../API/axios";
 import { useParams } from "react-router-dom";
 
 const AddBucket = (props) => {
@@ -42,24 +41,36 @@ const AddBucket = (props) => {
                     }}
                   />
                 </div>
-                <div>
+                <div className="select-container">
+                  <label htmlFor="Description">Position</label>
                   <select
+                    className="select-dropdown"
                     onChange={(e) => {
                       props.setType(e.target.value);
                     }}
                   >
-                    <option value="Employee">Employee</option>
-                    <option value="Manager">Manager</option>
+                    <option className="select-option" value="Employee">
+                      Employee
+                    </option>
+                    <option className="select-option" value="Manager">
+                      Manager
+                    </option>
                   </select>
                 </div>
-                <div>
+                <div className="select-container">
+                  <label htmlFor="Status">Status</label>
                   <select
+                    className="select-dropdown"
                     onChange={(e) => {
                       props.setStatus(e.target.value);
                     }}
                   >
-                    <option value="0">Draft</option>
-                    <option value="1">publish</option>
+                    <option className="select-option" value="0">
+                      Draft
+                    </option>
+                    <option className="select-option" value="1">
+                      Publish
+                    </option>
                   </select>
                 </div>
               </>
