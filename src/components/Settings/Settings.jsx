@@ -1,7 +1,6 @@
 import React from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
-import SideBar from "../Sidebar/SideBar";
 import profile from "../../Assets/profile.png";
 import {
   updateAdmin,
@@ -145,7 +144,6 @@ const Settings = () => {
 
   return (
     <div className="d-flex">
-      <SideBar />
       <div className="w-100 p-3">
         <div>
           <div>
