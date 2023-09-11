@@ -48,7 +48,7 @@ const BucketContains = (props) => {
         <p className="card-text">{props.item.type}</p>
         <p className="card-text">
           {props.item.publish_status ? (
-            <div style={{display:'flex', alignItems:'center'}}>
+            <div style={{ display: "flex", alignItems: "center" }}>
               <FontAwesomeIcon
                 onClick={handleClick}
                 icon={faCircleDot}
@@ -63,7 +63,7 @@ const BucketContains = (props) => {
               Published
             </div>
           ) : (
-            <div style={{display:'flex', alignItems:'center'}}>
+            <div style={{ display: "flex", alignItems: "center" }}>
               <FontAwesomeIcon
                 onClick={handleClick}
                 icon={faCircleDot}

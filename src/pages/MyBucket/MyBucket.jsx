@@ -14,6 +14,7 @@ const MyBucket = () => {
   const [bucketsData, setBucketsData] = useState([]);
   const [adminData, setAdminData] = useState([]);
   const [refresh, setRefresh] = useState(false);
+  const [showModal2, setShowModal2] = useState(true);
 
   var isAuthenticated = localStorage.getItem("isAuthenticated");
   const id = localStorage.getItem("user_id");
