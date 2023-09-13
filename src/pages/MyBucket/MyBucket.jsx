@@ -6,6 +6,7 @@ import BucketHeader from "./../../components/MybucketComponents/BucketHeader";
 import { getAllBuckets } from "../../API/axios";
 import { getadminbyID } from "../../API/axios";
 import Layout from "../../components/Layout/Layout";
+import Loading from "../../components/Spinner/Spinner";
 
 const MyBucket = () => {
   const navigate = useNavigate();
@@ -24,6 +25,9 @@ const MyBucket = () => {
   const [type, setType] = useState("Employee");
   const [status, setStatus] = useState("0");
   const [searchItem, setSearchItem] = useState("");
+  const [loading, setLoading]=useState(true);
+  const backgroundColor = "white";
+  const height = "100px";
 
   var isAuthenticated = localStorage.getItem("isAuthenticated");
   const id = localStorage.getItem("user_id");
@@ -42,8 +46,8 @@ const MyBucket = () => {
 
           const data = response.data.data;
           console.log("data : ", data);
-
           setBucketsData(data);
+          setLoading(false);
         } catch (error) {
           console.error("Error fetching bucket data:", error);
           alert("Data fetching faild");
@@ -160,7 +164,9 @@ const MyBucket = () => {
                   <p>Status</p>
                   <p>Actions</p>
                 </div>
-
+                {loading ? (
+            <Loading backgroundColor={backgroundColor} height={height} />
+          ) : (<>
                 {filteredData.length > 0 ? (
                   <>
                     {filteredData.map((item, index) => (
@@ -215,7 +221,7 @@ const MyBucket = () => {
                       <></>
                     )}
                   </>
-                )}
+                )}</>)}
 
                 <button
                   type="button"
