@@ -7,6 +7,7 @@ import { getAllQuestion, getBucketById } from "../../API/axios";
 import { useNavigate } from "react-router-dom";
 import Layout from "../../components/Layout/Layout";
 import "./BucketDetails.css";
+import Loading from "../../components/Spinner/Spinner";
 
 const BucketDetails = () => {
   const params = useParams();
@@ -29,13 +30,15 @@ const BucketDetails = () => {
   const [isAdd, setIsAdd] = useState(true);
   const [isBucketEdit, setIsBucketEdit] = useState(true);
   const [searchItem, setSearchItem] = useState("");
+  const [loading, setLoading] = useState(true);
+  const backgroundColor = "white";
+  const height = "100px";
 
   useEffect(() => {
     const getAllQuestions = async () => {
       try {
         const response = await getAllQuestion();
         console.log("response : ", response);
-        // Handle the response here
         if (response.data.code == 400) {
           alert(response.data.message);
         } else {
@@ -60,6 +63,7 @@ const BucketDetails = () => {
         const response = await getBucketById(params["bucket_id"]);
         setBucketTopic(response.data.data[0].name);
         setBucketdescription(response.data.data[0].description);
+        setLoading(false);
         if (response.data.data[0].publish_status == 1) {
           setBucketStatus("Published");
         }
@@ -118,12 +122,6 @@ const BucketDetails = () => {
                 editQuestionId={editQuestionId}
                 setEditQuestionId={setEditQuestionId}
                 setSearchItem={setSearchItem}
-                // questionList={questionList}
-                // bucketTitle={"question"}
-                // firstField={"Question"}
-                // placeHolder={"Add Your Question Here.."}
-                // refresh={questionRefresh}
-                // setQuestionRefresh={setQuestionRefresh}
               />
             </div>
             <div className="q-header">
@@ -139,33 +137,13 @@ const BucketDetails = () => {
               </div>
             </div>
             <div className="q-container">
-              {filteredData.length > 0 ? (
-                <>
-                  {filteredData.map((item, index) => (
-                    <>
-                      <BucketDetailCard
-                        index={index}
-                        // item={item}
-                        // setGetQuestion={setGetQuestion}
-                        // getQuestion={getQuestion}
-                        item={item}
-                        setGetQuestion={setGetQuestion}
-                        getQuestion={getQuestion}
-                        setEditQuestionId={setEditQuestionId}
-                        setEditTempQuestionId={setEditTempQuestionId}
-                        setBucketPropTitle={setBucketPropTitle}
-                        setIsAdd={setIsAdd}
-                        setIsBucketEdit={setIsBucketEdit}
-                      />
-                      <hr style={{ margin: "0", padding: "0" }} />
-                    </>
-                  ))}
-                </>
+              {loading ? (
+                <Loading backgroundColor={backgroundColor} height={height} />
               ) : (
                 <>
-                  {!searchItem ? (
+                  {filteredData.length > 0 ? (
                     <>
-                      {questionList.map((item, index) => (
+                      {filteredData.map((item, index) => (
                         <>
                           <BucketDetailCard
                             index={index}
@@ -186,7 +164,33 @@ const BucketDetails = () => {
                       ))}
                     </>
                   ) : (
-                    <></>
+                    <>
+                      {!searchItem ? (
+                        <>
+                          {questionList.map((item, index) => (
+                            <>
+                              <BucketDetailCard
+                                index={index}
+                                // item={item}
+                                // setGetQuestion={setGetQuestion}
+                                // getQuestion={getQuestion}
+                                item={item}
+                                setGetQuestion={setGetQuestion}
+                                getQuestion={getQuestion}
+                                setEditQuestionId={setEditQuestionId}
+                                setEditTempQuestionId={setEditTempQuestionId}
+                                setBucketPropTitle={setBucketPropTitle}
+                                setIsAdd={setIsAdd}
+                                setIsBucketEdit={setIsBucketEdit}
+                              />
+                              <hr style={{ margin: "0", padding: "0" }} />
+                            </>
+                          ))}
+                        </>
+                      ) : (
+                        <></>
+                      )}
+                    </>
                   )}
                 </>
               )}
