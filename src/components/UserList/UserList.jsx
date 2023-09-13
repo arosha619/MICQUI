@@ -32,6 +32,11 @@ const UserList = () => {
   const [loading, setLoading] = useState(true);
   const backgroundColor = "white";
   const height = "100px";
+  const [currentPage, setCurrentPage] = useState(1);
+  const [usersPerPage] = useState(5);
+  const indexOfLastUser = currentPage * usersPerPage;
+  const indexOfFirstUser = indexOfLastUser - usersPerPage;
+  const currentUsers = filteredData.slice(indexOfFirstUser, indexOfLastUser);
 
   const isAuthenticated = localStorage.getItem("isAuthenticated");
   const id = localStorage.getItem("user_id");
@@ -42,6 +47,20 @@ const UserList = () => {
       navigate("/");
     }
   }, []);
+
+   // Handle page navigation
+   const nextPage = () => {
+    if (indexOfLastUser < filteredData.length) {
+      setCurrentPage(currentPage + 1);
+    }
+  };
+
+  const prevPage = () => {
+    if (currentPage > 1) {
+      setCurrentPage(currentPage - 1);
+    }
+  };
+  
 
   const handleProfilePictureChange = (file) => {
     setPro_pic(file);
@@ -168,7 +187,7 @@ const UserList = () => {
             <Loading backgroundColor={backgroundColor} height={height} />
           ) : (
             <>
-              {filteredData.map((item) => {
+              {currentUsers.map((item) => {
                 return (
                   <div className="card-wrapper" key={item.id}>
                     <div className="profile-picture">
@@ -220,7 +239,9 @@ const UserList = () => {
               })}
             </>
           )}
+          
         </div>
+        
         {openModal && (
           <UpdateUserModal
             pro_pic={pro_pic}
@@ -338,7 +359,17 @@ const UserList = () => {
             </Modal.Footer>
           </Modal>
         )}
+        <div className="pagination">
+        <button id="previous" onClick={prevPage} disabled={currentPage === 1}>
+          Previous
+        </button>
+        <button id="next" onClick={nextPage} disabled={indexOfLastUser >= filteredData.length}>
+          Next
+        </button>
+        </div>
+       
       </div>
+      
     </Layout>
   );
 };
