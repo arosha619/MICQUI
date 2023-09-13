@@ -70,18 +70,17 @@
 
 .login_button1 {
   display: block;
-  width: 55%;
+  width: 30%;
   border-radius: 25px;
   font-size: 23px;
   font-family: inherit;
   cursor: pointer;
-  background-color: black;
+  background-color: rgb(0, 0, 0);
   color: rgba(193, 165, 100, 1) !important;
   border: none;
   text-decoration: none;
   text-align: center;
 }
-
 
 .link_container {
   display: grid;
@@ -109,8 +108,7 @@
 }
 
 .error_msg {
-  color: rgb(252, 249, 249);
-  padding-left: 1rem;
+  color: red;
   font-size: 0.85rem;
   margin: 0;
 }
@@ -162,18 +160,17 @@
   margin: 0px;
 }
 
-.login_button{
-  
+.login_button {
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: center;
-
 }
- 
-.play-button{width: 23px;
-  height: 23px;
-  display: flex;  /* align-content: center; */
+
+.play-button {
+  width: 25px;
+  height: 25px;
+  display: flex; /* align-content: center; */
   align-items: center;
   background-position: center;
   background-color: rgba(193, 165, 100, 1);
@@ -181,10 +178,11 @@
   flex-wrap: nowrap;
   justify-content: center;
 }
-.buttons{
-  padding-top: 70px;
+.buttons {
+  padding-top: 30px;
 }
-.footer-msg{
-  padding-top: 50px;
+.footer-msg {
+  color: aliceblue;
+  margin-top: 50px;
   text-align: center !important;
 }
