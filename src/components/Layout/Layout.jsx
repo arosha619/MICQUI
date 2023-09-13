@@ -19,16 +19,9 @@ function Layout({ Title, children }) {
   return (
     <div className="layout">
       <Sidebar />
-      
       <div className="wrapper">
         <Header Title={Title} />
         <div className="content">{children}</div>
-
-    /*  {loading ? <Loading backgroundColor={backgroundColor} />:(<>
-        <Header />
-        <div className="content">{ children }</div>
-        </> )}*/
-
       </div>
       
     </div>

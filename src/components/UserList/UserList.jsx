@@ -170,61 +170,6 @@ const UserList = () => {
             <p>Status</p>
             <p>Actions</p>
           </div>
-      /*    {filteredData.length === 0 ? (
-            <div className="card-emty">
-              <p>No data available.</p>
-            </div>
-          ) : (
-            filteredData.map((item) => {
-              return (
-                <div className="card-wrapper" key={item.id}>
-                  <div className="profile-picture">
-                    <img src={item.profile_pic} />
-                  </div>
-                  <p>{item.full_name}</p>
-                  <p>{item.email}</p>
-                  <p>077 8126872</p>
-                  <p>{item.role}</p>
-                  <p>{item.is_verified === 1 ? "Verified" : "Not Verified"}</p>
-                  <div className="action-button">
-                    <FontAwesomeIcon
-                      onClick={() => {
-                        setPro_pic(item.profile_pic);
-                        setFullname(item.full_name);
-                        setRole(item.role);
-                        setCompany(item.company_name);
-                        setUserId(item.id);
-                        setOpenmodal(true);
-                      }}
-                      icon={faPen}
-                      style={{
-                        color: "#000",
-                        width: "20px",
-                        height: "20px",
-                        padding: "2px 10px",
-                        cursor: "pointer",
-                      }}
-                    />
-                    <FontAwesomeIcon
-                      onClick={() => {
-                        setDeleteid(item.id);
-                        setIsdelete(true);
-                      }}
-                      icon={faTrash}
-                      style={{
-                        color: "red",
-                        width: "20px",
-                        height: "20px",
-                        padding: "2px 10px",
-                        cursor: "pointer",
-                      }}
-                    />
-                  </div>
-                </div>
-              );
-            })
-          )}*/
-
           {loading ? <Loading backgroundColor={backgroundColor} height={height} /> : (<>
           {filteredData.map((item) => {
             return (
