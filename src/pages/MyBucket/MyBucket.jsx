@@ -28,7 +28,7 @@ const MyBucket = () => {
   const backgroundColor = "white";
   const height = "100px";
   const [currentPage, setCurrentPage] = useState(1);
-  const [bucketsPerPage] = useState(2);
+  const [bucketsPerPage] = useState(5);
 
   const indexOfLastBucket = currentPage * bucketsPerPage;
   const indexOfFirstBucket = indexOfLastBucket - bucketsPerPage;
