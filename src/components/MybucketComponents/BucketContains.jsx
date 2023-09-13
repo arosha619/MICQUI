@@ -1,89 +1,107 @@
-import React, { useState, useEffect } from "react";
-import bucketData from "./BucketContains";
+import React from "react";
 import { useNavigate } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCircleDot, faEye, faPen } from "@fortawesome/free-solid-svg-icons";
 
 const BucketContains = (props) => {
-
   const navigate = useNavigate();
   const isChecked = (event) => {
     if (event.target.checked) {
       props.setDeleteBucket([...props.deleteBucket, props.item]);
+      props.setDeleteBucketIds([
+        ...props.deleteBucketIds,
+        props.item.bucket_id,
+      ]);
     } else {
       const updatedDeleteBucket = props.deleteBucket.filter(
         (bucketItem) => bucketItem !== props.item
       );
+
+      const updatedDeleteBucketIds = props.deleteBucketIds.filter(
+        (bucketItemId) => bucketItemId !== props.item.bucket_id
+      );
       props.setDeleteBucket(updatedDeleteBucket);
+      props.setDeleteBucketIds(updatedDeleteBucketIds);
     }
   };
 
-
-
   const handleClick = async (event) => {
     event.preventDefault();
-    
-    navigate(`/bucket-data/${props.item.bucket_id}`);
+
+    navigate(`/my-buckets/bucket-data/${props.item.bucket_id}`);
   };
-  
+
+  const editBucket = () => {};
 
   return (
     <div>
-      <div
-        className="card-body d-flex row"
-        style={{ marginRight: "0px", marginLeft: "0px" }}
-      >
-        <div className="form-check col-1 d-flex align-items-center">
+      <div className="backet-card">
+        <div>
           <input
-            style={{ scale: "2", marginLeft: "15px" }}
-            className="form-check-input"
+            style={{ scale: "1.5", marginLeft: "15px" }}
             type="checkbox"
             onChange={isChecked}
           />
         </div>
-        <div className="card-content col-11 ">
-          <div
-            className="p-2"
-            onClick={handleClick}
-            style={{ cursor: "pointer" }}
-          >
-            <h5 className="card-title">{props.item.name}</h5>
-            <p className="card-text">{props.item.description}</p>
-          </div>
-          <div>
-            <div className="dropdown ">
-              <button
-                className="btn btn-light dropdown-toggle"
-                type="button"
-                data-bs-toggle="dropdown"
-                aria-expanded="false"
-              >
-                {props.item.type}
-              </button>
-              <ul className="dropdown-menu dropdown-menu-light">
-                <li>
-                  <a className="dropdown-item " href="#">
-                    Manager
-                  </a>
-                </li>
-                <li>
-                  <a className="dropdown-item" href="#">
-                    Employee
-                  </a>
-                </li>
-              </ul>
+        <p className="card-title">{props.item.name}</p>
+        <p className="card-text">{props.item.description}</p>
+        <p className="card-text">{props.item.type}</p>
+        <p className="card-text">
+          {props.item.publish_status ? (
+            <div style={{display:'flex', alignItems:'center'}}>
+              <FontAwesomeIcon
+                onClick={handleClick}
+                icon={faCircleDot}
+                style={{
+                  color: "green",
+                  width: "15px",
+                  height: "15px",
+                  padding: "2px 10px 2px 0",
+                  cursor: "pointer",
+                }}
+              />
+              Published
             </div>
-          </div>
+          ) : (
+            <div style={{display:'flex', alignItems:'center'}}>
+              <FontAwesomeIcon
+                onClick={handleClick}
+                icon={faCircleDot}
+                style={{
+                  color: "gray",
+                  width: "15px",
+                  height: "15px",
+                  padding: "2px 10px 2px 0",
+                  cursor: "pointer",
+                }}
+              />
+              Draft
+            </div>
+          )}
+        </p>
+        <div>
+          <FontAwesomeIcon
+            onClick={handleClick}
+            icon={faEye}
+            style={{
+              color: "black",
+              width: "20px",
+              height: "20px",
+              padding: "2px 20px 2px 0",
+              cursor: "pointer",
+            }}
+          />
+          <FontAwesomeIcon
+            icon={faPen}
+            style={{
+              color: "black",
+              width: "20px",
+              height: "20px",
+              padding: "2px 20px",
+              cursor: "pointer",
+            }}
+          />
         </div>
-      </div>
-      <div
-        className="row"
-        style={{
-          paddingLeft: "20px",
-          paddingRight: "20px",
-          marginRight: "0px",
-          marginLeft: "0px",
-        }}
-      >
-        <hr />
       </div>
     </div>
   );

@@ -4,7 +4,8 @@ import Sidebar from "./Sidebar";
 import Header from "./Header";
 import Loading from "../Spinner/Spinner";
 
-function Layout({ children }) {
+
+function Layout({ Title, children }) {
   const [loading, setLoading] = useState(true);
   const backgroundColor = 'white'; 
   
@@ -20,10 +21,14 @@ function Layout({ children }) {
       <Sidebar />
       
       <div className="wrapper">
-      {loading ? <Loading backgroundColor={backgroundColor} />:(<>
+        <Header Title={Title} />
+        <div className="content">{children}</div>
+
+    /*  {loading ? <Loading backgroundColor={backgroundColor} />:(<>
         <Header />
         <div className="content">{ children }</div>
-        </> )}
+        </> )}*/
+
       </div>
       
     </div>

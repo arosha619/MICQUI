@@ -105,7 +105,6 @@
 }
 .menu-wrapper a{
     text-decoration: none; 
-    transition: 0.4s cubic-bezier(0.6, -0.28, 0.735, 0.045);
 
 }
 .menu-button{
@@ -117,13 +116,13 @@
     padding: 10px;
     border-radius: 12px;
     display: flex;
-    align-content: stretch;
+    align-items: center;
     justify-content: flex-start;
-    transition: 0.4s cubic-bezier(0.6, -0.28, 0.735, 0.045);
 
 }
 .menu-button:hover{
     background-color: rgb(195, 165, 100);
+    color: white;
 }
 .plane-logo{
     height: 200px;
@@ -136,18 +135,23 @@
     transition: 0.4s cubic-bezier(0.6, -0.28, 0.735, 0.045);
 }
 .logOut{
-    display: flex;
-    bottom: 10px;
+
 }
-.activeLink {
-    color: white;
+.active {
+    border: none;
+    color: #ffffff;
     font-size: 18px;
     font-weight: 500;
-    background-color: #757575;
+    background-color: #2F2E2B;
     margin: 10px 0;
     padding: 10px;
     border-radius: 12px;
     display: flex;
     align-content: stretch;
     justify-content: flex-start;
+    transition: 0.4s cubic-bezier(0.6, -0.28, 0.735, 0.045);
+
+  }
+  .active img{
+    color: #C1A564;
   }

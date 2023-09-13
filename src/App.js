@@ -1,4 +1,3 @@
-import SideBar from "./components/Sidebar/SideBar";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Dashboard from "./pages/Dashboard";
 import UserList from "./components/UserList/UserList";
@@ -10,7 +9,9 @@ import ChangedPassword from "./components/ForgotPassword/ChangedPassword";
 import Settings from "./components/Settings/Settings";
 import SuccessfullyRegistered from "./components/SignUp/SuccessfullyRegistered";
 import BucketDetails from "./pages/BucketDetails/BucketDetails.jsx";
-import Layout from "./components/Layout/Layout";
+import AddBucket from "./components/AddBucket/AddBucket";
+import './App.css'
+
 
 function App() {
   return (
@@ -20,13 +21,12 @@ function App() {
       <Route path="/home" element={<Dashboard />} />
       <Route path="/user-list" element={<UserList />} />
       <Route path="/my-buckets" element={<MyBucket />} />
-      <Route path="/bucket-data/:bucket_id" element={<BucketDetails />} />
+      <Route path="/my-buckets/bucket-data/:bucket_id" element={<BucketDetails />} />
       <Route path="/settings" element={<Settings />} />
       <Route path="/forgot-password" element={<ForgotPassword />} />
       <Route path="/change-password" element={<ChangedPassword />} />
       <Route path="/user/reset" element={<ChangedPassword />} />
       <Route path="/verify" element={<SuccessfullyRegistered />} />
-      <Route path="/layout" element={<Layout />} />
     </Routes>
   );
 }
