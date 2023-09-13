@@ -197,6 +197,7 @@ input.nosubmit {
   border: none;
   transition: background-color 0.3s, transform 0.3s;
   cursor: pointer;
+  width: 100px;
 }
 .pagination button:hover {
   background-color: rgb(31, 30, 28);
