@@ -4,34 +4,51 @@ import { useNavigate } from "react-router-dom";
 import { FaCheckCircle, FaExclamationCircle, FaTrash } from "react-icons/fa";
 import "./MyBucketComponent.css";
 import { useParams } from "react-router-dom";
-import { AiOutlineCloseCircle } from "react-icons/ai";
 import "./MyBucketComponent.css";
 import {
   getadminbyID,
   addBucket,
+  editBucket,
   addQuestion,
   deleteBucketSet,
+  editQuestion,
 } from "../../API/axios";
-import AddBucket from "../AddBucket/AddBucket";
 import { Button, Modal } from "react-bootstrap";
+import Bucketmodal from "../Modal/Bucketmodal";
 
 const BucketHeader = (props) => {
   const navigate = useNavigate();
   const [deleteBucket, setDeleteBucket] = useState([]);
   const [adminData, setAdminData] = useState([]);
-  const [showModal, setShowModal] = useState(true);
-  const [bucketPropTitle, setBucketPropTitle] = useState("");
-  const [description, setDescription] = useState("");
-  const [type, setType] = useState("Employee");
-  const [status, setStatus] = useState("0");
   const { bucket_id } = useParams();
   const [createConfirms, setCreateConfirms] = useState(false);
   const [isdelete, setIsdelete] = useState(false);
   const [confirmdelete, setConfirmdelete] = useState(false);
   const [createBucket, setCreateBucket] = useState(false);
-
+  const [updateBucket, setUpdateBucket] = useState(false);
+  const [UpdateConfirms, setUpdateConfirms] = useState(false);
   var isAuthenticated = localStorage.getItem("isAuthenticated");
 
+  // const deleteBucketList = async (event) => {
+  //   event.preventDefault();
+  //   const formData = {
+  //     bucketIds: props.deleteBucketIds,
+  //   };
+
+  //   try {
+  //     const response = await deleteBucketSet(formData);
+  //     if (response.status === 200) {
+  //       props.setRefresh(!props.refresh);
+  //       props.setDeleteBucket([]);
+  //       props.setDeleteBucketIds([]);
+  //       setConfirmdelete(true);
+  //       setIsdelete(false);
+  //     }
+  //   } catch (error) {
+  //     console.log(error);
+  //     alert("Delete faild");
+  //   }
+  // };
   const deleteBucketList = async (event) => {
     event.preventDefault();
     const formData = {
@@ -44,11 +61,10 @@ const BucketHeader = (props) => {
         props.setRefresh(!props.refresh);
         props.setDeleteBucket([]);
         props.setDeleteBucketIds([]);
-        setConfirmdelete(true);
         setIsdelete(false);
+        setConfirmdelete(true);
       }
     } catch (error) {
-      console.log(error);
       alert("Delete faild");
     }
   };
@@ -82,156 +98,164 @@ const BucketHeader = (props) => {
   }
   const handleClose = async (event) => {
     event.preventDefault();
+    if (props.isAdd) {
+      if (props.bucketTitle === "bucket") {
+        const formdata = {
+          name: props.bucketPropTitle,
+          description: props.description,
+          type: props.type,
+          publish_status: props.status,
+        };
 
-    if (props.bucketTitle === "bucket") {
-      const formdata = {
-        name: bucketPropTitle,
-        description: description,
-        type: type,
-        publish_status: status,
-      };
-
-      try {
-        const response = await addBucket(formdata);
-        if (response.status === 200) {
-          const button = document.getElementById("myButton");
-          if (button) {
-            button.click();
-          }
-          props.setRefresh(!props.refresh);
-          setCreateBucket(true);
-          setCreateConfirms(true);
-        } else {
-          alert("Something went Wrong");
-        }
-      } catch (error) {
-        alert(error.message);
-      }
-    }
-    if (props.bucketTitle === "question") {
-      const formdata = {
-        bucket_id: bucket_id,
-        question: bucketPropTitle,
-      };
-
-      try {
-        const response = await addQuestion(formdata);
-
-        if (response.data.code === 200) {
-          const button = document.getElementById("myButton");
-          setBucketPropTitle("");
-          if (button) {
-            button.click();
-          }
-          props.setQuestionRefresh(!props.refresh);
-          setCreateConfirms(true);
-        } else {
-          alert("Something went Wrong");
-        }
-      } catch (error) {
-        if (error.response.data.message) {
-          console.log(error.response.data.message);
-
-          if (
-            error.response.data.message ===
-            "Maximum number of questions reached for this bucket."
-          ) {
+        try {
+          const response = await addBucket(formdata);
+          if (response.status === 200) {
             const button = document.getElementById("myButton");
+            props.setBucketPropTitle("");
+            props.setDescription("");
+            props.setType("Employee");
+            props.setStatus("0");
             if (button) {
               button.click();
             }
+            props.setRefresh(!props.refresh);
+            setCreateBucket(true);
+            setCreateConfirms(true);
+          } else {
+            alert("Something went Wrong");
           }
-          alert(error.response.data.message);
-        } else {
+        } catch (error) {
           alert(error.message);
+        }
+      }
+      if (props.bucketTitle === "question") {
+        const formdata = {
+          bucket_id: bucket_id,
+          question: props.bucketPropTitle,
+        };
+
+        try {
+          const response = await addQuestion(formdata);
+
+          if (response.data.code === 200) {
+            const button = document.getElementById("myButton");
+            props.setBucketPropTitle("");
+            if (button) {
+              button.click();
+            }
+            props.setQuestionRefresh(!props.refresh);
+            setCreateConfirms(true);
+          } else {
+            alert("Something went Wrong");
+          }
+        } catch (error) {
+          if (error.response.data.message) {
+            if (
+              error.response.data.message ===
+              "Maximum number of questions reached for this bucket."
+            ) {
+              const button = document.getElementById("myButton");
+              if (button) {
+                button.click();
+              }
+            }
+            alert(error.response.data.message);
+          } else {
+            alert(error.message);
+          }
+        }
+      }
+    } else {
+      if (props.bucketTitle === "bucket") {
+        const formdata = {
+          name: props.bucketPropTitle,
+          description: props.description,
+          type: props.type,
+          publish_status: props.status,
+        };
+
+        try {
+          const response = await editBucket(props.editBucketId, formdata);
+          if (response.status === 200) {
+            const button = document.getElementById("myButton");
+            props.setBucketPropTitle("");
+            props.setDescription("");
+            props.setType("Employee");
+            props.setStatus("0");
+            if (button) {
+              button.click();
+            }
+            props.setRefresh(!props.refresh);
+            setUpdateBucket(true);
+            setUpdateConfirms(true);
+
+            // alert("Successfully updated");
+          } else {
+            alert("Something went Wrong");
+          }
+        } catch (error) {
+          alert(error.message);
+        }
+      }
+      if (props.bucketTitle === "question") {
+        const formdata = {
+          question: props.bucketPropTitle,
+        };
+
+        try {
+          const response = await editQuestion(props.editQuestionId, formdata);
+
+          if (response.status === 200) {
+            const button = document.getElementById("myButton");
+            props.setBucketPropTitle("");
+            props.setEditQuestionId("");
+            if (button) {
+              button.click();
+            }
+            props.setQuestionRefresh(!props.refresh);
+            setUpdateConfirms(true);
+          } else {
+            alert("Something went Wrong");
+          }
+        } catch (error) {
+          alert("Question update faild");
         }
       }
     }
   };
 
+  const handleAddBucket = (event) => {
+    event.preventDefault();
+    props.setBucketPropTitle("");
+    props.setIsAdd(true);
+  };
+
   return (
     <>
-      {showModal && (
-        <div
-          className="modal fade"
-          id="exampleModalCenter"
-          tabindex="-1"
-          role="dialog"
-          aria-labelledby="exampleModalCenterTitle"
-          aria-hidden="true"
-        >
-          <div className="modal-dialog modal-dialog-centered" role="document">
-            <div className="modal-content">
-              <div className="modal-header">
-                <h5 className="modal-title" id="exampleModalLongTitle">
-                  {props.bucketTitle == "question"
-                    ? "Add Question"
-                    : "Add Bucket"}
-                </h5>
-                <button
-                  type="button"
-                  class="btn"
-                  data-bs-dismiss="modal"
-                  aria-label="Close"
-                  style={{ outline: "none !important" }}
-                  onFocus={(e) => e.target.blur()}
-                >
-                  <AiOutlineCloseCircle
-                    style={{ color: "red", fontSize: "30px" }}
-                  />
-                </button>
-              </div>
-              <div className="modal-body">
-                <AddBucket
-                  bucketTitle={props.bucketTitle}
-                  firstField={props.firstField}
-                  placeHolder={props.placeHolder}
-                  bucketPropTitle={bucketPropTitle}
-                  setBucketPropTitle={setBucketPropTitle}
-                  description={description}
-                  setDescription={setDescription}
-                  type={type}
-                  setType={setType}
-                  setStatus={setStatus}
-                />
-              </div>
-              <div className="modal-footer d-flex justify-content-center">
-                <button
-                  style={{
-                    width: "100px",
-                    backgroundColor: "black",
-                    color: "white",
-                    padding: "10px 0",
-                  }}
-                  type="button"
-                  className="btn"
-                  data-bs-dismiss="modal"
-                  id="myButton"
-                >
-                  Close
-                </button>
-                <button
-                  style={{
-                    width: "100px",
-                    backgroundColor: "black",
-                    color: "white",
-                    padding: "10px 0",
-                  }}
-                  type="button"
-                  className="btn btn-primary"
-                  onClick={handleClose}
-                >
-                  Submit
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
-
+      <Bucketmodal
+        bucketTitle={props.bucketTitle}
+        firstField={props.firstField}
+        placeHolder={props.placeHolder}
+        bucketPropTitle={props.bucketPropTitle}
+        setBucketPropTitle={props.setBucketPropTitle}
+        description={props.description}
+        setDescription={props.setDescription}
+        type={props.type}
+        setType={props.setType}
+        setStatus={props.setStatus}
+        handleClose={handleClose}
+        isAdd={props.isAdd}
+        setIsAdd={props.setIsAdd}
+        editBucketId={props.editBucketId}
+        editQuestionId={props.editQuestionId}
+        setIsBucketEdit={props.setIsBucketEdit}
+        isBucketEdit={props.isBucketEdit}
+        status={props.status}
+      />
       <div className="mb-3 w-100 search-header">
         <div className="w-50 ">
           <input
+            onChange={(e) => props.setSearchItem(e.target.value)}
             style={{
               padding: "10px 20px",
               boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
@@ -239,10 +263,15 @@ const BucketHeader = (props) => {
             type="search"
             className="form-control"
             placeholder="Search here..."
-            // onChange={(e) => handleSearch(e.target.value)}
           />
         </div>
-        <button data-bs-toggle="modal" data-bs-target="#exampleModalCenter">
+        <button
+          type="button"
+          className="btn btn-outline-light"
+          data-bs-toggle="modal"
+          data-bs-target="#exampleModalCenter"
+          onClick={handleAddBucket}
+        >
           {props.bucketTitle == "question" ? "Add Question" : "Add Bucket"}
         </button>
       </div>
@@ -289,6 +318,42 @@ const BucketHeader = (props) => {
           </div>
         </div>
         <div>
+          {UpdateConfirms && (
+            <Modal
+              show={UpdateConfirms}
+              onHide={() => setCreateConfirms(false)}
+              style={{ background: "rgba(15, 14, 14, 0.144)" }}
+            >
+              <Modal.Header closeButton>
+                <div className="d-flex justify-content-center align-items-center text-danger">
+                  <FaCheckCircle
+                    size={24}
+                    style={{ marginLeft: "220px", color: "green" }}
+                    onClick={() => {
+                      setCreateConfirms(false);
+                      window.location.reload();
+                    }}
+                  />
+                </div>
+              </Modal.Header>
+              <Modal.Body className="d-flex justify-content-center ">
+                {updateBucket
+                  ? "Bucket Successfully Updated."
+                  : "Question Successfully Updated."}
+              </Modal.Body>
+              <Modal.Footer className="d-flex justify-content-center">
+                <Button
+                  variant="dark"
+                  style={{ width: "100px" }}
+                  onClick={() => {
+                    setUpdateConfirms(false);
+                  }}
+                >
+                  Ok
+                </Button>
+              </Modal.Footer>
+            </Modal>
+          )}
           {createConfirms && (
             <Modal
               show={createConfirms}
@@ -310,7 +375,7 @@ const BucketHeader = (props) => {
               <Modal.Body className="d-flex justify-content-center ">
                 {createBucket
                   ? "Bucket Successfully Created."
-                  : "Question Successfully Added."}
+                  : "Question Successfully Created."}
               </Modal.Body>
               <Modal.Footer className="d-flex justify-content-center">
                 <Button

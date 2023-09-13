@@ -37,7 +37,6 @@ const UserList = () => {
   const indexOfLastUser = currentPage * usersPerPage;
   const indexOfFirstUser = indexOfLastUser - usersPerPage;
   const currentUsers = filteredData.slice(indexOfFirstUser, indexOfLastUser);
-
   const isAuthenticated = localStorage.getItem("isAuthenticated");
   const id = localStorage.getItem("user_id");
 
@@ -48,8 +47,8 @@ const UserList = () => {
     }
   }, []);
 
-   // Handle page navigation
-   const nextPage = () => {
+  // Handle page navigation
+  const nextPage = () => {
     if (indexOfLastUser < filteredData.length) {
       setCurrentPage(currentPage + 1);
     }
@@ -60,7 +59,6 @@ const UserList = () => {
       setCurrentPage(currentPage - 1);
     }
   };
-  
 
   const handleProfilePictureChange = (file) => {
     setPro_pic(file);
@@ -157,7 +155,13 @@ const UserList = () => {
   };
 
   return (
-    <Layout Title={"Users(" + filteredData.length + ")"}>
+    <Layout
+      Title={
+        "Users(" +
+        (filteredData.length !== null ? filteredData.length : 0) +
+        ")"
+      }
+    >
       <div className="d-flex">
         <div className="w-100">
           <form className="mb-3 w-50">
@@ -195,7 +199,7 @@ const UserList = () => {
                     </div>
                     <p>{item.full_name}</p>
                     <p>{item.email}</p>
-                    <p>077 8126872</p>
+                    <p>null</p>
                     <p>{item.role}</p>
                     <p>
                       {item.is_verified === 1 ? "Verified" : "Not Verified"}
@@ -239,9 +243,8 @@ const UserList = () => {
               })}
             </>
           )}
-          
         </div>
-        
+
         {openModal && (
           <UpdateUserModal
             pro_pic={pro_pic}
@@ -360,16 +363,18 @@ const UserList = () => {
           </Modal>
         )}
         <div className="pagination">
-        <button id="previous" onClick={prevPage} disabled={currentPage === 1}>
-          Previous
-        </button>
-        <button id="next" onClick={nextPage} disabled={indexOfLastUser >= filteredData.length}>
-          Next
-        </button>
+          <button id="previous" onClick={prevPage} disabled={currentPage === 1}>
+            Previous
+          </button>
+          <button
+            id="next"
+            onClick={nextPage}
+            disabled={indexOfLastUser >= filteredData.length}
+          >
+            Next
+          </button>
         </div>
-       
       </div>
-      
     </Layout>
   );
 };

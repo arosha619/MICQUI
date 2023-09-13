@@ -80,12 +80,12 @@ export const deleteQuestionById = async (id) => {
 };
 
 export const addBucket = async (formData) => {
-    const res = await API.post(`bucket/addBucket`, formData);
-    return res;
+  const res = await API.post(`bucket/addBucket`, formData);
+  return res;
 };
 
 export const editBucket = async (id, formData) => {
-  const res = await API.put(`bucket/editBucket/${id}`, formData);
+  const res = await API.put(`bucket/updateBucket/${id}`, formData);
   return res;
 };
 
@@ -100,7 +100,11 @@ export const getBucketById = async (id) => {
 };
 
 export const deleteBucketSet = async (formData) => {
-  const res = await API.post(`bucket/deleteBuckets`,formData);
+  const res = await API.post(`bucket/deleteBuckets`, formData);
   return res;
 };
 
+export const editQuestion = async (id, formData) => {
+  const res = await API.put(`question/updateQuestion/${id}`, formData);
+  return res;
+};
