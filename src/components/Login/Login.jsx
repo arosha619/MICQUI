@@ -142,9 +142,9 @@ const Login = () => {
                   </div>
                 </div>
                 <div class="forget_password">
-                  <a href="/forgot-password" className="small">
+                  {/* <a href="/forgot-password" className="small">
                     Forgot Password ?
-                  </a>
+                  </a> */}
                 </div>
               </div>
               <div className="buttons">
