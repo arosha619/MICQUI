@@ -13,7 +13,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPen, faTrash, faUsers } from "@fortawesome/free-solid-svg-icons";
 import Loading from "../Spinner/Spinner";
 
-
 const UserList = () => {
   const [selectAll, setSelectAll] = useState(false);
   const [filteredData, setFilteredData] = useState([]);
@@ -31,8 +30,8 @@ const UserList = () => {
   const [confirmdelete, setConfirmdelete] = useState(false);
   const [confirmupdate, setConfirmupdate] = useState(false);
   const [loading, setLoading] = useState(true);
-  const backgroundColor = 'white'; 
-  const height = '100px';
+  const backgroundColor = "white";
+  const height = "100px";
 
   const isAuthenticated = localStorage.getItem("isAuthenticated");
   const id = localStorage.getItem("user_id");
@@ -144,7 +143,13 @@ const UserList = () => {
   };
 
   return (
-    <Layout Title={"Users(" + (filteredData.length !== null ? filteredData.length : 0) + ")"}>
+    <Layout
+      Title={
+        "Users(" +
+        (filteredData.length !== null ? filteredData.length : 0) +
+        ")"
+      }
+    >
       <div className="d-flex">
         <div className="w-100">
           <form className="mb-3 w-50">
@@ -170,56 +175,62 @@ const UserList = () => {
             <p>Status</p>
             <p>Actions</p>
           </div>
-          {loading ? <Loading backgroundColor={backgroundColor} height={height} /> : (<>
-          {filteredData.map((item) => {
-            return (
-              <div className="card-wrapper" key={item.id}>
-                <div className="profile-picture">
-                  <img src={item.profile_pic} />
-                </div>
-                <p>{item.full_name}</p>
-                <p>{item.email}</p>
-                <p>077 8126872</p>
-                <p>{item.role}</p>
-                <p>{item.is_verified === 1 ? "Verified" : "Not Verified"}</p>
-                <div className="action-button">
-                  <FontAwesomeIcon
-                    onClick={() => {
-                      setPro_pic(item.profile_pic);
-                      setFullname(item.full_name);
-                      setRole(item.role);
-                      setCompany(item.company_name);
-                      setUserId(item.id);
-                      setOpenmodal(true);
-                    }}
-                    icon={faPen}
-                    style={{
-                      color: "#000",
-                      width: "20px",
-                      height: "20px",
-                      padding: "2px 10px",
-                      cursor: "pointer",
-                    }}
-                  />
-                  <FontAwesomeIcon
-                    onClick={() => {
-                      setDeleteid(item.id);
-                      setIsdelete(true);
-                    }}
-                    icon={faTrash}
-                    style={{
-                      color: "red",
-                      width: "20px",
-                      height: "20px",
-                      padding: "2px 10px",
-                      cursor: "pointer",
-                    }}
-                  />
-                </div>
-              </div>
-            );
-          })}
-          </> )}
+          {loading ? (
+            <Loading backgroundColor={backgroundColor} height={height} />
+          ) : (
+            <>
+              {filteredData.map((item) => {
+                return (
+                  <div className="card-wrapper" key={item.id}>
+                    <div className="profile-picture">
+                      <img src={item.profile_pic} />
+                    </div>
+                    <p>{item.full_name}</p>
+                    <p>{item.email}</p>
+                    <p>null</p>
+                    <p>{item.role}</p>
+                    <p>
+                      {item.is_verified === 1 ? "Verified" : "Not Verified"}
+                    </p>
+                    <div className="action-button">
+                      <FontAwesomeIcon
+                        onClick={() => {
+                          setPro_pic(item.profile_pic);
+                          setFullname(item.full_name);
+                          setRole(item.role);
+                          setCompany(item.company_name);
+                          setUserId(item.id);
+                          setOpenmodal(true);
+                        }}
+                        icon={faPen}
+                        style={{
+                          color: "#000",
+                          width: "20px",
+                          height: "20px",
+                          padding: "2px 10px",
+                          cursor: "pointer",
+                        }}
+                      />
+                      <FontAwesomeIcon
+                        onClick={() => {
+                          setDeleteid(item.id);
+                          setIsdelete(true);
+                        }}
+                        icon={faTrash}
+                        style={{
+                          color: "red",
+                          width: "20px",
+                          height: "20px",
+                          padding: "2px 10px",
+                          cursor: "pointer",
+                        }}
+                      />
+                    </div>
+                  </div>
+                );
+              })}
+            </>
+          )}
         </div>
         {openModal && (
           <UpdateUserModal
