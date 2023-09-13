@@ -6,7 +6,6 @@ import BucketHeader from "./../../components/MybucketComponents/BucketHeader";
 import { getAllBuckets } from "../../API/axios";
 import { getadminbyID } from "../../API/axios";
 import Layout from "../../components/Layout/Layout";
-import Loading from "../../components/Spinner/Spinner";
 
 const MyBucket = () => {
   const navigate = useNavigate();
@@ -25,18 +24,6 @@ const MyBucket = () => {
   const [type, setType] = useState("Employee");
   const [status, setStatus] = useState("0");
   const [searchItem, setSearchItem] = useState("");
-  const [loading, setLoading] = useState(true);
-  const backgroundColor = "white";
-  const height = "100px";
-  const [currentPage, setCurrentPage] = useState(1);
-  const [bucketsPerPage] = useState(5);
-
-  const indexOfLastBucket = currentPage * bucketsPerPage;
-  const indexOfFirstBucket = indexOfLastBucket - bucketsPerPage;
-  const currentBuckets = bucketsData.slice(
-    indexOfFirstBucket,
-    indexOfLastBucket
-  );
 
   var isAuthenticated = localStorage.getItem("isAuthenticated");
   const id = localStorage.getItem("user_id");
@@ -72,7 +59,6 @@ const MyBucket = () => {
         const AdminData = await getadminbyID(id);
         setAdminData(AdminData.data.data);
         console.log(AdminData);
-        setLoading(false);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -130,17 +116,6 @@ const MyBucket = () => {
   if (!isAuthenticated || isAuthenticated === "false") {
     return null;
   }
-  const nextPage = () => {
-    if (indexOfLastBucket < bucketsData.length) {
-      setCurrentPage(currentPage + 1);
-    }
-  };
-
-  const prevPage = () => {
-    if (currentPage > 1) {
-      setCurrentPage(currentPage - 1);
-    }
-  };
 
   return (
     <Layout Title={"Buckets(" + bucketsData.length + ")"}>
@@ -185,9 +160,10 @@ const MyBucket = () => {
                   <p>Status</p>
                   <p>Actions</p>
                 </div>
-                {currentBuckets.length > 0 ? (
+
+                {filteredData.length > 0 ? (
                   <>
-                    {currentBuckets.map((item, index) => (
+                    {filteredData.map((item, index) => (
                       <BucketContains
                         key={index}
                         deleteBucket={deleteBucket}
@@ -253,17 +229,6 @@ const MyBucket = () => {
               </div>
             </div>
           </div>
-        </div>
-        <div className="pagination">
-          <button onClick={prevPage} disabled={currentPage === 1}>
-            Previous
-          </button>
-          <button
-            onClick={nextPage}
-            disabled={indexOfLastBucket >= bucketsData.length}
-          >
-            Next
-          </button>
         </div>
       </div>
     </Layout>
