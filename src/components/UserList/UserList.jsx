@@ -144,7 +144,7 @@ const UserList = () => {
   };
 
   return (
-    <Layout Title={"Users("+filteredData.length+")"}>
+    <Layout Title={"Users(" + (filteredData.length !== null ? filteredData.length : 0) + ")"}>
       <div className="d-flex">
         <div className="w-100">
           <form className="mb-3 w-50">
