@@ -6,13 +6,13 @@ import BucketHeader from "./../../components/MybucketComponents/BucketHeader";
 import { getAllBuckets } from "../../API/axios";
 import { getadminbyID } from "../../API/axios";
 import Layout from "../../components/Layout/Layout";
+import Loading from "../../components/Spinner/Spinner";
 
 const MyBucket = () => {
   const navigate = useNavigate();
   const [deleteBucket, setDeleteBucket] = useState([]);
   const [deleteBucketIds, setDeleteBucketIds] = useState([]);
   const [bucketsData, setBucketsData] = useState([]);
-  const [filteredData, setFilteredData] = useState([]);
   const [adminData, setAdminData] = useState([]);
   const [refresh, setRefresh] = useState(false);
   const [editBucketId, setEditBucketId] = useState("");
@@ -24,6 +24,18 @@ const MyBucket = () => {
   const [type, setType] = useState("Employee");
   const [status, setStatus] = useState("0");
   const [searchItem, setSearchItem] = useState("");
+  const [loading, setLoading] = useState(true);
+  const backgroundColor = "white";
+  const height = "100px";
+  const [currentPage, setCurrentPage] = useState(1);
+  const [bucketsPerPage] = useState(2);
+
+  const indexOfLastBucket = currentPage * bucketsPerPage;
+  const indexOfFirstBucket = indexOfLastBucket - bucketsPerPage;
+  const currentBuckets = bucketsData.slice(
+    indexOfFirstBucket,
+    indexOfLastBucket
+  );
 
   var isAuthenticated = localStorage.getItem("isAuthenticated");
   const id = localStorage.getItem("user_id");
@@ -42,8 +54,8 @@ const MyBucket = () => {
 
           const data = response.data.data;
           console.log("data : ", data);
-
           setBucketsData(data);
+          setLoading(false);
         } catch (error) {
           console.error("Error fetching bucket data:", error);
           alert("Data fetching faild");
@@ -67,15 +79,9 @@ const MyBucket = () => {
     fetchUsers();
   }, [id]);
 
-  useEffect(() => {
-    if (bucketsData.length > 0) {
-      const filteredItems = bucketsData.filter((item) =>
-        item.name.toLowerCase().includes(searchItem.toLowerCase())
-      );
-
-      setFilteredData(filteredItems);
-    }
-  }, [searchItem]);
+  const filteredData = currentBuckets.filter((item) =>
+    item.name.toLowerCase().includes(searchItem.toLowerCase())
+  );
 
   useEffect(() => {
     var isAuthenticated = localStorage.getItem("isAuthenticated");
@@ -116,6 +122,17 @@ const MyBucket = () => {
   if (!isAuthenticated || isAuthenticated === "false") {
     return null;
   }
+  const nextPage = () => {
+    if (indexOfLastBucket < bucketsData.length) {
+      setCurrentPage(currentPage + 1);
+    }
+  };
+
+  const prevPage = () => {
+    if (currentPage > 1) {
+      setCurrentPage(currentPage - 1);
+    }
+  };
 
   return (
     <Layout Title={"Buckets(" + bucketsData.length + ")"}>
@@ -160,59 +177,64 @@ const MyBucket = () => {
                   <p>Status</p>
                   <p>Actions</p>
                 </div>
-
-                {filteredData.length > 0 ? (
-                  <>
-                    {filteredData.map((item, index) => (
-                      <BucketContains
-                        key={index}
-                        deleteBucket={deleteBucket}
-                        setDeleteBucket={setDeleteBucket}
-                        setDeleteBucketIds={setDeleteBucketIds}
-                        deleteBucketIds={deleteBucketIds}
-                        item={item}
-                        setEditBucketId={setEditBucketId}
-                        setEditTempBucketId={setEditTempBucketId}
-                        setIsAdd={setIsAdd}
-                        setIsBucketEdit={setIsBucketEdit}
-                        setBucketPropTitle={setBucketPropTitle}
-                        setDescription={setDescription}
-                        setType={setType}
-                        setStatus={setStatus}
-                      />
-                    ))}
-                  </>
+                {loading ? (
+                  <Loading backgroundColor={backgroundColor} height={height} />
                 ) : (
                   <>
-                    {!searchItem ? (
+                    {filteredData.length > 0 ? (
                       <>
-                        {bucketsData.length > 0 ? (
+                        {filteredData.map((item, index) => (
+                          <BucketContains
+                            key={index}
+                            deleteBucket={deleteBucket}
+                            setDeleteBucket={setDeleteBucket}
+                            setDeleteBucketIds={setDeleteBucketIds}
+                            deleteBucketIds={deleteBucketIds}
+                            item={item}
+                            setEditBucketId={setEditBucketId}
+                            setEditTempBucketId={setEditTempBucketId}
+                            setIsAdd={setIsAdd}
+                            setIsBucketEdit={setIsBucketEdit}
+                            setBucketPropTitle={setBucketPropTitle}
+                            setDescription={setDescription}
+                            setType={setType}
+                            setStatus={setStatus}
+                          />
+                        ))}
+                      </>
+                    ) : (
+                      <>
+                        {!searchItem ? (
                           <>
-                            {bucketsData.map((item, index) => (
-                              <BucketContains
-                                key={index}
-                                deleteBucket={deleteBucket}
-                                setDeleteBucket={setDeleteBucket}
-                                setDeleteBucketIds={setDeleteBucketIds}
-                                deleteBucketIds={deleteBucketIds}
-                                item={item}
-                                setEditBucketId={setEditBucketId}
-                                setEditTempBucketId={setEditTempBucketId}
-                                setIsAdd={setIsAdd}
-                                setIsBucketEdit={setIsBucketEdit}
-                                setBucketPropTitle={setBucketPropTitle}
-                                setDescription={setDescription}
-                                setType={setType}
-                                setStatus={setStatus}
-                              />
-                            ))}
+                            {filteredData.length > 0 ? (
+                              <>
+                                {filteredData.map((item, index) => (
+                                  <BucketContains
+                                    key={index}
+                                    deleteBucket={deleteBucket}
+                                    setDeleteBucket={setDeleteBucket}
+                                    setDeleteBucketIds={setDeleteBucketIds}
+                                    deleteBucketIds={deleteBucketIds}
+                                    item={item}
+                                    setEditBucketId={setEditBucketId}
+                                    setEditTempBucketId={setEditTempBucketId}
+                                    setIsAdd={setIsAdd}
+                                    setIsBucketEdit={setIsBucketEdit}
+                                    setBucketPropTitle={setBucketPropTitle}
+                                    setDescription={setDescription}
+                                    setType={setType}
+                                    setStatus={setStatus}
+                                  />
+                                ))}
+                              </>
+                            ) : (
+                              <></>
+                            )}
                           </>
                         ) : (
                           <></>
                         )}
                       </>
-                    ) : (
-                      <></>
                     )}
                   </>
                 )}
@@ -229,6 +251,17 @@ const MyBucket = () => {
               </div>
             </div>
           </div>
+        </div>
+        <div className="pagination">
+          <button onClick={prevPage} disabled={currentPage === 1}>
+            Previous
+          </button>
+          <button
+            onClick={nextPage}
+            disabled={indexOfLastBucket >= bucketsData.length}
+          >
+            Next
+          </button>
         </div>
       </div>
     </Layout>
