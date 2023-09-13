@@ -12,8 +12,18 @@ const MyBucket = () => {
   const [deleteBucket, setDeleteBucket] = useState([]);
   const [deleteBucketIds, setDeleteBucketIds] = useState([]);
   const [bucketsData, setBucketsData] = useState([]);
+  const [filteredData, setFilteredData] = useState([]);
   const [adminData, setAdminData] = useState([]);
   const [refresh, setRefresh] = useState(false);
+  const [editBucketId, setEditBucketId] = useState("");
+  const [editTempBucketId, setEditTempBucketId] = useState("");
+  const [isAdd, setIsAdd] = useState(true);
+  const [isBucketEdit, setIsBucketEdit] = useState(true);
+  const [bucketPropTitle, setBucketPropTitle] = useState("");
+  const [description, setDescription] = useState("");
+  const [type, setType] = useState("Employee");
+  const [status, setStatus] = useState("0");
+  const [searchItem, setSearchItem] = useState("");
 
   var isAuthenticated = localStorage.getItem("isAuthenticated");
   const id = localStorage.getItem("user_id");
@@ -58,6 +68,16 @@ const MyBucket = () => {
   }, [id]);
 
   useEffect(() => {
+    if (bucketsData.length > 0) {
+      const filteredItems = bucketsData.filter((item) =>
+        item.name.toLowerCase().includes(searchItem.toLowerCase())
+      );
+
+      setFilteredData(filteredItems);
+    }
+  }, [searchItem]);
+
+  useEffect(() => {
     var isAuthenticated = localStorage.getItem("isAuthenticated");
 
     if (!isAuthenticated || isAuthenticated == null) {
@@ -83,6 +103,16 @@ const MyBucket = () => {
     }
   }, [refresh]);
 
+  useEffect(() => {
+    if (editTempBucketId != "") {
+      const button = document.getElementById("hiddenButton");
+      if (button) {
+        button.click();
+      }
+    }
+    setEditTempBucketId("");
+  }, [editTempBucketId]);
+
   if (!isAuthenticated || isAuthenticated === "false") {
     return null;
   }
@@ -104,6 +134,20 @@ const MyBucket = () => {
                 setDeleteBucketIds={setDeleteBucketIds}
                 deleteBucketIds={deleteBucketIds}
                 setDeleteBucket={setDeleteBucket}
+                isAdd={isAdd}
+                setIsAdd={setIsAdd}
+                editBucketId={editBucketId}
+                setIsBucketEdit={setIsBucketEdit}
+                isBucketEdit={isBucketEdit}
+                bucketPropTitle={bucketPropTitle}
+                setBucketPropTitle={setBucketPropTitle}
+                description={description}
+                setDescription={setDescription}
+                type={type}
+                setType={setType}
+                status={status}
+                setStatus={setStatus}
+                setSearchItem={setSearchItem}
               />
             </div>
             <div>
@@ -116,9 +160,10 @@ const MyBucket = () => {
                   <p>Status</p>
                   <p>Actions</p>
                 </div>
-                {bucketsData.length > 0 ? (
+
+                {filteredData.length > 0 ? (
                   <>
-                    {bucketsData.map((item, index) => (
+                    {filteredData.map((item, index) => (
                       <BucketContains
                         key={index}
                         deleteBucket={deleteBucket}
@@ -126,12 +171,61 @@ const MyBucket = () => {
                         setDeleteBucketIds={setDeleteBucketIds}
                         deleteBucketIds={deleteBucketIds}
                         item={item}
+                        setEditBucketId={setEditBucketId}
+                        setEditTempBucketId={setEditTempBucketId}
+                        setIsAdd={setIsAdd}
+                        setIsBucketEdit={setIsBucketEdit}
+                        setBucketPropTitle={setBucketPropTitle}
+                        setDescription={setDescription}
+                        setType={setType}
+                        setStatus={setStatus}
                       />
                     ))}
                   </>
                 ) : (
-                  <></>
+                  <>
+                    {!searchItem ? (
+                      <>
+                        {bucketsData.length > 0 ? (
+                          <>
+                            {bucketsData.map((item, index) => (
+                              <BucketContains
+                                key={index}
+                                deleteBucket={deleteBucket}
+                                setDeleteBucket={setDeleteBucket}
+                                setDeleteBucketIds={setDeleteBucketIds}
+                                deleteBucketIds={deleteBucketIds}
+                                item={item}
+                                setEditBucketId={setEditBucketId}
+                                setEditTempBucketId={setEditTempBucketId}
+                                setIsAdd={setIsAdd}
+                                setIsBucketEdit={setIsBucketEdit}
+                                setBucketPropTitle={setBucketPropTitle}
+                                setDescription={setDescription}
+                                setType={setType}
+                                setStatus={setStatus}
+                              />
+                            ))}
+                          </>
+                        ) : (
+                          <></>
+                        )}
+                      </>
+                    ) : (
+                      <></>
+                    )}
+                  </>
                 )}
+
+                <button
+                  type="button"
+                  id="hiddenButton"
+                  className="btn btn-warning btn-outline-light d-none"
+                  data-bs-toggle="modal"
+                  data-bs-target="#exampleModalCenter"
+                >
+                  New Button
+                </button>
               </div>
             </div>
           </div>

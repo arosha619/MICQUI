@@ -31,7 +31,21 @@ const BucketContains = (props) => {
     navigate(`/my-buckets/bucket-data/${props.item.bucket_id}`);
   };
 
-  const editBucket = () => {};
+  const handleEditBucket = (event) => {
+    event.preventDefault();
+    props.setIsAdd(false);
+    props.setIsBucketEdit(true);
+    props.setEditBucketId(props.item.bucket_id);
+    props.setEditTempBucketId(props.item.bucket_id);
+    props.setBucketPropTitle(props.item.name);
+    props.setDescription(props.item.description);
+    props.setType(props.item.type);
+    if (props.item.publish_status == 1) {
+      props.setStatus("1");
+    } else {
+      props.setStatus("0");
+    }
+  };
 
   return (
     <div>
@@ -48,7 +62,7 @@ const BucketContains = (props) => {
         <p className="card-text">{props.item.type}</p>
         <p className="card-text">
           {props.item.publish_status ? (
-            <div style={{display:'flex', alignItems:'center'}}>
+            <div style={{ display: "flex", alignItems: "center" }}>
               <FontAwesomeIcon
                 onClick={handleClick}
                 icon={faCircleDot}
@@ -63,7 +77,7 @@ const BucketContains = (props) => {
               Published
             </div>
           ) : (
-            <div style={{display:'flex', alignItems:'center'}}>
+            <div style={{ display: "flex", alignItems: "center" }}>
               <FontAwesomeIcon
                 onClick={handleClick}
                 icon={faCircleDot}
@@ -92,6 +106,7 @@ const BucketContains = (props) => {
             }}
           />
           <FontAwesomeIcon
+            onClick={handleEditBucket}
             icon={faPen}
             style={{
               color: "black",

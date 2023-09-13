@@ -1,0 +1,19 @@
+.modal-footer button {
+  background-color: black;
+  color: white;
+  font-weight: 500;
+  width: 100px;
+}
+.modal-footer .btn:hover {
+  color: var(--bs-btn-hover-color);
+  background-color: #272727;
+  border-color: var(--bs-btn-hover-border-color);
+}
+
+.modal-footer {
+  display: flex;
+  flex-shrink: 0;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+}
