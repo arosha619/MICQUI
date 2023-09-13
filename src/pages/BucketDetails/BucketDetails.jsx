@@ -7,6 +7,7 @@ import { getAllQuestion, getBucketById } from "../../API/axios";
 import { useNavigate } from "react-router-dom";
 import Layout from "../../components/Layout/Layout";
 import "./BucketDetails.css";
+import Loading from "../../components/Spinner/Spinner";
 
 const BucketDetails = () => {
   const params = useParams();
@@ -18,6 +19,10 @@ const BucketDetails = () => {
   const [bucketStatus, setBucketStatus] = useState("draft");
   const [bucketTopic, setBucketTopic] = useState("");
   const [bucketdescription, setBucketdescription] = useState("");
+  const [loading, setLoading]= useState(true);
+  const backgroundColor = "white";
+  const height = "100px";
+
   
 
   useEffect(() => {
@@ -50,6 +55,7 @@ const BucketDetails = () => {
         const response = await getBucketById(params["bucket_id"]);
         setBucketTopic(response.data.data[0].name);
         setBucketdescription(response.data.data[0].description)
+        setLoading(false);
         if (response.data.data[0].publish_status == 1) {
           setBucketStatus("Published");
         }
@@ -94,6 +100,10 @@ const BucketDetails = () => {
               </div>
             </div>
             <div className="q-container">
+            {loading ? (
+            <Loading backgroundColor={backgroundColor} height={height} />
+          ) : (
+            <>
               {questionList.map((item, index) => (
                 <>
                   <BucketDetailCard
@@ -104,7 +114,7 @@ const BucketDetails = () => {
                   />
                   <hr style={{margin:'0',padding:'0'}} />
                 </>
-              ))}
+              ))}</>)}
             </div>
           </div>
         </div>
