@@ -9,6 +9,7 @@ import { FaExclamationCircle, FaCheckCircle } from "react-icons/fa";
 import { FaPlay } from "react-icons/fa6";
 import Loading from "../Spinner/Spinner/Spinner";
 
+
 const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -111,11 +112,6 @@ const Login = () => {
                 {renderErrorMsg("noUsername")}
                 {/* //old site - https://micqui.web.app/#/buckets */}
                 {/* Us:  admin@admin.com */}
-                {/* Pw: admin2023           
-            
-Gold color code - Color(0xffc1a564) 
-rgb(193, 165, 100)
-rgba(193, 165, 100, 1) */}
                 <div className="input-container">
                   <span className="password-icon">
                     <FaLock />
