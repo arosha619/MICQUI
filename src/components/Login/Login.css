@@ -136,8 +136,16 @@
     margin-bottom: 3rem;
   }
 }
+.password-input-container {
+  position: relative;
+}
+
 .password-toggle-icon-login {
   color: rgba(193, 165, 100, 1);
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  right: 10px;
   cursor: pointer;
 }
 
