@@ -131,7 +131,6 @@ const Settings = () => {
         setDeleteSuccessfull(true);
         setDeleteModal(false);
         localStorage.clear();
-        console.log(res);
       })
       .catch((error) => {
         alert("Error deleting data:");

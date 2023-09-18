@@ -53,7 +53,6 @@ const MyBucket = () => {
           const response = await getAllBuckets();
 
           const data = response.data.data;
-          console.log("data : ", data);
           setBucketsData(data);
           setLoading(false);
         } catch (error) {
@@ -70,7 +69,6 @@ const MyBucket = () => {
       try {
         const AdminData = await getadminbyID(id);
         setAdminData(AdminData.data.data);
-        console.log(AdminData);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -94,10 +92,7 @@ const MyBucket = () => {
       const fetchBucketData = async () => {
         try {
           const response = await getAllBuckets();
-
           const data = response.data.data;
-          console.log("data : ", data);
-
           setBucketsData(data);
         } catch (error) {
           console.error("Error fetching bucket data:", error);

@@ -10,6 +10,8 @@ import "./BucketDetails.css";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import { getQuestions_Answers, getAllUsers } from "../../API/axios";
+import { faCaretLeft } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const BucketDetails = () => {
   const params = useParams();
@@ -52,12 +54,10 @@ const BucketDetails = () => {
           alert(response.data.message);
         } else {
           const data = response.data.data;
-
           const filteredData = data.filter(
             (item) => item.bucket_id == params["bucket_id"]
           );
           setQuestionList(filteredData);
-          console.log(filteredData);
         }
       } catch (error) {
         alert("data fetch failed..!");
@@ -129,7 +129,24 @@ const BucketDetails = () => {
   // });
 
   return (
-    <Layout Title="Questions">
+    <Layout
+      Title={
+        <>
+          <FontAwesomeIcon
+            onClick={handleBack}
+            icon={faCaretLeft}
+            style={{
+              color: "rgb(0,0,0,.7)",
+              width: "20px",
+              height: "20px",
+              cursor: "pointer",
+              paddingRight: "10px",
+            }}
+          />
+          Questions
+        </>
+      }
+    >
       <div className="d-flex">
         <div className=" w-100">
           <div>
@@ -152,6 +169,7 @@ const BucketDetails = () => {
                 setSearchItem={setSearchItem}
               />
             </div>
+
             <div className="q-header">
               <h2>{bucketTopic}</h2>
               <p style={{ margin: "0" }}>{bucketdescription}</p>
