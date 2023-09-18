@@ -7,15 +7,13 @@ import { getAllQuestion, getBucketById } from "../../API/axios";
 import { useNavigate } from "react-router-dom";
 import Layout from "../../components/Layout/Layout";
 import "./BucketDetails.css";
+import Button from "react-bootstrap/Button";
+import Modal from "react-bootstrap/Modal";
+import { getQuestions_Answers, getAllUsers } from "../../API/axios";
 
 const BucketDetails = () => {
   const params = useParams();
   const navigate = useNavigate();
-  // const [questionList, setQuestionList] = useState([]);
-  // const [getQuestion, setGetQuestion] = useState(false);
-  // const [questionRefresh, setQuestionRefresh] = useState(false);
-  // const [bucketStatus, setBucketStatus] = useState("draft");
-  // const [bucketTopic, setBucketTopic] = useState("");
   const [bucketdescription, setBucketdescription] = useState("");
   const [questionList, setQuestionList] = useState([]);
   const [filteredData, setFilteredData] = useState([]);
@@ -29,13 +27,27 @@ const BucketDetails = () => {
   const [isAdd, setIsAdd] = useState(true);
   const [isBucketEdit, setIsBucketEdit] = useState(true);
   const [searchItem, setSearchItem] = useState("");
+  const [modalShow, setModalShow] = useState(false);
+  const [Answers, setAnswers] = useState([]);
+  const [userdata, setUserData] = useState([]);
+
+  useEffect(() => {
+    const fetchUsers = async () => {
+      try {
+        const usersData = await getAllUsers();
+        setUserData(usersData.data.data);
+      } catch (error) {
+        console.error("Error fetching user data:", error);
+      }
+    };
+
+    fetchUsers();
+  }, []);
 
   useEffect(() => {
     const getAllQuestions = async () => {
       try {
         const response = await getAllQuestion();
-        console.log("response : ", response);
-        // Handle the response here
         if (response.data.code == 400) {
           alert(response.data.message);
         } else {
@@ -45,6 +57,7 @@ const BucketDetails = () => {
             (item) => item.bucket_id == params["bucket_id"]
           );
           setQuestionList(filteredData);
+          console.log(filteredData);
         }
       } catch (error) {
         alert("data fetch failed..!");
@@ -96,6 +109,25 @@ const BucketDetails = () => {
     navigate("/my-buckets");
   };
 
+  useEffect(() => {
+    const getAnswers = async () => {
+      try {
+        const response = await getQuestions_Answers(params["bucket_id"]);
+        setAnswers(response.data.data);
+        console.log(response.data.data);
+      } catch (error) {
+        alert("Answers fetching failed");
+      }
+    };
+
+    getAnswers();
+  }, []);
+
+  const userMap = {};
+  userdata.forEach((user) => {
+    userMap[user.id] = user.full_name;
+  });
+
   return (
     <Layout Title="Questions">
       <div className="d-flex">
@@ -118,12 +150,6 @@ const BucketDetails = () => {
                 editQuestionId={editQuestionId}
                 setEditQuestionId={setEditQuestionId}
                 setSearchItem={setSearchItem}
-                // questionList={questionList}
-                // bucketTitle={"question"}
-                // firstField={"Question"}
-                // placeHolder={"Add Your Question Here.."}
-                // refresh={questionRefresh}
-                // setQuestionRefresh={setQuestionRefresh}
               />
             </div>
             <div className="q-header">
@@ -145,9 +171,6 @@ const BucketDetails = () => {
                     <>
                       <BucketDetailCard
                         index={index}
-                        // item={item}
-                        // setGetQuestion={setGetQuestion}
-                        // getQuestion={getQuestion}
                         item={item}
                         setGetQuestion={setGetQuestion}
                         getQuestion={getQuestion}
@@ -169,9 +192,6 @@ const BucketDetails = () => {
                         <>
                           <BucketDetailCard
                             index={index}
-                            // item={item}
-                            // setGetQuestion={setGetQuestion}
-                            // getQuestion={getQuestion}
                             item={item}
                             setGetQuestion={setGetQuestion}
                             getQuestion={getQuestion}
@@ -201,7 +221,58 @@ const BucketDetails = () => {
               edit question
             </button>
           </div>
+          <button
+            className="btn_answers"
+            onClick={() => setModalShow(true)}
+            style={{ margin: "10px auto" }}
+          >
+            View Answers
+          </button>
         </div>
+        <Modal
+          show={modalShow}
+          onHide={() => setModalShow(false)}
+          size="lg"
+          aria-labelledby="contained-modal-title-vcenter"
+          centered
+        >
+          <Modal.Header>
+            <Modal.Title id="contained-modal-title-vcenter">
+              Answers
+            </Modal.Title>
+          </Modal.Header>
+          {Answers.length > 0 ? (
+            <Modal.Body>
+              <div style={{ maxHeight: "300px", overflowY: "auto" }}>
+                <table className="table">
+                  <thead>
+                    <tr>
+                      <th>Question</th>
+                      <th>Answer</th>
+                      <th>User</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {Answers.map((item, index) => (
+                      <tr key={index}>
+                        <td>{item.Question}</td>
+                        <td>{item.Answer}</td>
+                        <td>{userMap[item.UserID]}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </Modal.Body>
+          ) : (
+            <>
+              <p style={{ marginLeft: "20px" }}>No Answers available</p>
+            </>
+          )}
+          <Modal.Footer>
+            <Button onClick={() => setModalShow(false)}>Close</Button>
+          </Modal.Footer>
+        </Modal>
       </div>
     </Layout>
   );

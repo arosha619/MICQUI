@@ -24,3 +24,17 @@
   box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
   padding: 0 20px;
 }
+.btn_answers{
+  width: 120px;
+  border-radius: 20px;
+  color: white;
+  border: none;
+  background-color: rgba(193, 165, 100, 1);
+  margin-right: 20px;
+  padding: 3px;
+  transition: transform .5s;
+}
+.btn_answers:hover{
+  background-color: black !important;
+  transform: scale(1.07);
+}

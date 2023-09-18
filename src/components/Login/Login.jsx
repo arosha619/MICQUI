@@ -113,20 +113,21 @@ const Login = () => {
                 {/* //old site - https://micqui.web.app/#/buckets */}
                 {/* Us:  admin@admin.com */}
                 <div className="input-container">
+                  <div className="input-field">
+                  <div className="password-input-container">
                   <span className="password-icon">
                     <FaLock />
                   </span>
-                  <div className="input-field">
                     <input
-                      // type={passwordVisible ? "text" : "password"}
-                      type="password"
+                      type={passwordVisible ? "text" : "password"}
+                      // type="password"
                       placeholder="Password"
                       value={password}
                       onChange={(e) => setPassword(e.target.value)}
                       style={{ paddingLeft: "30px", marginLeft: "5px" }}
                     />
 
-                    {/* {password ? (
+                    {password ? (
                   <span
                     className="password-toggle-icon-login"
                     onClick={() => setPasswordVisible(!passwordVisible)}
@@ -135,7 +136,8 @@ const Login = () => {
                   </span>
                 ) : (
                   ""
-                )} */}
+                )}
+                </div>
                     {renderErrorMsg("password")}
                     {renderErrorMsg("noPassword")}
                     {renderErrorMsg("PasswordLength")}
@@ -180,7 +182,7 @@ const Login = () => {
                 show={showModal1}
                 onHide={() => setShowModal1(false)}
               >
-                <Modal.Header closeButton>
+                <Modal.Header >
                   <div className="d-flex justify-content-center align-items-center text-danger">
                     <FaCheckCircle
                       size={24}

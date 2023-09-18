@@ -10,6 +10,7 @@ import Settings from "./components/Settings/Settings";
 import SuccessfullyRegistered from "./components/SignUp/SuccessfullyRegistered";
 import BucketDetails from "./pages/BucketDetails/BucketDetails.jsx";
 import AddBucket from "./components/AddBucket/AddBucket";
+import PageNotFound from "./components/PageNotFound/PageNotFound";
 import './App.css'
 
 
@@ -27,6 +28,7 @@ function App() {
       <Route path="/change-password" element={<ChangedPassword />} />
       <Route path="/user/reset" element={<ChangedPassword />} />
       <Route path="/verify" element={<SuccessfullyRegistered />} />
+      <Route path="*" element={<PageNotFound />} />
     </Routes>
   );
 }
