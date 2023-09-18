@@ -15,10 +15,6 @@ const ChangedPassword = () => {
     const searchParams = new URLSearchParams(location.search);
     const userId = searchParams.get("id");
     const token = searchParams.get("token");
-
-    console.log("User ID:", userId);
-    console.log("Token:", token);
-
   }, [location.search]);
 
   const [password, setPassword] = useState("");
@@ -44,7 +40,6 @@ const ChangedPassword = () => {
 
   const sendAdminData = async () => {
     try {
-      console.log(response);
       setResponse(response);
       setShowModal(true);
     } catch (err) {
@@ -88,7 +83,6 @@ const ChangedPassword = () => {
           alert(response.data.message);
         }
       } catch (error) {
-        console.error("Password reset failed:", error);
         alert("Password reset failed. Please try again.");
       }
     }
