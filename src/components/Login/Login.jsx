@@ -182,7 +182,7 @@ const Login = () => {
                 show={showModal1}
                 onHide={() => setShowModal1(false)}
               >
-                <Modal.Header closeButton>
+                <Modal.Header >
                   <div className="d-flex justify-content-center align-items-center text-danger">
                     <FaCheckCircle
                       size={24}
