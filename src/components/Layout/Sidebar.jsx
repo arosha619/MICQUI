@@ -72,7 +72,7 @@ function Sidebar() {
         />
       </div>
       <div className="logo-container">
-        <Link to="/">
+        <Link to="/user-list">
           {isshow ? (
             <img src={logo} alt="Logo" />
           ) : (
