@@ -16,6 +16,7 @@ const BucketDetailCard = (props) => {
   const [modalShow, setModalShow] = useState(false);
   const [Answers, setAnswers] = useState([]);
   const [userdata, setUserData] = useState([]);
+  const [filteredAnswer, setFilteredAnswer] = useState([]);
 
   const handleClick = async (event) => {
     event.preventDefault();
@@ -68,6 +69,8 @@ const BucketDetailCard = (props) => {
   });
  const  showAnswers =(id)=>{
   const filteredAnswers = Answers.filter((item) => item.QuestionID === id);
+  setFilteredAnswer(filteredAnswers);
+  setModalShow(true);
   console.log(filteredAnswers);
  }
 
@@ -164,7 +167,7 @@ const BucketDetailCard = (props) => {
               Answers
             </Modal.Title>
           </Modal.Header>
-          {Answers.length > 0 ? (
+          {filteredAnswer.length > 0 ? (
             <Modal.Body>
               <div style={{ maxHeight: "300px", overflowY: "auto" }}>
                 <table className="table">
@@ -176,7 +179,7 @@ const BucketDetailCard = (props) => {
                     </tr>
                   </thead>
                   <tbody>
-                    {Answers.map((item, index) => (
+                    {filteredAnswer.map((item, index) => (
                       <tr key={index}>
                         <td>{item.Question}</td>
                         <td>{item.Answer}</td>
