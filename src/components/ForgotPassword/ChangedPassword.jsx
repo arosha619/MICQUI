@@ -4,6 +4,7 @@ import { useLocation, useNavigate, useParams } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Modal, Button } from "react-bootstrap";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
+import { resetPasword } from "../../API/axios";
 
 const ChangedPassword = () => {
   const [passwordVisible, setPasswordVisible] = useState(false);
@@ -15,11 +16,9 @@ const ChangedPassword = () => {
     const userId = searchParams.get("id");
     const token = searchParams.get("token");
 
-    // Now you can use userId and token for your password reset logic
     console.log("User ID:", userId);
     console.log("Token:", token);
 
-    // Implement your password reset logic here
   }, [location.search]);
 
   const [password, setPassword] = useState("");
@@ -35,8 +34,9 @@ const ChangedPassword = () => {
     noUsername: "Please enter your username",
     noPassword: "Please enter your password",
     ComparePassword: "Passwords don't match",
-    PasswordLength: "password should be more than 6 characters",
+    PasswordLength: "Password should be more than 6 characters",
   };
+
   const isValidEmail = (email) => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailRegex.test(email);
@@ -52,7 +52,7 @@ const ChangedPassword = () => {
     }
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (!password) {
@@ -74,7 +74,23 @@ const ChangedPassword = () => {
       });
     } else {
       setErrorMessages("");
-      sendAdminData();
+
+      try {
+        const response = await resetPasword({
+          newPassword: password,
+          confirmPassword: confirmPassword,
+        });
+
+        if (response.data.success) {
+          setResponse(response);
+          setShowModal(true);
+        } else {
+          alert(response.data.message);
+        }
+      } catch (error) {
+        console.error("Password reset failed:", error);
+        alert("Password reset failed. Please try again.");
+      }
     }
   };
 
@@ -90,18 +106,18 @@ const ChangedPassword = () => {
         <h1 className="title">Change Your Password Here!</h1>
         <form onSubmit={handleSubmit}>
           <div className="inputs_container">
-          <div className="input-container">
-          <div className="input-field">
-            <input
-              type={passwordVisible ? "text" : "password"}
-              placeholder="Password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-            />
-            {renderErrorMsg("password")}
-            {renderErrorMsg("noPassword")}
-            {renderErrorMsg("PasswordLength")}
-            {password ? (
+            <div className="input-container">
+              <div className="input-field">
+                <input
+                  type={passwordVisible ? "text" : "password"}
+                  placeholder="Password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                />
+                {renderErrorMsg("password")}
+                {renderErrorMsg("noPassword")}
+                {renderErrorMsg("PasswordLength")}
+                {password ? (
                   <span
                     className="password-toggle-icon"
                     onClick={() => setPasswordVisible(!passwordVisible)}
@@ -111,21 +127,20 @@ const ChangedPassword = () => {
                 ) : (
                   ""
                 )}
-                </div>
-                </div>
-                <div className="input-container">
-                <div className="input-field">
-            <input
-              type={confirmPasswordVisible ? "text" : "password"}
-              placeholder="Confirm Password"
-              value={confirmPassword}
-              onChange={(e) => setConfirmPassword(e.target.value)}
-            />
-            {renderErrorMsg("password")}
-            {renderErrorMsg("noPassword")}
-            {renderErrorMsg("ComparePassword")}
-            
-            {confirmPassword ? (
+              </div>
+            </div>
+            <div className="input-container">
+              <div className="input-field">
+                <input
+                  type={confirmPasswordVisible ? "text" : "password"}
+                  placeholder="Confirm Password"
+                  value={confirmPassword}
+                  onChange={(e) => setConfirmPassword(e.target.value)}
+                />
+                {renderErrorMsg("password")}
+                {renderErrorMsg("noPassword")}
+                {renderErrorMsg("ComparePassword")}
+                {confirmPassword ? (
                   <span
                     className="password-toggle-icon"
                     onClick={() =>
@@ -137,9 +152,9 @@ const ChangedPassword = () => {
                 ) : (
                   ""
                 )}
+              </div>
+            </div>
           </div>
-          </div>
-         </div>
           <input
             type="submit"
             value="Change Password"

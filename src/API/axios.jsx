@@ -113,4 +113,8 @@ export const getQuestions_Answers = async (id) => {
   const res = await API.get(`question/getQANDAnsByBId/${id}`);
   return res;
 };
+export const resetPasword = async (id,token) => {
+  const res = await API.post(`admin/forget-password/${id}/${token}`);
+  return res;
+};
 
