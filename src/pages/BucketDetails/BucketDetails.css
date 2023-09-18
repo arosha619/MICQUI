@@ -25,17 +25,20 @@
   padding: 0 20px;
 }
 .btn_answers{
+  background-color: rgb(0, 0, 0);
+  color: white;
+  font-size: 10px;
   border: none;
-  background-color: rgb(195, 160, 100);
-  color: rgb(0, 0, 0);
   font-weight: 500;
-  border-radius: 12px;
-  padding: 10px 10px;
+  border-radius: 7px;
+  padding: 5px 10px;
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Define the shadow */
   cursor: pointer;
   transition: box-shadow 0.3s ease;
 }
 .btn_answers:hover{
-  background-color: rgb(196, 167, 118);
+  background-color: rgb(195, 160, 100);
+  color: rgb(0, 0, 0);
   box-shadow: 0px 6px 10px rgba(0, 0, 0, 0.2);
+  font-weight: 700;
 }
