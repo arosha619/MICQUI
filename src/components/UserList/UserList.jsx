@@ -199,7 +199,7 @@ const UserList = () => {
                     </div>
                     <p>{item.full_name}</p>
                     <p>{item.email}</p>
-                    <p>null</p>
+                    <p>{item.phone_num}</p>
                     <p>{item.role}</p>
                     <p>
                       {item.is_verified === 1 ? "Verified" : "Not Verified"}
@@ -311,7 +311,7 @@ const UserList = () => {
               </div>
             </Modal.Header>
             <Modal.Body className="d-flex justify-content-center ">
-              User Deleted Successfully?
+              User Deleted Successfully!
             </Modal.Body>
             <Modal.Footer className="d-flex justify-content-center">
               <Button
