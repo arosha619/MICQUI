@@ -57,7 +57,6 @@ const Login = () => {
         admin_name: username,
         password: password,
       };
-      console.log(data);
       const res = await LoginApi(data);
       console.log(res.data.sub.id);
       if (res.data.success === true) {
