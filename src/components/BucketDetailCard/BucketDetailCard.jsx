@@ -1,4 +1,4 @@
-import React, { useState,useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { deleteQuestionById } from "../../API/axios";
 import { FaTrash } from "react-icons/fa";
 import "./BucketCard.css";
@@ -31,7 +31,6 @@ const BucketDetailCard = (props) => {
       try {
         const usersData = await getAllUsers();
         setUserData(usersData.data.data);
-        // console.log(userdata);
       } catch (error) {
         console.error("Error fetching user data:", error);
       }
@@ -67,12 +66,12 @@ const BucketDetailCard = (props) => {
   userdata.forEach((user) => {
     userMap[user.id] = user.full_name;
   });
- const  showAnswers =(id)=>{
-  const filteredAnswers = Answers.filter((item) => item.QuestionID === id);
-  setFilteredAnswer(filteredAnswers);
-  setModalShow(true);
-  console.log(filteredAnswers);
- }
+  const showAnswers = (id) => {
+    const filteredAnswers = Answers.filter((item) => item.QuestionID === id);
+    setFilteredAnswer(filteredAnswers);
+    setModalShow(true);
+    console.log(filteredAnswers);
+  };
 
   return (
     <div className="bucketq-card">
@@ -80,13 +79,13 @@ const BucketDetailCard = (props) => {
         {props.index + 1}). {props.item.question}
       </p>
       <div style={{ display: "flex", alignItems: "center" }}>
-      <button
-            className="btn_answers"
-            style={{ margin: "10px auto" }}
-            onClick={() => showAnswers(props.item.q_id)}
-          >
-            View Answers
-          </button>
+        <button
+          className="btn_answers"
+          style={{ margin: "10px auto" }}
+          onClick={() => showAnswers(props.item.q_id)}
+        >
+          Answers
+        </button>
         <FontAwesomeIcon
           onClick={handleEditQuestion}
           icon={faPen}
@@ -119,7 +118,7 @@ const BucketDetailCard = (props) => {
             </div>
           </Modal.Header>
           <Modal.Body className="d-flex justify-content-center ">
-            Are you sure you want to delete this question ? 
+            Are you sure to delete this Question?
           </Modal.Body>
           <Modal.Footer className="d-flex justify-content-center ">
             <Button variant="dark" onClick={handleClick}>
@@ -156,49 +155,42 @@ const BucketDetailCard = (props) => {
         </Modal>
       )}
       <Modal
-          show={modalShow}
-          onHide={() => setModalShow(false)}
-          size="lg"
-          aria-labelledby="contained-modal-title-vcenter"
-          centered
-        >
-          <Modal.Header>
-            <Modal.Title id="contained-modal-title-vcenter">
-              Answers
-            </Modal.Title>
-          </Modal.Header>
-          {filteredAnswer.length > 0 ? (
-            <Modal.Body>
-              <div style={{ maxHeight: "300px", overflowY: "auto" }}>
-                <table className="table">
-                  <thead>
-                    <tr>
-                      <th>Question</th>
-                      <th>Answer</th>
-                      <th>User</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {filteredAnswer.map((item, index) => (
-                      <tr key={index}>
-                        <td>{item.Question}</td>
-                        <td>{item.Answer}</td>
-                        <td>{userMap[item.UserID]}</td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
+        show={modalShow}
+        onHide={() => setModalShow(false)}
+        size="lg"
+        aria-labelledby="contained-modal-title-vcenter"
+        centered
+      >
+        <Modal.Header>
+          <Modal.Title id="contained-modal-title-vcenter">Answers</Modal.Title>
+        </Modal.Header>
+        {filteredAnswer.length > 0 ? (
+          <Modal.Body>
+            <div className="answer-header">{filteredAnswer[0].Question}</div>
+            <div className="answer-fullbody">
+              <div className="answer-body">
+                <p>User</p>
+                <p>Answer</p>
               </div>
-            </Modal.Body>
-          ) : (
-            <>
-              <p style={{ marginLeft: "20px" }}>No Answers available</p>
-            </>
-          )}
-          <Modal.Footer>
-            <Button onClick={() => setModalShow(false)}>Close</Button>
-          </Modal.Footer>
-        </Modal>
+              <div className="answer-body-container">
+                {filteredAnswer.map((item, index) => (
+                  <div className="answer-body2" key={index}>
+                    <p>{userMap[item.UserID]}</p>
+                    <p>{item.Answer}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </Modal.Body>
+        ) : (
+          <>
+            <p style={{ marginLeft: "20px" }}>No Answers available</p>
+          </>
+        )}
+        <Modal.Footer>
+          <Button onClick={() => setModalShow(false)}>Close</Button>
+        </Modal.Footer>
+      </Modal>
     </div>
   );
 };

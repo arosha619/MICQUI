@@ -239,58 +239,7 @@ const BucketDetails = () => {
               edit question
             </button>
           </div>
-          {/* <button
-            className="btn_answers"
-            onClick={() => setModalShow(true)}
-            style={{ margin: "10px auto" }}
-          >
-            View Answers
-          </button> */}
         </div>
-        {/* <Modal
-          show={modalShow}
-          onHide={() => setModalShow(false)}
-          size="lg"
-          aria-labelledby="contained-modal-title-vcenter"
-          centered
-        >
-          <Modal.Header>
-            <Modal.Title id="contained-modal-title-vcenter">
-              Answers
-            </Modal.Title>
-          </Modal.Header>
-          {Answers.length > 0 ? (
-            <Modal.Body>
-              <div style={{ maxHeight: "300px", overflowY: "auto" }}>
-                <table className="table">
-                  <thead>
-                    <tr>
-                      <th>Question</th>
-                      <th>Answer</th>
-                      <th>User</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {Answers.map((item, index) => (
-                      <tr key={index}>
-                        <td>{item.Question}</td>
-                        <td>{item.Answer}</td>
-                        <td>{userMap[item.UserID]}</td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-            </Modal.Body>
-          ) : (
-            <>
-              <p style={{ marginLeft: "20px" }}>No Answers available</p>
-            </>
-          )}
-          <Modal.Footer>
-            <Button onClick={() => setModalShow(false)}>Close</Button>
-          </Modal.Footer>
-        </Modal> */}
       </div>
     </Layout>
   );

@@ -1,12 +1,55 @@
-.bucketq-card{
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    width: 100%;
-    padding: 20px 20px;
+.bucketq-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 20px 20px;
+}
+.bucketq-card p {
+  margin: 0;
+  font-size: 18px;
+}
+.answer-header {
+  font-size: 20px;
+  font-weight: 500;
+  padding: 10px 30px;
+  background-color: rgb(255, 255, 255);
+  /* border-radius: 12px;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2); */
+  margin-bottom: 0px;
+  margin: 0px;
+}
+.answer-body {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  padding-bottom: 10px;
+  padding: 10px 30px;
+    border-radius: 12px;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+  margin-bottom: 10px;
+}
+.answer-body p {
+  font-weight: 700;
+  margin: 0;
+  padding: 0;
+}
+.answer-body2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  padding: 10px 30px;
 
 }
-.bucketq-card p{
+.answer-fullbody {
+  padding: 10px;
+  border-radius: 12px;
+}
+.answer-body2 p {
     margin: 0;
-    font-size: 18px;
+    padding: 0;
+}
+.answer-body-container{
+    border-radius: 12px;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+    max-height: 400px;
+    overflow-x: auto;
 }
