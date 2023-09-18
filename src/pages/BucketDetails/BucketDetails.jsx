@@ -123,10 +123,10 @@ const BucketDetails = () => {
     getAnswers();
   }, []);
 
-  const userMap = {};
-  userdata.forEach((user) => {
-    userMap[user.id] = user.full_name;
-  });
+  // const userMap = {};
+  // userdata.forEach((user) => {
+  //   userMap[user.id] = user.full_name;
+  // });
 
   return (
     <Layout
@@ -239,15 +239,15 @@ const BucketDetails = () => {
               edit question
             </button>
           </div>
-          <button
+          {/* <button
             className="btn_answers"
             onClick={() => setModalShow(true)}
             style={{ margin: "10px auto" }}
           >
             View Answers
-          </button>
+          </button> */}
         </div>
-        <Modal
+        {/* <Modal
           show={modalShow}
           onHide={() => setModalShow(false)}
           size="lg"
@@ -290,7 +290,7 @@ const BucketDetails = () => {
           <Modal.Footer>
             <Button onClick={() => setModalShow(false)}>Close</Button>
           </Modal.Footer>
-        </Modal>
+        </Modal> */}
       </div>
     </Layout>
   );

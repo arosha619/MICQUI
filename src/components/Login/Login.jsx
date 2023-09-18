@@ -9,7 +9,6 @@ import { FaExclamationCircle, FaCheckCircle } from "react-icons/fa";
 import { FaPlay } from "react-icons/fa6";
 import Loading from "../Spinner/Spinner/Spinner";
 
-
 const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -58,18 +57,20 @@ const Login = () => {
         password: password,
       };
       const res = await LoginApi(data);
-      console.log(res.data.sub.id);
       if (res.data.success === true) {
         localStorage.setItem("token", res.data.token);
         localStorage.setItem("user_id", res.data.sub.id);
         localStorage.setItem("isAuthenticated", true);
+
         setShowModal1(true);
-        // window.location.href = `/user-list`;
+        setTimeout(() => {
+          navigate("/user-list");
+        }, 1500);
       } else {
         // Authentication failed
         setShowModal2(true);
         const errorData = await res.message;
-        setError(errorData || "Autenticación fallida");
+        setError(errorData || "Autenticación faild");
       }
     } catch (error) {
       setShowModal2(true);
@@ -113,30 +114,30 @@ const Login = () => {
                 {/* Us:  admin@admin.com */}
                 <div className="input-container">
                   <div className="input-field">
-                  <div className="password-input-container">
-                  <span className="password-icon">
-                    <FaLock />
-                  </span>
-                    <input
-                      type={passwordVisible ? "text" : "password"}
-                      // type="password"
-                      placeholder="Password"
-                      value={password}
-                      onChange={(e) => setPassword(e.target.value)}
-                      style={{ paddingLeft: "30px", marginLeft: "5px" }}
-                    />
+                    <div className="password-input-container">
+                      <span className="password-icon">
+                        <FaLock />
+                      </span>
+                      <input
+                        type={passwordVisible ? "text" : "password"}
+                        // type="password"
+                        placeholder="Password"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                        style={{ paddingLeft: "30px", marginLeft: "5px" }}
+                      />
 
-                    {password ? (
-                  <span
-                    className="password-toggle-icon-login"
-                    onClick={() => setPasswordVisible(!passwordVisible)}
-                  >
-                    {passwordVisible ? <FaEye /> : <FaEyeSlash />}
-                  </span>
-                ) : (
-                  ""
-                )}
-                </div>
+                      {password ? (
+                        <span
+                          className="password-toggle-icon-login"
+                          onClick={() => setPasswordVisible(!passwordVisible)}
+                        >
+                          {passwordVisible ? <FaEye /> : <FaEyeSlash />}
+                        </span>
+                      ) : (
+                        ""
+                      )}
+                    </div>
                     {renderErrorMsg("password")}
                     {renderErrorMsg("noPassword")}
                     {renderErrorMsg("PasswordLength")}
@@ -181,7 +182,7 @@ const Login = () => {
                 show={showModal1}
                 onHide={() => setShowModal1(false)}
               >
-                <Modal.Header >
+                <Modal.Header>
                   <div className="d-flex justify-content-center align-items-center text-danger">
                     <FaCheckCircle
                       size={24}
@@ -190,13 +191,9 @@ const Login = () => {
                   </div>
                 </Modal.Header>
                 <Modal.Body className="d-flex justify-content-center ">
-                  Login Successfull!
+                  Login Successfull !
                 </Modal.Body>
-                <Modal.Footer className="d-flex justify-content-center ">
-                  <Button variant="dark" onClick={() => navigate("/user-list")}>
-                    Ok
-                  </Button>
-                </Modal.Footer>
+                <Modal.Footer className="d-flex justify-content-center "></Modal.Footer>
               </Modal>
             )}
             {showModal2 && (
@@ -214,7 +211,8 @@ const Login = () => {
                   </div>
                 </Modal.Header>
                 <Modal.Body className="d-flex justify-content-center ">
-                  Login failed!
+                  Login failed! Invalid Username or password
+                
                 </Modal.Body>
                 <Modal.Footer className="d-flex justify-content-center ">
                   <Button variant="dark" onClick={() => setShowModal2(false)}>
