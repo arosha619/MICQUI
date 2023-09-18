@@ -108,3 +108,9 @@ export const editQuestion = async (id, formData) => {
   const res = await API.put(`question/updateQuestion/${id}`, formData);
   return res;
 };
+
+export const getQuestions_Answers = async (id) => {
+  const res = await API.get(`question/getQANDAnsByBId/${id}`);
+  return res;
+};
+
