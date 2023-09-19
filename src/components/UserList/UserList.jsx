@@ -37,6 +37,7 @@ const UserList = () => {
   const indexOfLastUser = currentPage * usersPerPage;
   const indexOfFirstUser = indexOfLastUser - usersPerPage;
   const currentUsers = filteredData.slice(indexOfFirstUser, indexOfLastUser);
+  const [loadingData, setLoadingData] = useState(true);
   const isAuthenticated = localStorage.getItem("isAuthenticated");
   const id = localStorage.getItem("user_id");
 
@@ -70,6 +71,7 @@ const UserList = () => {
         const usersData = await getAllUsers();
         setUserData(usersData.data.data);
         setFilteredData(usersData.data.data);
+        setLoadingData(false);
         setLoading(false);
       } catch (error) {
         console.error("Error fetching user data:", error);
@@ -158,7 +160,9 @@ const UserList = () => {
         (filteredData.length !== null ? filteredData.length : 0) +
         ")"
       }
-    >
+    >{loadingData ? (
+      <Loading backgroundColor={backgroundColor} height={height} />
+    ) : (
       <div className="d-flex">
         <div className="w-100">
           <form className="mb-3 w-50">
@@ -372,6 +376,7 @@ const UserList = () => {
           </button>
         </div>
       </div>
+      )}
     </Layout>
   );
 };
