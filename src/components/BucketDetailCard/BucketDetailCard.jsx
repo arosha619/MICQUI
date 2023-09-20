@@ -24,6 +24,7 @@ const BucketDetailCard = (props) => {
     if (response.data.code === 200) {
       props.setGetQuestion(!props.getQuestion);
       setDeleteSuccess(true);
+      setDeleteModal(false);
     }
   };
   useEffect(() => {
@@ -134,7 +135,10 @@ const BucketDetailCard = (props) => {
         <Modal
           style={{ background: "rgba(15, 14, 14, 0.144)" }}
           show={deleteSuccess}
-          onHide={() => setDeleteSuccess(false)}
+          onHide={() => {
+            setDeleteSuccess(false); 
+            props.setGetQuestion(!props.getQuestion); 
+          }}
         >
           <Modal.Header closeButton>
             <div className="d-flex justify-content-center align-items-center text-success">
