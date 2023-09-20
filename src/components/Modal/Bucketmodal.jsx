@@ -18,8 +18,8 @@ function Bucketmodal(props) {
           >
             <div className="modal-dialog modal-dialog-centered" role="document">
               <div className="modal-content">
-                <div className="modal-header">
-                  <h5 className="modal-title" id="exampleModalLongTitle">
+                <div className="modal-header" style={{ textAlign: "center", display: "flex", alignItems: "center" }}>
+                  <h5 className="modal-title" id="exampleModalLongTitle" style={{ margin: "auto", display: "inline-block" }}>
                     {props.bucketTitle == "bucket"
                       ? "Add Bucket"
                       : "Add Question"}
