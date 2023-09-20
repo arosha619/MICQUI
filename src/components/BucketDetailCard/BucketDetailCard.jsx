@@ -81,7 +81,7 @@ const BucketDetailCard = (props) => {
       <div style={{ display: "flex", alignItems: "center" }}>
         <button
           className="btn_answers"
-          style={{ margin: "10px auto" }}
+          style={{ margin: "10px auto",marginLeft:"20px" }}
           onClick={() => showAnswers(props.item.q_id)}
         >
           Answers

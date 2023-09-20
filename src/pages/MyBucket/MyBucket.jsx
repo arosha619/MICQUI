@@ -32,7 +32,7 @@ const MyBucket = () => {
 
   const indexOfLastBucket = currentPage * bucketsPerPage;
   const indexOfFirstBucket = indexOfLastBucket - bucketsPerPage;
-  const currentBuckets = bucketsData.slice(
+  const currentBuckets = bucketsData.reverse().slice(
     indexOfFirstBucket,
     indexOfLastBucket
   );

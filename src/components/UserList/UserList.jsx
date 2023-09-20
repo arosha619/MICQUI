@@ -192,7 +192,7 @@ const UserList = () => {
             <Loading backgroundColor={backgroundColor} height={height} />
           ) : (
             <>
-              {currentUsers.map((item) => {
+              {currentUsers.reverse().map((item) => {
                 return (
                   <div className="card-wrapper" key={item.id}>
                     <div className="profile-picture">
