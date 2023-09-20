@@ -29,13 +29,14 @@ function Header(props) {
         </div>
       </div>
       <div className="menu-profile">
-        <div className="menu-profile-name">
-          <h5>{admin_name}</h5>
-        </div>
+        <div className="menu-profile-name">{/* <h5>{admin_name}</h5> */}</div>
         <div className="profile-pic">
           <img
             src={admin_propic || pro_pic_default}
             alt="Profile"
+            style={{
+              boxShadow: "0px 5px 15px rgba(0, 0, 0, 0.2)", 
+            }}
           />
         </div>
       </div>

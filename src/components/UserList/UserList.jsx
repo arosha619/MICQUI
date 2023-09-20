@@ -347,7 +347,7 @@ const UserList = () => {
               </div>
             </Modal.Header>
             <Modal.Body className="d-flex justify-content-center ">
-              User Update Successfully?
+              User Update Successfully!
             </Modal.Body>
             <Modal.Footer className="d-flex justify-content-center">
               <Button
