@@ -81,7 +81,7 @@ const BucketDetailCard = (props) => {
       <div style={{ display: "flex", alignItems: "center" }}>
         <button
           className="btn_answers"
-          style={{ margin: "10px auto" }}
+          style={{ margin: "10px auto",marginLeft:"20px" }}
           onClick={() => showAnswers(props.item.q_id)}
         >
           Answers
@@ -166,7 +166,7 @@ const BucketDetailCard = (props) => {
         </Modal.Header>
         {filteredAnswer.length > 0 ? (
           <Modal.Body>
-            <div className="answer-header">{filteredAnswer[0].Question}</div>
+            <div className="answer-header">{props.item.question}</div>
             <div className="answer-fullbody">
               <div className="answer-body">
                 <p>User</p>
