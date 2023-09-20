@@ -166,7 +166,7 @@ const BucketDetailCard = (props) => {
         </Modal.Header>
         {filteredAnswer.length > 0 ? (
           <Modal.Body>
-            <div className="answer-header">{filteredAnswer[0].Question}</div>
+            <div className="answer-header">{props.item.question}</div>
             <div className="answer-fullbody">
               <div className="answer-body">
                 <p>User</p>
