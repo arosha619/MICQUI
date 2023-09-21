@@ -21,7 +21,7 @@ const BucketDetails = () => {
   const [filteredData, setFilteredData] = useState([]);
   const [getQuestion, setGetQuestion] = useState(false);
   const [questionRefresh, setQuestionRefresh] = useState(false);
-  const [bucketStatus, setBucketStatus] = useState("draft");
+  const [bucketStatus, setBucketStatus] = useState("Draft");
   const [bucketTopic, setBucketTopic] = useState("No title");
   const [editQuestionId, setEditQuestionId] = useState("");
   const [editTempQuestionId, setEditTempQuestionId] = useState("");
