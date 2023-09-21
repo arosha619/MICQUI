@@ -52,7 +52,7 @@ const MyBucket = () => {
         try {
           const response = await getAllBuckets();
 
-          const data = response.data.data;
+          const data = response.data.data.reverse();;
           setBucketsData(data);
           setLoading(false);
         } catch (error) {
@@ -63,7 +63,7 @@ const MyBucket = () => {
 
       fetchBucketData();
     }
-  }, []);
+  }, [refresh]);
   useEffect(() => {
     const fetchUsers = async () => {
       try {
@@ -81,28 +81,30 @@ const MyBucket = () => {
     item.name.toLowerCase().includes(searchItem.toLowerCase())
   );
 
-  useEffect(() => {
-    var isAuthenticated = localStorage.getItem("isAuthenticated");
+  // useEffect(() => {
+  //   var isAuthenticated = localStorage.getItem("isAuthenticated");
 
-    if (!isAuthenticated || isAuthenticated == null) {
-      alert("Need to login first");
-      console.log("not authanticated");
-      navigate("/");
-    } else {
-      const fetchBucketData = async () => {
-        try {
-          const response = await getAllBuckets();
-          const data = response.data.data;
-          setBucketsData(data);
-        } catch (error) {
-          console.error("Error fetching bucket data:", error);
-          alert("Data fetching faild");
-        }
-      };
+  //   if (!isAuthenticated || isAuthenticated == null) {
+  //     alert("Need to login first");
+  //     console.log("not authanticated");
+  //     navigate("/");
+  //   } else {
+  //     const fetchBucketData = async () => {
+  //       try {
+  //         const response = await getAllBuckets();
+  //         const data = response.data.data;
+  //         setBucketsData(data);
+  //         console.log("hi");
+  //         console.log(data)
+  //       } catch (error) {
+  //         console.error("Error fetching bucket data:", error);
+  //         alert("Data fetching faild");
+  //       }
+  //     };
 
-      fetchBucketData();
-    }
-  }, [refresh]);
+  //     fetchBucketData();
+  //   }
+  // }, [refresh]);
 
   useEffect(() => {
     if (editTempBucketId != "") {
