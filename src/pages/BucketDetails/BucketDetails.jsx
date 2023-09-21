@@ -12,6 +12,8 @@ import Modal from "react-bootstrap/Modal";
 import { getQuestions_Answers, getAllUsers } from "../../API/axios";
 import { faCaretLeft } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import Tooltip from "react-bootstrap/Tooltip";
+import OverlayTrigger from "react-bootstrap/OverlayTrigger";
 
 const BucketDetails = () => {
   const params = useParams();
@@ -21,7 +23,7 @@ const BucketDetails = () => {
   const [filteredData, setFilteredData] = useState([]);
   const [getQuestion, setGetQuestion] = useState(false);
   const [questionRefresh, setQuestionRefresh] = useState(false);
-  const [bucketStatus, setBucketStatus] = useState("draft");
+  const [bucketStatus, setBucketStatus] = useState("Draft");
   const [bucketTopic, setBucketTopic] = useState("No title");
   const [editQuestionId, setEditQuestionId] = useState("");
   const [editTempQuestionId, setEditTempQuestionId] = useState("");
@@ -171,8 +173,36 @@ const BucketDetails = () => {
             </div>
 
             <div className="q-header">
-              <h2>{bucketTopic}</h2>
-              <p style={{ margin: "0" }}>{bucketdescription}</p>
+            {bucketTopic.length > 30 ? (
+            <OverlayTrigger
+              placement="top"
+              overlay={
+                <Tooltip id={`tooltip-bucketTopic`}>{bucketTopic}</Tooltip>
+              }
+            >
+              <span>
+                {`${bucketTopic.slice(0, 30)} ...`}
+              </span>
+            </OverlayTrigger>
+          ) : (
+            <span>{bucketTopic}</span>
+          )}
+          {bucketdescription.length > 50 ? (
+                <OverlayTrigger
+                  placement="top"
+                  overlay={
+                    <Tooltip id={`tooltip-bucketDescription`}>
+                      {bucketdescription}
+                    </Tooltip>
+                  }
+                >
+                  <p style={{ margin: "0" }}>
+                    {`${bucketdescription.slice(0, 50)} ...`}
+                  </p>
+                </OverlayTrigger>
+              ) : (
+                <p style={{ margin: "0" }}>{bucketdescription}</p>
+              )}
               <div className="q-status">
                 <GoDotFill
                   style={{

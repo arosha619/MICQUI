@@ -64,7 +64,7 @@ const Login = () => {
 
         setShowModal1(true);
         setTimeout(() => {
-          navigate("/user-list");
+          navigate("/my-buckets");
         }, 1500);
       } else {
         // Authentication failed

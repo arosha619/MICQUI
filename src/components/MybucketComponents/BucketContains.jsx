@@ -2,6 +2,8 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleDot, faEye, faPen } from "@fortawesome/free-solid-svg-icons";
+import Tooltip from "react-bootstrap/Tooltip";
+import OverlayTrigger from "react-bootstrap/OverlayTrigger";
 
 const BucketContains = (props) => {
   const navigate = useNavigate();
@@ -57,8 +59,39 @@ const BucketContains = (props) => {
             onChange={isChecked}
           />
         </div>
-        <p className="card-title">{props.item.name}</p>
-        <p className="card-text">{props.item.description}</p>
+        {props.item.name.length > 20 ? (
+          <OverlayTrigger
+            placement="top"
+            overlay={
+              <Tooltip id={`tooltip-name-${props.item.bucket_id}`}>
+                {props.item.name}
+              </Tooltip>
+            }
+          >
+            <p className="card-title">
+              {props.item.name.slice(0, 20) + " ..."}
+            </p>
+          </OverlayTrigger>
+        ) : (
+          <p className="card-title">{props.item.name}</p>
+        )}
+        {props.item.description.length > 20 ? (
+          <OverlayTrigger
+            placement="top"
+            overlay={
+              <Tooltip id={`tooltip-description-${props.item.bucket_id}`}>
+                {props.item.description}
+              </Tooltip>
+            }
+          >
+            <p className="card-text">
+              {props.item.description.slice(0, 20) + " ..."}
+            </p>
+          </OverlayTrigger>
+        ) : (
+          <p className="card-text">{props.item.description}</p>
+        )}
+
         <p className="card-text">{props.item.type}</p>
         <p className="card-text">
           {props.item.publish_status ? (

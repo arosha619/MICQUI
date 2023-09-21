@@ -72,7 +72,7 @@ function Sidebar() {
         />
       </div>
       <div className="logo-container">
-        <Link to="/user-list">
+        <Link to="/my-buckets">
           {isshow ? (
             <img src={logo} alt="Logo" />
           ) : (
@@ -84,6 +84,22 @@ function Sidebar() {
       </div>
 
       <div className="menu-wrapper">
+      <NavLink
+          to="/my-buckets"
+          className="menu-button"
+          activeClassName="activeLink"
+        >
+          <FontAwesomeIcon
+            icon={faBucket}
+            style={{
+              color: "#fff",
+              width: "20px",
+              height: "20px",
+              paddingRight: "20px",
+            }}
+          />
+          {isshow && "Bucket List"}
+        </NavLink>
         <NavLink
           to="/user-list"
           className="menu-button"
@@ -100,22 +116,7 @@ function Sidebar() {
           />
           {isshow && "User List"}
         </NavLink>
-        <NavLink
-          to="/my-buckets"
-          className="menu-button"
-          activeClassName="activeLink"
-        >
-          <FontAwesomeIcon
-            icon={faBucket}
-            style={{
-              color: "#fff",
-              width: "20px",
-              height: "20px",
-              paddingRight: "20px",
-            }}
-          />
-          {isshow && "Bucket List"}
-        </NavLink>
+        
         <Link onClick={()=>setLogoutModal(true)}>
           <div className="menu-button logOut">
             <FontAwesomeIcon
