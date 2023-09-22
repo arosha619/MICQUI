@@ -33,7 +33,7 @@ export const createAdmin = async (formData) => {
 };
 
 export const updateUser = async (id, formData) => {
-  const res = await ImgAPI.put(`user/update/${id}`, formData);
+  const res = await API.put(`user/update/${id}`, formData);
   return res;
 };
 export const deleteUser = async (id) => {

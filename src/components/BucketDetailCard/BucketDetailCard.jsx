@@ -77,7 +77,7 @@ const BucketDetailCard = (props) => {
   return (
     <div className="bucketq-card">
       <p style={{ margin: "0px" }}>
-        {props.index + 1}). {props.item.question}
+        {props.index + 1}) {props.item.question}
       </p>
       <div style={{ display: "flex", alignItems: "center" }}>
         <button
