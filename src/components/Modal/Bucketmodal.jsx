@@ -24,19 +24,6 @@ function Bucketmodal(props) {
                       ? "Add Bucket"
                       : "Add Question"}
                   </h5>
-
-                  <button
-                    type="button"
-                    className="btn"
-                    data-bs-dismiss="modal"
-                    aria-label="Close"
-                    style={{ outline: "none !important" }}
-                    onFocus={(e) => e.target.blur()}
-                  >
-                    <AiOutlineCloseCircle
-                      style={{ color: "red", fontSize: "30px" }}
-                    />
-                  </button>
                 </div>
                 <div className="modal-body">
                   <ModalBody
@@ -93,19 +80,6 @@ function Bucketmodal(props) {
                       ? "Edit Bucket"
                       : "Edit Question"}
                   </h5>
-
-                  <button
-                    type="button"
-                    className="btn"
-                    data-bs-dismiss="modal"
-                    aria-label="Close"
-                    style={{ outline: "none !important" }}
-                    onFocus={(e) => e.target.blur()}
-                  >
-                    <AiOutlineCloseCircle
-                      style={{ color: "red", fontSize: "30px" }}
-                    />
-                  </button>
                 </div>
                 <div className="modal-body">
                   <ModalBody

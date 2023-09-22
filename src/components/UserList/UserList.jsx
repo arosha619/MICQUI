@@ -20,6 +20,7 @@ const UserList = () => {
   const [openModal, setOpenmodal] = useState(false);
   const [pro_pic, setPro_pic] = useState(null);
   const [fullname, setFullname] = useState("");
+  const [phone, setPhone] = useState("");
   const [role, setRole] = useState("");
   const [company, setCompany] = useState("");
   const [userID, setUserId] = useState("");
@@ -40,6 +41,7 @@ const UserList = () => {
   const [loadingData, setLoadingData] = useState(true);
   const isAuthenticated = localStorage.getItem("isAuthenticated");
   const id = localStorage.getItem("user_id");
+  const [refresh, setRefresh] = useState(false);
 
   useEffect(() => {
     if (!isAuthenticated || isAuthenticated === null) {
@@ -66,6 +68,7 @@ const UserList = () => {
   };
 
   useEffect(() => {
+    setRefresh(false);
     const fetchUsers = async () => {
       try {
         const usersData = await getAllUsers();
@@ -79,7 +82,7 @@ const UserList = () => {
     };
 
     fetchUsers();
-  }, []);
+  }, [refresh]);
 
   useEffect(() => {
     const fetchUsers = async () => {
@@ -123,8 +126,8 @@ const UserList = () => {
   const handleupdate = async () => {
     const formData = {
       full_name: fullname,
-      profile_pic: pro_pic,
       role: role,
+      phone_num: phone,
       company_name: company,
     };
 
@@ -160,222 +163,227 @@ const UserList = () => {
         (filteredData.length !== null ? filteredData.length : 0) +
         ")"
       }
-    >{loadingData ? (
-      <Loading backgroundColor={backgroundColor} height={height} />
-    ) : (
-      <div className="d-flex">
-        <div className="w-100">
-          <form className="mb-3 w-50">
-            <div className="input-group w-100">
-              <input
-                style={{
-                  padding: "10px 20px",
-                  boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
-                }}
-                type="search"
-                className="form-control"
-                placeholder="Search here..."
-                onChange={(e) => handleSearch(e.target.value)}
-              />
+    >
+      {loadingData ? (
+        <Loading backgroundColor={backgroundColor} height={height} />
+      ) : (
+        <div className="d-flex">
+          <div className="w-100">
+            <form className="mb-3 w-50">
+              <div className="input-group w-100">
+                <input
+                  style={{
+                    padding: "10px 20px",
+                    boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
+                  }}
+                  type="search"
+                  className="form-control"
+                  placeholder="Search here..."
+                  onChange={(e) => handleSearch(e.target.value)}
+                />
+              </div>
+            </form>
+            <div className="card_header">
+              <p>Name</p>
+              <p>Email</p>
+              <p>Phone</p>
+              <p>Company</p>
+              <p>Position</p>
+              <p>Status</p>
+              <p>Actions</p>
             </div>
-          </form>
-          <div className="card_header">
-            <p>Image</p>
-            <p>Name</p>
-            <p>Email</p>
-            <p>Phone</p>
-            <p>Position</p>
-            <p>Status</p>
-            <p>Actions</p>
+            {loading ? (
+              <Loading backgroundColor={backgroundColor} height={height} />
+            ) : (
+              <>
+                {currentUsers.reverse().map((item) => {
+                  return (
+                    <div className="card-wrapper" key={item.id}>
+                      <p>{item.full_name}</p>
+                      <p>{item.email}</p>
+                      <p>{item.phone_num}</p>
+                      <p>{item.company_name}</p>
+                      <p>{item.role}</p>
+                      <p>
+                        {item.is_verified === 1 ? "Verified" : "Not Verified"}
+                      </p>
+                      <div className="action-button">
+                        <FontAwesomeIcon
+                          onClick={() => {
+                            setPro_pic(item.profile_pic);
+                            setFullname(item.full_name);
+                            setRole(item.role);
+                            setCompany(item.company_name);
+                            setPhone(item.phone_num);
+                            setUserId(item.id);
+                            setOpenmodal(true);
+                          }}
+                          icon={faPen}
+                          style={{
+                            color: "#000",
+                            width: "20px",
+                            height: "20px",
+                            padding: "2px 10px",
+                            cursor: "pointer",
+                          }}
+                        />
+                        <FontAwesomeIcon
+                          onClick={() => {
+                            setDeleteid(item.id);
+                            setIsdelete(true);
+                          }}
+                          icon={faTrash}
+                          style={{
+                            color: "red",
+                            width: "20px",
+                            height: "20px",
+                            padding: "2px 10px",
+                            cursor: "pointer",
+                          }}
+                        />
+                      </div>
+                    </div>
+                  );
+                })}
+              </>
+            )}
           </div>
-          {loading ? (
-            <Loading backgroundColor={backgroundColor} height={height} />
-          ) : (
-            <>
-              {currentUsers.reverse().map((item) => {
-                return (
-                  <div className="card-wrapper" key={item.id}>
-                    <div className="profile-picture">
-                      <img src={item.profile_pic} />
-                    </div>
-                    <p>{item.full_name}</p>
-                    <p>{item.email}</p>
-                    <p>{item.phone_num}</p>
-                    <p>{item.role}</p>
-                    <p>
-                      {item.is_verified === 1 ? "Verified" : "Not Verified"}
-                    </p>
-                    <div className="action-button">
-                      <FontAwesomeIcon
-                        onClick={() => {
-                          setPro_pic(item.profile_pic);
-                          setFullname(item.full_name);
-                          setRole(item.role);
-                          setCompany(item.company_name);
-                          setUserId(item.id);
-                          setOpenmodal(true);
-                        }}
-                        icon={faPen}
-                        style={{
-                          color: "#000",
-                          width: "20px",
-                          height: "20px",
-                          padding: "2px 10px",
-                          cursor: "pointer",
-                        }}
-                      />
-                      <FontAwesomeIcon
-                        onClick={() => {
-                          setDeleteid(item.id);
-                          setIsdelete(true);
-                        }}
-                        icon={faTrash}
-                        style={{
-                          color: "red",
-                          width: "20px",
-                          height: "20px",
-                          padding: "2px 10px",
-                          cursor: "pointer",
-                        }}
-                      />
-                    </div>
-                  </div>
-                );
-              })}
-            </>
-          )}
-        </div>
 
-        {openModal && (
-          <UpdateUserModal
-            pro_pic={pro_pic}
-            fullname={fullname}
-            setFullname={setFullname}
-            role={role}
-            setRole={setRole}
-            company={company}
-            setCompany={setCompany}
-            setOpenmodal={setOpenmodal}
-            handleupdate={handleupdate}
-            handleProfilePictureChange={handleProfilePictureChange}
-          />
-        )}
-        {isdelete && (
-          <Modal
-            show={isdelete}
-            onHide={() => setIsdelete(false)}
-            style={{ background: "rgba(15, 14, 14, 0.144)" }}
-          >
-            <Modal.Header closeButton>
-              <div className="d-flex justify-content-center align-items-center text-danger">
-                <FaExclamationCircle
-                  size={24}
-                  style={{ marginLeft: "220px" }}
+          {openModal && (
+            <UpdateUserModal
+              phone={phone}
+              setPhone={setPhone}
+              fullname={fullname}
+              setFullname={setFullname}
+              role={role}
+              setRole={setRole}
+              company={company}
+              setCompany={setCompany}
+              setOpenmodal={setOpenmodal}
+              handleupdate={handleupdate}
+              handleProfilePictureChange={handleProfilePictureChange}
+            />
+          )}
+          {isdelete && (
+            <Modal
+              show={isdelete}
+              onHide={() => setIsdelete(false)}
+              style={{ background: "rgba(15, 14, 14, 0.144)" }}
+            >
+              <Modal.Header closeButton>
+                <div className="d-flex justify-content-center align-items-center text-danger">
+                  <FaExclamationCircle
+                    size={24}
+                    style={{ marginLeft: "220px" }}
+                    onClick={() => setIsdelete(false)}
+                  />
+                </div>
+              </Modal.Header>
+              <Modal.Body className="d-flex justify-content-center ">
+                Are you sure to delete this user?
+              </Modal.Body>
+              <Modal.Footer className="d-flex justify-content-center">
+                <Button
+                  variant="secondary"
+                  style={{ width: "100px" }}
                   onClick={() => setIsdelete(false)}
-                />
-              </div>
-            </Modal.Header>
-            <Modal.Body className="d-flex justify-content-center ">
-              Are you sure to delete this user?
-            </Modal.Body>
-            <Modal.Footer className="d-flex justify-content-center">
-              <Button
-                variant="secondary"
-                style={{ width: "100px" }}
-                onClick={() => setIsdelete(false)}
-              >
-                No
-              </Button>
-              <Button
-                variant="dark"
-                style={{ width: "100px" }}
-                onClick={() => handleDelete(deleteid)}
-              >
-                Yes
-              </Button>
-            </Modal.Footer>
-          </Modal>
-        )}
-        {confirmdelete && (
-          <Modal
-            show={confirmdelete}
-            onHide={() => setConfirmdelete(false)}
-            style={{ background: "rgba(15, 14, 14, 0.144)" }}
-          >
-            <Modal.Header closeButton>
-              <div className="d-flex justify-content-center align-items-center text-danger">
-                <FaCheckCircle
-                  size={24}
-                  style={{ marginLeft: "220px", color: "green" }}
-                  onClick={() => setConfirmdelete(false)}
-                />
-              </div>
-            </Modal.Header>
-            <Modal.Body className="d-flex justify-content-center ">
-              User Deleted Successfully!
-            </Modal.Body>
-            <Modal.Footer className="d-flex justify-content-center">
-              <Button
-                variant="dark"
-                style={{ width: "100px" }}
-                onClick={() => {
-                  setConfirmdelete(false);
-                  window.location.reload();
-                }}
-              >
-                Ok
-              </Button>
-            </Modal.Footer>
-          </Modal>
-        )}
-        {confirmupdate && (
-          <Modal
-            show={confirmupdate}
-            onHide={() => setConfirmupdate(false)}
-            style={{ background: "rgba(15, 14, 14, 0.144)" }}
-          >
-            <Modal.Header closeButton>
-              <div className="d-flex justify-content-center align-items-center text-danger">
-                <FaCheckCircle
-                  size={24}
-                  style={{ marginLeft: "220px", color: "green" }}
+                >
+                  No
+                </Button>
+                <Button
+                  variant="dark"
+                  style={{ width: "100px" }}
+                  onClick={() => handleDelete(deleteid)}
+                >
+                  Yes
+                </Button>
+              </Modal.Footer>
+            </Modal>
+          )}
+          {confirmdelete && (
+            <Modal
+              show={confirmdelete}
+              onHide={() => setConfirmdelete(false)}
+              style={{ background: "rgba(15, 14, 14, 0.144)" }}
+            >
+              <Modal.Header closeButton>
+                <div className="d-flex justify-content-center align-items-center text-danger">
+                  <FaCheckCircle
+                    size={24}
+                    style={{ marginLeft: "220px", color: "green" }}
+                    onClick={() => setConfirmdelete(false)}
+                  />
+                </div>
+              </Modal.Header>
+              <Modal.Body className="d-flex justify-content-center ">
+                User Deleted Successfully!
+              </Modal.Body>
+              <Modal.Footer className="d-flex justify-content-center">
+                <Button
+                  variant="dark"
+                  style={{ width: "100px" }}
+                  onClick={() => {
+                    setConfirmdelete(false);
+                    setRefresh(true);
+                  }}
+                >
+                  Ok
+                </Button>
+              </Modal.Footer>
+            </Modal>
+          )}
+          {confirmupdate && (
+            <Modal
+              show={confirmupdate}
+              onHide={() => setConfirmupdate(false)}
+              style={{ background: "rgba(15, 14, 14, 0.144)" }}
+            >
+              <Modal.Header closeButton>
+                <div className="d-flex justify-content-center align-items-center text-danger">
+                  <FaCheckCircle
+                    size={24}
+                    style={{ marginLeft: "220px", color: "green" }}
+                    onClick={() => {
+                      setConfirmupdate(false);
+                      setRefresh(true);
+                    }}
+                  />
+                </div>
+              </Modal.Header>
+              <Modal.Body className="d-flex justify-content-center ">
+                User Update Successfully!
+              </Modal.Body>
+              <Modal.Footer className="d-flex justify-content-center">
+                <Button
+                  variant="dark"
+                  style={{ width: "100px" }}
                   onClick={() => {
                     setConfirmupdate(false);
-                    window.location.reload();
+                    setRefresh(true);
                   }}
-                />
-              </div>
-            </Modal.Header>
-            <Modal.Body className="d-flex justify-content-center ">
-              User Update Successfully!
-            </Modal.Body>
-            <Modal.Footer className="d-flex justify-content-center">
-              <Button
-                variant="dark"
-                style={{ width: "100px" }}
-                onClick={() => {
-                  setConfirmupdate(false);
-                  window.location.reload();
-                }}
-              >
-                Ok
-              </Button>
-            </Modal.Footer>
-          </Modal>
-        )}
-        <div className="pagination">
-          <button id="previous" onClick={prevPage} disabled={currentPage === 1}>
-            Previous
-          </button>
-          <button
-            id="next"
-            onClick={nextPage}
-            disabled={indexOfLastUser >= filteredData.length}
-          >
-            Next
-          </button>
+                >
+                  Ok
+                </Button>
+              </Modal.Footer>
+            </Modal>
+          )}
+          <div className="pagination">
+            <button
+              id="previous"
+              onClick={prevPage}
+              disabled={currentPage === 1}
+            >
+              Previous
+            </button>
+            <button
+              id="next"
+              onClick={nextPage}
+              disabled={indexOfLastUser >= filteredData.length}
+            >
+              Next
+            </button>
+          </div>
         </div>
-      </div>
       )}
     </Layout>
   );

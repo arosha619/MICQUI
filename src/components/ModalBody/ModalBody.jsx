@@ -7,11 +7,10 @@ function ModalBody(props) {
         <div className="card-body">
           <form>
             <div className="form-group w-100">
-              <label for="exampleInputEmail1" F>
-                {props.firstField}
-              </label>
-              <input
-                type="text"
+              <label for="exampleInputEmail1">{props.firstField}</label>
+              <textarea
+                style={{ height: "40px" }}
+                maxLength={150}
                 className="form-control"
                 id="bucketTitle"
                 aria-describedby="BucketTitle"
@@ -27,8 +26,8 @@ function ModalBody(props) {
               <>
                 <div className="form-group">
                   <label for="Description">Description</label>
-                  <input
-                    type="textarea"
+                  <textarea
+                    maxLength={150}
                     className="form-control"
                     id="description"
                     aria-describedby="description"
@@ -49,18 +48,24 @@ function ModalBody(props) {
                   >
                     {props.isAdd ? (
                       <>
-                        <option className="select-option" value="Employee">Employee</option>
-                        <option className="select-option" value="Manager">Manager</option>
+                        <option className="select-option" value="Employee">
+                          Employee
+                        </option>
+                        <option className="select-option" value="Manager">
+                          Manager
+                        </option>
                       </>
                     ) : (
                       <>
-                        <option className="select-option"
+                        <option
+                          className="select-option"
                           value="Employee"
                           selected={props.type == "Employee"}
                         >
                           Employee
                         </option>
-                        <option className="select-option"
+                        <option
+                          className="select-option"
                           value="Manager"
                           selected={props.type == "Manager"}
                         >
@@ -80,15 +85,27 @@ function ModalBody(props) {
                   >
                     {props.isAdd ? (
                       <>
-                        <option className="select-option" value="0">Draft</option>
-                        <option className="select-option" value="1">publish</option>
+                        <option className="select-option" value="0">
+                          Draft
+                        </option>
+                        <option className="select-option" value="1">
+                          publish
+                        </option>
                       </>
                     ) : (
                       <>
-                        <option className="select-option" value="0" selected={props.status == "0"}>
+                        <option
+                          className="select-option"
+                          value="0"
+                          selected={props.status == "0"}
+                        >
                           Draft
                         </option>
-                        <option className="select-option" value="1" selected={props.status == "1"}>
+                        <option
+                          className="select-option"
+                          value="1"
+                          selected={props.status == "1"}
+                        >
                           publish
                         </option>
                       </>
@@ -102,7 +119,6 @@ function ModalBody(props) {
           </form>
         </div>
       </div>
-          
     </div>
   );
 }

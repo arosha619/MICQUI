@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 
 function UpdateUserModal({
-  pro_pic,
   fullname,
   setFullname,
   role,
@@ -10,6 +9,8 @@ function UpdateUserModal({
   setCompany,
   setOpenmodal,
   handleupdate,
+  phone,
+  setPhone,
   handleProfilePictureChange,
 }) {
   const [selectedProfilePicture, setSelectedProfilePicture] = useState(null);
@@ -23,27 +24,23 @@ function UpdateUserModal({
   return (
     <div className="user-update">
       <div className="user-update-container">
-        <h3 style={{ padding: "10px" }}>Update User</h3>
-        <div className="user-update-form" style={{ padding: "0 70px" }}>
-          <form style={{ display: "grid" }}>
-            <input
-              type="file"
-              accept="image/*"
-              onChange={handleFileInputChange}
-              style={{ display: "none" }}
-            />
-            <img
-              style={{ maxWidth: "15vw", cursor: "pointer" }}
-              src={
-                selectedProfilePicture
-                  ? URL.createObjectURL(selectedProfilePicture)
-                  : pro_pic
-              }
-              alt="profile_pic"
-              onClick={() => {
-                document.querySelector('input[type="file"]').click();
-              }}
-            />
+        <h3
+          style={{
+            padding: "20px 20px 30px 10px",
+            borderBottom: "1px solid LightGray",
+          }}
+        >
+          Update User
+        </h3>
+        <div className="user-update-form" style={{ padding: "10px 30px" }}>
+          <form
+            style={{
+              display: "grid",
+              border: "1px solid LightGray",
+              padding: "20px",
+              borderRadius: "12px",
+            }}
+          >
             <label>Full Name:</label>
             <input
               type="text"
@@ -60,8 +57,8 @@ function UpdateUserModal({
                 setRole(e.target.value);
               }}
             >
-              <option value="manager">Manager</option>
-              <option value="employee">Employee</option>
+              <option value="Manager">Manager</option>
+              <option value="Employee">Employee</option>
             </select>
             <label>Company Name:</label>
             <input
@@ -71,10 +68,21 @@ function UpdateUserModal({
                 setCompany(e.target.value);
               }}
             ></input>
+            <label>Phone:</label>
+            <input
+              type="text"
+              value={phone}
+              onChange={(e) => {
+                setPhone(e.target.value);
+              }}
+            ></input>
           </form>
         </div>
-        <button onClick={() => setOpenmodal(false)}>Back</button>
-        <button onClick={handleupdate}>Update</button>
+        <br/>
+        <div style={{borderTop:'1px solid LightGray', padding:'10px'}}>
+          <button onClick={() => setOpenmodal(false)}>Back</button>
+          <button onClick={handleupdate}>Update</button>
+        </div>
       </div>
     </div>
   );

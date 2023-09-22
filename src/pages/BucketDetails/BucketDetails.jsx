@@ -173,21 +173,19 @@ const BucketDetails = () => {
             </div>
 
             <div className="q-header">
-            {bucketTopic.length > 30 ? (
-            <OverlayTrigger
-              placement="top"
-              overlay={
-                <Tooltip id={`tooltip-bucketTopic`}>{bucketTopic}</Tooltip>
-              }
-            >
-              <span>
-                {`${bucketTopic.slice(0, 30)} ...`}
-              </span>
-            </OverlayTrigger>
-          ) : (
-            <span>{bucketTopic}</span>
-          )}
-          {bucketdescription.length > 50 ? (
+              {bucketTopic.length > 30 ? (
+                <OverlayTrigger
+                  placement="top"
+                  overlay={
+                    <Tooltip id={`tooltip-bucketTopic`}>{bucketTopic}</Tooltip>
+                  }
+                >
+                  <span style={{fontWeight:'500', fontSize:'20px', paddingLeft:'25px'}}>{`${bucketTopic.slice(0, 30)} ...`}</span>
+                </OverlayTrigger>
+              ) : (
+                <span style={{fontWeight:'500', fontSize:'20px', paddingLeft:'25px'}}>{bucketTopic}</span>
+              )}
+              {bucketdescription.length > 50 ? (
                 <OverlayTrigger
                   placement="top"
                   overlay={
