@@ -170,7 +170,7 @@ const Login = () => {
             </div> */}
 
                 <div className="footer-msg">
-                  By clicking Login or Signup , You agree to our privacy policy
+                  By clicking Login , You agree to our privacy policy
                   & terms of services
                 </div>
               </div>
