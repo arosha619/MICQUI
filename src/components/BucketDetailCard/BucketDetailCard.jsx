@@ -8,6 +8,8 @@ import { faPen } from "@fortawesome/free-solid-svg-icons";
 import { Modal, Button } from "react-bootstrap";
 import { FaExclamationCircle, FaCheckCircle } from "react-icons/fa";
 import { getQuestions_Answers, getAllUsers } from "../../API/axios";
+import Tooltip from "react-bootstrap/Tooltip";
+import OverlayTrigger from "react-bootstrap/OverlayTrigger";
 
 const BucketDetailCard = (props) => {
   const params = useParams();
@@ -76,13 +78,28 @@ const BucketDetailCard = (props) => {
 
   return (
     <div className="bucketq-card">
-      <p style={{ margin: "0px" }}>
-        {props.index + 1}) {props.item.question}
-      </p>
+      {props.item.question.length > 100 ? (
+        <OverlayTrigger
+          placement="bottom"
+          overlay={
+            <Tooltip id={`tooltip-question-${props.item.q_id}`}>
+              {props.item.question}
+            </Tooltip>
+          }
+        >
+          <p style={{ margin: "0px" }}>
+            {props.index + 1}. {`${props.item.question.slice(0, 100)} ...`}
+          </p>
+        </OverlayTrigger>
+      ) : (
+        <p style={{ margin: "0px" }}>
+          {props.index + 1}. {props.item.question}
+        </p>
+      )}
       <div style={{ display: "flex", alignItems: "center" }}>
         <button
           className="btn_answers"
-          style={{ margin: "10px auto",marginLeft:"20px" }}
+          style={{ margin: "10px auto", marginLeft: "20px" }}
           onClick={() => showAnswers(props.item.q_id)}
         >
           Answers
@@ -136,8 +153,8 @@ const BucketDetailCard = (props) => {
           style={{ background: "rgba(15, 14, 14, 0.144)" }}
           show={deleteSuccess}
           onHide={() => {
-            setDeleteSuccess(false); 
-            props.setGetQuestion(!props.getQuestion); 
+            setDeleteSuccess(false);
+            props.setGetQuestion(!props.getQuestion);
           }}
         >
           <Modal.Header closeButton>
@@ -170,7 +187,27 @@ const BucketDetailCard = (props) => {
         </Modal.Header>
         {filteredAnswer.length > 0 ? (
           <Modal.Body>
-            <div className="answer-header">{props.item.question}</div>
+            <div className="answer-header">
+              {props.item.question.length > 100 ? (
+                <OverlayTrigger
+                  placement="top"
+                  overlay={
+                    <Tooltip id={`tooltip-question-${props.item.q_id}`}>
+                      {props.item.question}
+                    </Tooltip>
+                  }
+                >
+                  <p style={{ margin: "0px" }}>
+                    {props.index + 1}.{" "}
+                    {`${props.item.question.slice(0, 100)} ...`}
+                  </p>
+                </OverlayTrigger>
+              ) : (
+                <p style={{ margin: "0px" }}>
+                  {props.index + 1}. {props.item.question}
+                </p>
+              )}
+            </div>
             <div className="answer-fullbody">
               <div className="answer-body">
                 <p>User</p>
@@ -180,7 +217,20 @@ const BucketDetailCard = (props) => {
                 {filteredAnswer.map((item, index) => (
                   <div className="answer-body2" key={index}>
                     <p>{userMap[item.UserID]}</p>
-                    <p>{item.Answer}</p>
+                    {item.Answer.length > 50 ? (
+                      <OverlayTrigger
+                        placement="left"
+                        overlay={
+                          <Tooltip id={`tooltip-answer-${index}`}>
+                            {item.Answer}
+                          </Tooltip>
+                        }
+                      >
+                        <p>{item.Answer.slice(0, 50)} ...</p>
+                      </OverlayTrigger>
+                    ) : (
+                      <p>{item.Answer}</p>
+                    )}
                   </div>
                 ))}
               </div>
