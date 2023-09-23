@@ -57,7 +57,7 @@ const MyBucket = () => {
           setLoading(false);
         } catch (error) {
           console.error("Error fetching bucket data:", error);
-          alert("Data fetching faild");
+          alert("Data fetching faild ! Reload Browser or try again!");
         }
       };
 
