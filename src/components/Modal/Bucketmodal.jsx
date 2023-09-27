@@ -1,9 +1,18 @@
 import React from "react";
-import { AiOutlineCloseCircle } from "react-icons/ai";
 import ModalBody from "../ModalBody/ModalBody";
-import './BucketModal.css'
+import "./BucketModal.css";
 
 function Bucketmodal(props) {
+  const disabled =
+    props.bucketTitle === "bucket"
+      ? !(
+          props.bucketPropTitle &&
+          props.description &&
+          props.status &&
+          props.type
+        )
+      : !props.bucketPropTitle;
+
   return (
     <div>
       {props.isAdd ? (
@@ -18,8 +27,20 @@ function Bucketmodal(props) {
           >
             <div className="modal-dialog modal-dialog-centered" role="document">
               <div className="modal-content">
-                <div className="modal-header" style={{ textAlign: "center", display: "flex", alignItems: "center" }}>
-                  <h5 className="modal-title" id="exampleModalLongTitle" style={{ margin: "auto", display: "inline-block" }}>
+                <div
+                  className="modal-header"
+                  style={{
+                    textAlign: "center",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                  }}
+                >
+                  <h5
+                    className="modal-title"
+                    id="exampleModalLongTitle"
+                    style={{ margin: "auto", display: "inline-block" }}
+                  >
                     {props.bucketTitle == "bucket"
                       ? "Add Bucket"
                       : "Add Question"}
@@ -41,16 +62,33 @@ function Bucketmodal(props) {
                     isAdd={props.isAdd}
                   />
                 </div>
-                <div className="modal-footer" style={{display:"flex", alignItems:'center',  justifyContent: "center"}}>
+                <div
+                  className="modal-footer"
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                  }}
+                >
                   <button
                     type="button"
                     className="btn btn-secondary"
                     data-bs-dismiss="modal"
                     id="myButton"
                   >
-                     Back
+                    Back
                   </button>
                   <button
+                    style={
+                      disabled
+                        ? {
+                            backgroundColor: "black",
+                            opacity: "0.7",
+                            border: "1px solid black",
+                          }
+                        : {border: "1px solid black",}
+                    }
+                    disabled={disabled}
                     type="button"
                     className="btn btn-primary"
                     onClick={props.handleClose}
@@ -74,7 +112,10 @@ function Bucketmodal(props) {
           >
             <div className="modal-dialog modal-dialog-centered" role="document">
               <div className="modal-content">
-                <div className="modal-header">
+                <div
+                  className="modal-header"
+                  style={{ justifyContent: "center" }}
+                >
                   <h5 className="modal-title" id="exampleModalLongTitle">
                     {props.bucketTitle == "bucket"
                       ? "Edit Bucket"
@@ -97,12 +138,22 @@ function Bucketmodal(props) {
                     status={props.status}
                   />
                 </div>
-                <div className="modal-footer" style={{display:"flex", alignItems:'center',  justifyContent: "center"}}>
+                <div
+                  className="modal-footer"
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                  }}
+                >
                   <button
                     type="button"
                     className="btn btn-secondary"
                     data-bs-dismiss="modal"
                     id="myButton"
+                    onClick={() => {
+                      props.setDescription("");
+                    }}
                   >
                     Back
                   </button>

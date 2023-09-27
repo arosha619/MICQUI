@@ -81,31 +81,6 @@ const MyBucket = () => {
     item.name.toLowerCase().includes(searchItem.toLowerCase())
   );
 
-  // useEffect(() => {
-  //   var isAuthenticated = localStorage.getItem("isAuthenticated");
-
-  //   if (!isAuthenticated || isAuthenticated == null) {
-  //     alert("Need to login first");
-  //     console.log("not authanticated");
-  //     navigate("/");
-  //   } else {
-  //     const fetchBucketData = async () => {
-  //       try {
-  //         const response = await getAllBuckets();
-  //         const data = response.data.data;
-  //         setBucketsData(data);
-  //         console.log("hi");
-  //         console.log(data)
-  //       } catch (error) {
-  //         console.error("Error fetching bucket data:", error);
-  //         alert("Data fetching faild");
-  //       }
-  //     };
-
-  //     fetchBucketData();
-  //   }
-  // }, [refresh]);
-
   useEffect(() => {
     if (editTempBucketId != "") {
       const button = document.getElementById("hiddenButton");

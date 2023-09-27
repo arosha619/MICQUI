@@ -1,157 +1,164 @@
-.layout{
-    display: flex;
-    background-color: #00000017;
+.layout {
+  width: 100%;
+  display: flex;
+  background-color: #00000017;
 }
 
-.wrapper{
-    width: 100%;
+.wrapper {
+  width: 100%;
+}
+.wrapper-collapsed {
 }
 
 .content {
-    overflow-y: auto;
-    height: 86vh;
-    padding: 10px;
-  }
-.side-bar{
-    width: 280px;
-    height: 100vh;
-    background-color: rgb(0, 0, 0);
-    backdrop-filter: blur(20px);
-    color: white;
-    transition: 0.2s cubic-bezier(0.6, -0.28, 0.735, 0.045);
-
+  overflow-y: auto;
+  height: 86vh;
+  padding: 10px;
+}
+.side-bar {
+  width: 255px;
+  height: 100vh;
+  background-color: rgb(0, 0, 0);
+  backdrop-filter: blur(20px);
+  color: white;
+  transition: 0.2s cubic-bezier(0.6, -0.28, 0.735, 0.045);
 }
 .side-bar.collapsed {
-    width: 60px;
-    transition: 0.2s cubic-bezier(0.6, -0.28, 0.735, 0.045);
-
-  }
-
-.header{
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding-left: 10px;
-    padding-right: 20px;
-    height: 70px;
-    background-color: rgb(255, 255, 255);
-    border-radius: 12px;
-    margin: 10px;
-    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+  width: 55px;
+  transition: 0.2s cubic-bezier(0.6, -0.28, 0.735, 0.045);
 }
 
-  .menu {
-    display: flex;
-    align-items: center;
-  }
-  
-  .hambecon-menu {
-    margin-right: 10px;
-    cursor: pointer;
-  }
-  
-  .menu-title {
-    padding-left: 50px;
-    text-align: right;
-  }
-  .menu-title h3 {
-    margin: 0;
-    color: rgba(0, 0, 0, 0.8);
-    font-size: 20px;
-  }
-  
-  .menu-profile {
-    display: flex;
-    align-items: center;
-  }
-  
-  
-.profile-pic{
-    display: flex;
-    justify-content: flex-end;
-    transition: 0.4s cubic-bezier(0.6, -0.28, 0.735, 0.045);
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-left: 10px;
+  padding-right: 20px;
+  height: 70px;
+  background-color: rgb(255, 255, 255);
+  border-radius: 12px;
+  margin: 10px;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
 }
-.profile-pic img{
-    background-repeat: no-repeat;
-    width: 50px;
-    height: 50px;
-    border-radius: 50px;
-    object-fit: cover;
-    transition: 0.4s cubic-bezier(0.6, -0.28, 0.735, 0.045);
-}
-.menu-profile-name{
-    padding-right: 10px;    
-}
-.menu-profile-name h5{
-    font-size: 18px;
-    color: rgba(0, 0, 0, 0.8);
-}
-.logo-container{
-    display: flex;
-    justify-content: center;
-    border-bottom: 2px solid rgb(195, 165, 100);
-    transition: 0.4s cubic-bezier(0.6, -0.28, 0.735, 0.045);
 
+.menu {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 
+.hambecon-menu {
+  margin-right: 10px;
+  cursor: pointer;
 }
-.logo-container img{
-    width: 200px;
-    height: 200px;
-    transition: 0.4s cubic-bezier(0.6, -0.28, 0.735, 0.045);
 
+.menu-title {
+  padding-left: 20px;
+  text-align: right;
 }
-.menu-wrapper{
-    padding: 10px;
+.menu-title h3 {
+  margin: 0;
+  color: rgba(0, 0, 0, 0.8);
+  font-size: 20px;
 }
-.menu-wrapper a{
-    text-decoration: none; 
 
+.menu-profile {
+  display: flex;
+  align-items: center;
 }
-.menu-button{
-    color: white;
-    font-size: 18px;
-    font-weight: 500;
-    background-color: #000000;
-    margin: 10px 0;
-    padding: 10px;
-    border-radius: 12px;
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
 
+.profile-pic {
+  display: flex;
+  justify-content: flex-end;
+  transition: 0.4s cubic-bezier(0.6, -0.28, 0.735, 0.045);
 }
-.menu-button:hover{
-    background-color: rgb(195, 165, 100);
-    color: white;
+.profile-pic img {
+  background-repeat: no-repeat;
+  width: 50px;
+  height: 50px;
+  border-radius: 50px;
+  object-fit: cover;
+  transition: 0.4s cubic-bezier(0.6, -0.28, 0.735, 0.045);
 }
-.plane-logo{
-    height: 200px;
-    padding-top: 60px;
-    transition: 0.4s cubic-bezier(0.6, -0.28, 0.735, 0.045);
+.menu-profile-name {
+  padding-right: 10px;
 }
-.plane-logo img{
-    width: 50px;
-    height: 50px;
-    transition: 0.4s cubic-bezier(0.6, -0.28, 0.735, 0.045);
+.menu-profile-name h5 {
+  font-size: 18px;
+  color: rgba(0, 0, 0, 0.8);
 }
-.logOut{
-
+.logo-container {
+  display: flex;
+  justify-content: center;
+  border-bottom: 2px solid rgb(195, 165, 100);
+  transition: 0.4s cubic-bezier(0.6, -0.28, 0.735, 0.045);
+}
+.logo-container img {
+  width: 200px;
+  height: 200px;
+  transition: 0.4s cubic-bezier(0.6, -0.28, 0.735, 0.045);
+}
+.menu-wrapper {
+  padding: 10px;
+}
+.menu-wrapper a {
+  text-decoration: none;
+}
+.menu-button {
+  color: white;
+  font-size: 18px;
+  font-weight: 500;
+  background-color: #000000;
+  margin: 10px 0;
+  padding: 10px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.menu-button:hover {
+  background-color: rgb(195, 165, 100);
+  color: white;
+}
+.plane-logo {
+  height: 200px;
+  padding-top: 60px;
+  transition: 0.4s cubic-bezier(0.6, -0.28, 0.735, 0.045);
+}
+.plane-logo img {
+  width: 50px;
+  height: 50px;
+  transition: 0.4s cubic-bezier(0.6, -0.28, 0.735, 0.045);
+}
+.logOut {
 }
 .active {
-    border: none;
-    color: #ffffff;
-    font-size: 18px;
-    font-weight: 500;
-    background-color: #2F2E2B;
-    margin: 10px 0;
-    padding: 10px;
-    border-radius: 12px;
-    display: flex;
-    align-content: stretch;
-    justify-content: flex-start;
-    transition: 0.4s cubic-bezier(0.6, -0.28, 0.735, 0.045);
+  border: none;
+  color: #ffffff;
+  font-size: 18px;
+  font-weight: 500;
+  background-color: #2f2e2b;
+  margin: 10px 0;
+  padding: 10px;
+  border-radius: 12px;
+  display: flex;
+  align-content: stretch;
+  justify-content: flex-start;
+  transition: 0.4s cubic-bezier(0.6, -0.28, 0.735, 0.045);
+}
+.active img {
+  color: #c1a564;
+}
 
+@media only screen and (max-width: 960px) {
+  .side-bar {
+    width: 200px;
+    position: absolute;
+    z-index: 999;
   }
-  .active img{
-    color: #C1A564;
+  .side-bar.collapsed {
+    display: none;
+    width: 55px;
+    transition: 0.2s cubic-bezier(0.6, -0.28, 0.735, 0.045);
   }
+}

@@ -48,6 +48,9 @@ function ModalBody(props) {
                   >
                     {props.isAdd ? (
                       <>
+                        <option className="select-option" value="" disabled>
+                          Select Position
+                        </option>
                         <option className="select-option" value="Employee">
                           Employee
                         </option>
@@ -57,6 +60,9 @@ function ModalBody(props) {
                       </>
                     ) : (
                       <>
+                        <option className="select-option" value="" disabled>
+                          Select Position
+                        </option>
                         <option
                           className="select-option"
                           value="Employee"
@@ -85,15 +91,21 @@ function ModalBody(props) {
                   >
                     {props.isAdd ? (
                       <>
+                        <option className="select-option" value="" disabled>
+                          Select Status
+                        </option>
                         <option className="select-option" value="0">
                           Draft
                         </option>
                         <option className="select-option" value="1">
-                          publish
+                          Publish
                         </option>
                       </>
                     ) : (
                       <>
+                        <option className="select-option" value="" disabled>
+                          Select Status
+                        </option>
                         <option
                           className="select-option"
                           value="0"
@@ -106,7 +118,7 @@ function ModalBody(props) {
                           value="1"
                           selected={props.status == "1"}
                         >
-                          publish
+                          Publish
                         </option>
                       </>
                     )}

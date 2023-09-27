@@ -49,6 +49,9 @@ const AddBucket = (props) => {
                       props.setType(e.target.value);
                     }}
                   >
+                    <option className="select-option" value="" disabled>
+                      Select Position
+                    </option>
                     <option className="select-option" value="Employee">
                       Employee
                     </option>
@@ -65,12 +68,15 @@ const AddBucket = (props) => {
                       props.setStatus(e.target.value);
                     }}
                   >
+                    {/* <option className="select-option" value="" disabled>
+                      Select Status
+                    </option>
                     <option className="select-option" value="0">
                       Draft
                     </option>
                     <option className="select-option" value="1">
                       Publish
-                    </option>
+                    </option> */}
                   </select>
                 </div>
               </>
