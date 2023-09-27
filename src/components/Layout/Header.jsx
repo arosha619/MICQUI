@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { getadminbyID } from "../../API/axios";
 import pro_pic_default from "../../Assets/img/propic.jpeg";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+
+import { faBars, faBarsStaggered } from "@fortawesome/free-solid-svg-icons";
 
 function Header(props) {
   const id = localStorage.getItem("user_id");
@@ -24,6 +27,31 @@ function Header(props) {
   return (
     <div className="header">
       <div className="menu">
+        <div>
+          <FontAwesomeIcon
+            onClick={() => {
+              props.setIsshow(!props.isshow);
+            }}
+            icon={!props.isshow ? faBars : faBarsStaggered}
+            style={
+              props.isshow
+                ? {
+                    padding: "10px",
+                    color: "rgba(0,0,0,0.8)",
+                    width: "20px",
+                    height: "20px",
+                    cursor: "pointer",
+                  }
+                : {
+                    padding: "10px",
+                    color: "rgba(0,0,0,0.8)",
+                    width: "20px",
+                    height: "20px",
+                    cursor: "pointer",
+                  }
+            }
+          />
+        </div>
         <div className="menu-title">
           <h3>{props.Title}</h3>
         </div>
@@ -35,7 +63,7 @@ function Header(props) {
             src={admin_propic || pro_pic_default}
             alt="Profile"
             style={{
-              boxShadow: "0px 5px 15px rgba(0, 0, 0, 0.2)", 
+              boxShadow: "0px 5px 15px rgba(0, 0, 0, 0.2)",
             }}
           />
         </div>

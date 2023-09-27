@@ -8,7 +8,6 @@ import "./UserList.css";
 import { Button, Modal } from "react-bootstrap";
 import { FaCheckCircle, FaExclamationCircle } from "react-icons/fa";
 import Layout from "../Layout/Layout";
-import pro_pic_default from "../../Assets/person_four.jpg";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPen, faTrash, faUsers } from "@fortawesome/free-solid-svg-icons";
 import Loading from "../Spinner/Spinner";
@@ -18,10 +17,10 @@ const UserList = () => {
   const [filteredData, setFilteredData] = useState([]);
   const [userData, setUserData] = useState([]);
   const [openModal, setOpenmodal] = useState(false);
-  const [pro_pic, setPro_pic] = useState(null);
   const [fullname, setFullname] = useState("");
   const [phone, setPhone] = useState("");
   const [role, setRole] = useState("");
+  const [isVerified, setIsVerified] = useState();
   const [company, setCompany] = useState("");
   const [userID, setUserId] = useState("");
   const [deleteid, setDeleteid] = useState("");
@@ -63,15 +62,12 @@ const UserList = () => {
     }
   };
 
-  const handleProfilePictureChange = (file) => {
-    setPro_pic(file);
-  };
-
   useEffect(() => {
     setRefresh(false);
     const fetchUsers = async () => {
       try {
         const usersData = await getAllUsers();
+        console.log(usersData.data.data);
         setUserData(usersData.data.data);
         setFilteredData(usersData.data.data);
         setLoadingData(false);
@@ -129,8 +125,9 @@ const UserList = () => {
       role: role,
       phone_num: phone,
       company_name: company,
+      is_verified: isVerified,
     };
-
+    console.log(formData);
     try {
       updateUser(userID, formData)
         .then((res) => {
@@ -210,7 +207,7 @@ const UserList = () => {
                       <div className="action-button">
                         <FontAwesomeIcon
                           onClick={() => {
-                            setPro_pic(item.profile_pic);
+                            setIsVerified(item.is_verified);
                             setFullname(item.full_name);
                             setRole(item.role);
                             setCompany(item.company_name);
@@ -251,6 +248,8 @@ const UserList = () => {
 
           {openModal && (
             <UpdateUserModal
+              isVerified={isVerified}
+              setIsVerified={setIsVerified}
               phone={phone}
               setPhone={setPhone}
               fullname={fullname}
@@ -261,7 +260,6 @@ const UserList = () => {
               setCompany={setCompany}
               setOpenmodal={setOpenmodal}
               handleupdate={handleupdate}
-              handleProfilePictureChange={handleProfilePictureChange}
             />
           )}
           {isdelete && (

@@ -27,28 +27,10 @@ const BucketHeader = (props) => {
   const [createBucket, setCreateBucket] = useState(false);
   const [updateBucket, setUpdateBucket] = useState(false);
   const [UpdateConfirms, setUpdateConfirms] = useState(false);
+  const [errormsg, setErrormsg] = useState("");
+  const [iserror, setIsError] = useState(false);
   var isAuthenticated = localStorage.getItem("isAuthenticated");
 
-  // const deleteBucketList = async (event) => {
-  //   event.preventDefault();
-  //   const formData = {
-  //     bucketIds: props.deleteBucketIds,
-  //   };
-
-  //   try {
-  //     const response = await deleteBucketSet(formData);
-  //     if (response.status === 200) {
-  //       props.setRefresh(!props.refresh);
-  //       props.setDeleteBucket([]);
-  //       props.setDeleteBucketIds([]);
-  //       setConfirmdelete(true);
-  //       setIsdelete(false);
-  //     }
-  //   } catch (error) {
-  //     console.log(error);
-  //     alert("Delete faild");
-  //   }
-  // };
   const deleteBucketList = async (event) => {
     event.preventDefault();
     const formData = {
@@ -159,9 +141,11 @@ const BucketHeader = (props) => {
                 button.click();
               }
             }
-            alert(error.response.data.message);
+            setErrormsg(error.response.data.message);
+            setIsError(true);
           } else {
-            alert(error.message);
+            setErrormsg(error.message);
+            setIsError(true);
           }
         }
       }
@@ -266,6 +250,7 @@ const BucketHeader = (props) => {
           />
         </div>
         <button
+          style={{ backgroundColor: "rgb(150, 110, 41)" }}
           type="button"
           className="btn btn-outline-light"
           data-bs-toggle="modal"
@@ -386,6 +371,35 @@ const BucketHeader = (props) => {
                   }}
                 >
                   Ok
+                </Button>
+              </Modal.Footer>
+            </Modal>
+          )}
+          {iserror && (
+            <Modal
+              show={iserror}
+              onHide={() => setIsError(false)}
+              style={{ background: "rgba(15, 14, 14, 0.144)" }}
+            >
+              <Modal.Header closeButton>
+                <div className="d-flex justify-content-center align-items-center text-danger">
+                  <FaExclamationCircle
+                    size={24}
+                    style={{ marginLeft: "220px" }}
+                    onClick={() => setIsError(false)}
+                  />
+                </div>
+              </Modal.Header>
+              <Modal.Body className="d-flex justify-content-center ">
+                {errormsg}
+              </Modal.Body>
+              <Modal.Footer className="d-flex justify-content-center">
+                <Button
+                  variant="secondary"
+                  style={{ width: "100px" }}
+                  onClick={() => setIsError(false)}
+                >
+                  OK
                 </Button>
               </Modal.Footer>
             </Modal>

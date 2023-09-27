@@ -169,7 +169,7 @@ input.nosubmit {
   background-color: rgb(255, 255, 255);
   box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
   display: grid;
-  grid-template-columns:1.3fr 1.5fr 1fr 1fr 1fr 1fr 0.7fr;
+  grid-template-columns: 1.3fr 1.5fr 1fr 1fr 1fr 1fr 0.7fr;
   grid-gap: 10px;
   align-items: center;
   padding: 10px 20px;
@@ -208,4 +208,18 @@ input.nosubmit {
 .pagination button:disabled {
   background-color: rgba(150, 150, 150, 1);
   cursor: not-allowed;
+}
+@media only screen and (max-width: 600px) {
+  .card-wrapper {
+    display: flex;
+    justify-content: space-evenly;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-content: space-around;
+    align-items: flex-start;
+    height: auto;
+  }
+  .card_header {
+    display: none;
+  }
 }

@@ -17,3 +17,10 @@
   align-items: center;
   justify-content: center;
 }
+.btn-secondary:disabled {
+  color: var(--bs-btn-disabled-color);
+  pointer-events: none;
+  background-color: #000000;
+  border-color: #000000;
+  opacity: var(--bs-btn-disabled-opacity);
+}
