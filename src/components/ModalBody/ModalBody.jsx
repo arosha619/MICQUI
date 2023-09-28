@@ -4,7 +4,6 @@ function ModalBody(props) {
   const maxCharacters = 150;
 
   const remainingCharacters = maxCharacters - props.bucketPropTitle.length;
-  const remainingDesCharacters = maxCharacters - props.description.length;
   return (
     <div>
       <div className="card">
@@ -58,7 +57,7 @@ function ModalBody(props) {
                         color: "red",
                       }}
                     >
-                      {remainingDesCharacters} characters remaining
+                      {150 - props.description.length} characters remaining
                     </p>
                   ) : (
                     ""

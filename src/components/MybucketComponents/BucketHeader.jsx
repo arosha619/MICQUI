@@ -262,7 +262,7 @@ const BucketHeader = (props) => {
             }}
             type="search"
             className="form-control"
-            placeholder="Search here..."
+            placeholder="Search here by Name..."
           />
         </div>
         <button
