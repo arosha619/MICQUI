@@ -41,6 +41,9 @@ const UserList = () => {
   const isAuthenticated = localStorage.getItem("isAuthenticated");
   const id = localStorage.getItem("user_id");
   const [refresh, setRefresh] = useState(false);
+  const [fullnameError, setFullnameError] = useState("");
+  const [companyError, setCompanyError] = useState("");
+  const [phoneError, setPhoneError] = useState("");
 
   useEffect(() => {
     if (!isAuthenticated || isAuthenticated === null) {
@@ -120,27 +123,77 @@ const UserList = () => {
   };
 
   const handleupdate = async () => {
-    const formData = {
-      full_name: fullname,
-      role: role,
-      phone_num: phone,
-      company_name: company,
-      is_verified: isVerified,
-    };
-    console.log(formData);
-    try {
-      updateUser(userID, formData)
-        .then((res) => {
-          setOpenmodal(false);
-          setConfirmupdate(true);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    } catch (err) {
-      console.log(err);
+    // Reset previous error messages
+    setFullnameError("");
+    setCompanyError("");
+    setPhoneError("");
+
+    // Validation logic
+    let isValid = true;
+
+    if (!fullname.trim()) {
+      setFullnameError("Full Name is required");
+      isValid = false;
+    }
+
+    if (!company.trim()) {
+      setCompanyError("Company Name is required");
+      isValid = false;
+    }
+
+    if (!phone.trim()) {
+      setPhoneError("Phone is required");
+      isValid = false;
+    } else if (!/^\d{10}$/.test(phone)) {
+      setPhoneError("Phone must be a 10-digit number");
+      isValid = false;
+    }
+    if (isValid) {
+      const formData = {
+        full_name: fullname,
+        role: role,
+        phone_num: phone,
+        company_name: company,
+        is_verified: isVerified,
+      };
+
+      try {
+        updateUser(userID, formData)
+          .then((res) => {
+            setOpenmodal(false);
+            setConfirmupdate(true);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      } catch (err) {
+        console.log(err);
+      }
     }
   };
+
+  // const handleupdate = async () => {
+  //   const formData = {
+  //     full_name: fullname,
+  //     role: role,
+  //     phone_num: phone,
+  //     company_name: company,
+  //     is_verified: isVerified,
+  //   };
+  //   console.log(formData);
+  //   try {
+  //     updateUser(userID, formData)
+  //       .then((res) => {
+  //         setOpenmodal(false);
+  //         setConfirmupdate(true);
+  //       })
+  //       .catch((err) => {
+  //         console.log(err);
+  //       });
+  //   } catch (err) {
+  //     console.log(err);
+  //   }
+  // };
   const handleDelete = (id) => {
     setIsdelete(false);
     deleteUser(id)
@@ -260,6 +313,9 @@ const UserList = () => {
               setCompany={setCompany}
               setOpenmodal={setOpenmodal}
               handleupdate={handleupdate}
+              fullnameError={fullnameError}
+              companyError={companyError}
+              phoneError={phoneError}
             />
           )}
           {isdelete && (
