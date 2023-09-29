@@ -44,7 +44,7 @@
 }
 .user-update-form select {
   width: 100%; /* Set the width to 100% of its container */
-  padding: 10px; /* Padding inside the input field */
+  padding: 5px; /* Padding inside the input field */
   margin: 10px 0; /* Margin around the input field */
   border: 1px solid #ccc; /* Border style */
   border-radius: 5px; /* Rounded corners */
@@ -56,7 +56,7 @@
 }
 .user-update-form input {
   width: 100%; /* Set the width to 100% of its container */
-  padding: 10px; /* Padding inside the input field */
+  padding: 5px; /* Padding inside the input field */
   margin: 10px 0; /* Margin around the input field */
   border: 1px solid #ccc; /* Border style */
   border-radius: 5px; /* Rounded corners */
