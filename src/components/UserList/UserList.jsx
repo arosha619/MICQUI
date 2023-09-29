@@ -175,7 +175,7 @@ const UserList = () => {
                   }}
                   type="search"
                   className="form-control"
-                  placeholder="Search here..."
+                  placeholder="Search here by Name..."
                   onChange={(e) => handleSearch(e.target.value)}
                 />
               </div>

@@ -37,17 +37,14 @@ const Login = () => {
   }, []);
   const handleSubmit = async (e) => {
     localStorage.clear();
-    // Prevent page from reloading
     e.preventDefault();
 
     if (!username) {
-      // Username input is empty
       setErrorMessages({ name: "noUsername", message: errors.noUsername });
       return;
     }
 
     if (!password) {
-      // Password input is empty
       setErrorMessages({ name: "noPassword", message: errors.noPassword });
       return;
     }
@@ -67,23 +64,30 @@ const Login = () => {
           navigate("/my-buckets");
         }, 1500);
       } else {
-        // Authentication failed
         setShowModal2(true);
         const errorData = await res.message;
         setError(errorData || "Autenticación faild");
       }
     } catch (error) {
       setShowModal2(true);
-      // Handle any network or server errors
       setError("An error occurred. Please try again later.");
     }
   };
 
-  // Render error messages
   const renderErrorMsg = (name) =>
     name === errorMessages.name && (
       <p className="error_msg">{errorMessages.message}</p>
     );
+
+  const handleCloseModal2 = () => {
+    setShowModal2(false);
+  };
+  useEffect(() => {
+    if (showModal2) {
+      const timeoutId = setTimeout(handleCloseModal2, 3000);
+      return () => clearTimeout(timeoutId);
+    }
+  }, [showModal2]);
 
   return (
     <>
@@ -170,8 +174,8 @@ const Login = () => {
             </div> */}
 
                 <div className="footer-msg">
-                  By clicking Login , You agree to our privacy policy
-                  & terms of services
+                  By clicking Login , You agree to our privacy policy & terms of
+                  services
                 </div>
               </div>
             </form>
@@ -200,7 +204,7 @@ const Login = () => {
               <Modal
                 style={{ background: "rgba(15, 14, 14, 0.144)" }}
                 show={showModal2}
-                onHide={() => setShowModal2(false)}
+                onHide={handleCloseModal2}
               >
                 <Modal.Header closeButton>
                   <div className="d-flex justify-content-center align-items-center text-danger">
@@ -212,13 +216,8 @@ const Login = () => {
                 </Modal.Header>
                 <Modal.Body className="d-flex justify-content-center ">
                   Login failed! Invalid Username or password
-                
                 </Modal.Body>
-                <Modal.Footer className="d-flex justify-content-center ">
-                  <Button variant="dark" onClick={() => setShowModal2(false)}>
-                    Ok
-                  </Button>
-                </Modal.Footer>
+                <Modal.Footer className="d-flex justify-content-center "></Modal.Footer>
               </Modal>
             )}
           </div>
