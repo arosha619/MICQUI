@@ -78,7 +78,7 @@ const BucketDetailCard = (props) => {
 
   return (
     <div className="bucketq-card">
-      {props.item.question.length > 100 ? (
+      {props.item.question.length > 120 ? (
         <OverlayTrigger
           placement="bottom"
           overlay={
@@ -88,7 +88,7 @@ const BucketDetailCard = (props) => {
           }
         >
           <p style={{ margin: "0px" }}>
-            {props.index + 1}. {`${props.item.question.slice(0, 100)} ...`}
+            {props.index + 1}. {`${props.item.question.slice(0, 120)} ...`}
           </p>
         </OverlayTrigger>
       ) : (
@@ -217,7 +217,7 @@ const BucketDetailCard = (props) => {
                 {filteredAnswer.map((item, index) => (
                   <div className="answer-body2" key={index}>
                     <p>{userMap[item.UserID]}</p>
-                    {item.Answer.length > 50 ? (
+                    {item.Answer.length > 100 ? (
                       <OverlayTrigger
                         placement="left"
                         overlay={
@@ -226,7 +226,7 @@ const BucketDetailCard = (props) => {
                           </Tooltip>
                         }
                       >
-                        <p>{item.Answer.slice(0, 50)} ...</p>
+                        <p>{item.Answer.slice(0, 100)} ...</p>
                       </OverlayTrigger>
                     ) : (
                       <p>{item.Answer}</p>

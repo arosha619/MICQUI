@@ -13,7 +13,12 @@ function UpdateUserModal({
   handleupdate,
   phone,
   setPhone,
-}) {
+  fullnameError,
+  companyError,
+  phoneError,
+}) 
+
+{
   return (
     <div className="user-update">
       <div className="user-update-container">
@@ -43,6 +48,7 @@ function UpdateUserModal({
                 setFullname(e.target.value);
               }}
             ></input>
+             {!fullname ? ( <p style={{color:'red',textAlign:"left",fontSize:"10px"}}>{fullnameError}</p>) :""}
             <label>Role:</label>
             <select
               type="text"
@@ -73,6 +79,7 @@ function UpdateUserModal({
                 setCompany(e.target.value);
               }}
             ></input>
+            {!company ? ( <p style={{color:'red',textAlign:"left",fontSize:"10px"}}>{companyError}</p>) :""}
             <label>Phone:</label>
             <input
               type="text"
@@ -81,6 +88,7 @@ function UpdateUserModal({
                 setPhone(e.target.value);
               }}
             ></input>
+                 {phoneError ? ( <p style={{color:'red',textAlign:"left",fontSize:"10px"}}>{phoneError}</p>) :""}
           </form>
         </div>
         <br />

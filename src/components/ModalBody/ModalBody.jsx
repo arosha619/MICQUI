@@ -1,6 +1,9 @@
 import React from "react";
 
 function ModalBody(props) {
+  const maxCharacters = 150;
+
+  const remainingCharacters = maxCharacters - props.bucketPropTitle.length;
   return (
     <div>
       <div className="card">
@@ -9,7 +12,8 @@ function ModalBody(props) {
             <div className="form-group w-100">
               <label for="exampleInputEmail1">{props.firstField}</label>
               <textarea
-                style={{ height: "40px" }}
+              rows="3"
+                style={{ height: "40px", height:"auto" }}
                 maxLength={150}
                 className="form-control"
                 id="bucketTitle"
@@ -20,6 +24,16 @@ function ModalBody(props) {
                   props.setBucketPropTitle(e.target.value);
                 }}
               />
+            
+              {props.bucketPropTitle && props.bucketPropTitle.length > 100 ? (
+                <p
+                  style={{ fontSize: "12px", fontWeight: "200", color: "red" }}
+                >
+                  {remainingCharacters} characters remaining
+                </p>
+              ) : (
+                ""
+              )}
             </div>
 
             {props.bucketTitle === "bucket" ? (
@@ -37,6 +51,19 @@ function ModalBody(props) {
                       props.setDescription(e.target.value);
                     }}
                   />
+                  {props.description && props.description.length > 10 ? (
+                    <p
+                      style={{
+                        fontSize: "12px",
+                        fontWeight: "200",
+                        color: "red",
+                      }}
+                    >
+                      {150 - props.description.length} characters remaining
+                    </p>
+                  ) : (
+                    ""
+                  )}
                 </div>
                 <div className="select-container">
                   <label htmlFor="Position">Position</label>
