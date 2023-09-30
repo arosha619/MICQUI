@@ -30,6 +30,9 @@ const BucketHeader = (props) => {
   const [errormsg, setErrormsg] = useState("");
   const [iserror, setIsError] = useState(false);
   var isAuthenticated = localStorage.getItem("isAuthenticated");
+  const [addBucketEmptyErr, setaddBucketEmptyErr] = useState('');
+  const [addBucketDesEmptyErr, setaddBucketDesEmptyErr] = useState('');
+
 
   const deleteBucketList = async (event) => {
     event.preventDefault();
@@ -82,32 +85,37 @@ const BucketHeader = (props) => {
     event.preventDefault();
     if (props.isAdd) {
       if (props.bucketTitle === "bucket") {
-        const formdata = {
-          name: props.bucketPropTitle,
-          description: props.description,
-          type: props.type,
-          publish_status: props.status,
-        };
+        if (props.bucketPropTitle == "" || props.description == "") {
+          setaddBucketEmptyErr("Bucket Name is required")
+          setaddBucketDesEmptyErr("Bucket Description is required")
+        } else {
+          const formdata = {
+            name: props.bucketPropTitle,
+            description: props.description,
+            type: props.type,
+            publish_status: props.status,
+          };
 
-        try {
-          const response = await addBucket(formdata);
-          if (response.status === 200) {
-            const button = document.getElementById("myButton");
-            props.setBucketPropTitle("");
-            props.setDescription("");
-            props.setType("Employee");
-            props.setStatus("0");
-            if (button) {
-              button.click();
+          try {
+            const response = await addBucket(formdata);
+            if (response.status === 200) {
+              const button = document.getElementById("myButton");
+              props.setBucketPropTitle("");
+              props.setDescription("");
+              props.setType("Employee");
+              props.setStatus("0");
+              if (button) {
+                button.click();
+              }
+              props.setRefresh(!props.refresh);
+              setCreateBucket(true);
+              setCreateConfirms(true);
+            } else {
+              alert("Something went Wrong");
             }
-            props.setRefresh(!props.refresh);
-            setCreateBucket(true);
-            setCreateConfirms(true);
-          } else {
-            alert("Something went Wrong");
+          } catch (error) {
+            alert(error.message);
           }
-        } catch (error) {
-          alert(error.message);
         }
       }
       if (props.bucketTitle === "question") {
@@ -115,7 +123,9 @@ const BucketHeader = (props) => {
           bucket_id: bucket_id,
           question: props.bucketPropTitle,
         };
-
+        if (props.bucketPropTitle == "" ) {
+          setaddBucketEmptyErr("Question is required")
+        } else {
         try {
           const response = await addQuestion(formdata);
 
@@ -147,17 +157,22 @@ const BucketHeader = (props) => {
             setErrormsg(error.message);
             setIsError(true);
           }
-        }
+        }}
       }
     } else {
       if (props.bucketTitle === "bucket") {
+       
         const formdata = {
           name: props.bucketPropTitle,
           description: props.description,
           type: props.type,
           publish_status: props.status,
         };
-
+    
+        if (props.bucketPropTitle == "" || props.description == "") {
+          setaddBucketEmptyErr("Bucket Name is required")
+          setaddBucketDesEmptyErr("Bucket Description is required")
+        } else {
         try {
           const response = await editBucket(props.editBucketId, formdata);
           if (response.status === 200) {
@@ -181,10 +196,14 @@ const BucketHeader = (props) => {
           alert(error.message);
         }
       }
+      }
       if (props.bucketTitle === "question") {
         const formdata = {
           question: props.bucketPropTitle,
         };
+        if (props.bucketPropTitle == "" ) {
+          setaddBucketEmptyErr("Question is required")
+        } else {
 
         try {
           const response = await editQuestion(props.editQuestionId, formdata);
@@ -204,7 +223,7 @@ const BucketHeader = (props) => {
         } catch (error) {
           alert("Question update faild");
         }
-      }
+      }}
     }
   };
 
@@ -235,6 +254,11 @@ const BucketHeader = (props) => {
         setIsBucketEdit={props.setIsBucketEdit}
         isBucketEdit={props.isBucketEdit}
         status={props.status}
+       setaddBucketEmptyErr ={setaddBucketEmptyErr}
+       addBucketEmptyErr={addBucketEmptyErr}
+       setaddBucketDesEmptyErr={setaddBucketDesEmptyErr}
+       addBucketDesEmptyErr={addBucketDesEmptyErr}
+
       />
       <div className="mb-3 w-100 search-header">
         <div className="w-50 ">

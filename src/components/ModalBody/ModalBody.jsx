@@ -4,6 +4,10 @@ function ModalBody(props) {
   const maxCharacters = 150;
 
   const remainingCharacters = maxCharacters - props.bucketPropTitle.length;
+  // const handleChangeTitle = (event) => {
+  //   props.setaddBucketEmptyErr("")
+  //   props.setBucketPropTitle(event.target.value);
+  // }
   return (
     <div>
       <div className="card">
@@ -22,9 +26,10 @@ function ModalBody(props) {
                 value={props.bucketPropTitle}
                 onChange={(e) => {
                   props.setBucketPropTitle(e.target.value);
+                  // handleChangeTitle(e)
                 }}
-              />
-            
+              />{!props.bucketPropTitle ? (
+            <p style={{color:'red',textAlign:"left",fontSize:"10px"}}>{props.addBucketEmptyErr}</p>):""}
               {props.bucketPropTitle && props.bucketPropTitle.length > 100 ? (
                 <p
                   style={{ fontSize: "12px", fontWeight: "200", color: "red" }}
@@ -50,7 +55,9 @@ function ModalBody(props) {
                     onChange={(e) => {
                       props.setDescription(e.target.value);
                     }}
-                  />
+                  />{!props.description ? (
+            <p style={{color:'red',textAlign:"left",fontSize:"10px"}}>{props.addBucketDesEmptyErr}</p>):""}
+
                   {props.description && props.description.length > 10 ? (
                     <p
                       style={{
