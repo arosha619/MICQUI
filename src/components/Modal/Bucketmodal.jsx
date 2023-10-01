@@ -60,6 +60,10 @@ function Bucketmodal(props) {
                     setStatus={props.setStatus}
                     status={props.status}
                     isAdd={props.isAdd}
+                    setaddBucketEmptyErr={props.setaddBucketEmptyErr}
+                    addBucketEmptyErr={props.addBucketEmptyErr}
+                    setaddBucketDesEmptyErr={props.setaddBucketDesEmptyErr}
+                    addBucketDesEmptyErr={props.addBucketDesEmptyErr}
                   />
                 </div>
                 <div
@@ -86,9 +90,9 @@ function Bucketmodal(props) {
                             opacity: "0.7",
                             border: "1px solid black",
                           }
-                        : {border: "1px solid black",}
+                        : { border: "1px solid black" }
                     }
-                    disabled={disabled}
+                    // disabled={disabled}
                     type="button"
                     className="btn btn-primary"
                     onClick={props.handleClose}
@@ -136,6 +140,10 @@ function Bucketmodal(props) {
                     setStatus={props.setStatus}
                     isAdd={props.isAdd}
                     status={props.status}
+                    setaddBucketEmptyErr={props.setaddBucketEmptyErr}
+                    addBucketEmptyErr={props.addBucketEmptyErr}
+                    setaddBucketDesEmptyErr={props.setaddBucketDesEmptyErr}
+                    addBucketDesEmptyErr={props.addBucketDesEmptyErr}
                   />
                 </div>
                 <div
