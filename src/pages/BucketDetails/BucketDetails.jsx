@@ -169,6 +169,7 @@ const BucketDetails = () => {
                 editQuestionId={editQuestionId}
                 setEditQuestionId={setEditQuestionId}
                 setSearchItem={setSearchItem}
+                filteredData={questionList.length}
               />
             </div>
 

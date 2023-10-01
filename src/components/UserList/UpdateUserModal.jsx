@@ -60,17 +60,17 @@ function UpdateUserModal({
               <option value="Manager">Manager</option>
               <option value="Employee">Employee</option>
             </select>
-            {/* <label>Verification:</label>
+            <label>Verification:</label>
             <select
               type="number"
               value={isVerified}
               onChange={(e) => {
-                setIsVerified(Number(e.target.value));
+                setIsVerified(e.target.value);
               }}
             >
               <option value={1}>Verified</option>
               <option value={0}>Not Verified</option>
-            </select> */}
+            </select>
             <label>Company Name:</label>
             <input
               type="text"
