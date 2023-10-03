@@ -1,4 +1,4 @@
-import React from "react";
+import React,{useEffect,useState} from "react";
 import { useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleDot, faEye, faPen } from "@fortawesome/free-solid-svg-icons";
@@ -7,6 +7,7 @@ import OverlayTrigger from "react-bootstrap/OverlayTrigger";
 
 const BucketContains = (props) => {
   const navigate = useNavigate();
+  const[check,setCheck] = useState(false)
   const isChecked = (event) => {
     if (event.target.checked) {
       props.setDeleteBucket([...props.deleteBucket, props.item]);
@@ -33,6 +34,17 @@ const BucketContains = (props) => {
     navigate(`/my-buckets/bucket-data/${props.item.bucket_id}`);
   };
 
+  useEffect(() => {
+
+if(props.deleteBucketIds.includes(props.item.bucket_id)){
+  setCheck(true)
+}else{
+  setCheck(false)
+}
+    
+  }, [props.deleteBucketIds])
+  
+
   const handleEditBucket = (event) => {
     event.preventDefault();
     props.setIsAdd(false);
@@ -57,6 +69,7 @@ const BucketContains = (props) => {
             style={{ scale: "1.5", marginLeft: "15px" }}
             type="checkbox"
             onChange={isChecked}
+            checked={check}
           />
         </div>
         {props.item.name.length > 20 ? (
