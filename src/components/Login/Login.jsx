@@ -61,7 +61,7 @@ const Login = () => {
 
         setShowModal1(true);
         setTimeout(() => {
-          navigate("/my-buckets");
+          window.location.href = "/my-buckets"
         }, 1500);
       } else {
         setShowModal2(true);
