@@ -61,7 +61,7 @@ const Login = () => {
 
         setShowModal1(true);
         setTimeout(() => {
-          window.location.href = "/my-buckets"
+          window.location.href = "/my-buckets";
         }, 1500);
       } else {
         setShowModal2(true);
@@ -118,7 +118,7 @@ const Login = () => {
                 {/* Us:  admin@admin.com */}
                 <div className="input-container">
                   <div className="input-field">
-                    <div className="password-input-container">
+                    <div className="input-container">
                       <span className="password-icon">
                         <FaLock />
                       </span>
