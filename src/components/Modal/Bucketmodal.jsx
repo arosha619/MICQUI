@@ -160,7 +160,7 @@ function Bucketmodal(props) {
                     data-bs-dismiss="modal"
                     id="myButton"
                     onClick={() => {
-                      // props.setDescription("");
+                      window.location.reload();
                     }}
                   >
                     Back
