@@ -4,7 +4,8 @@ const token = localStorage.getItem("token");
 //"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOnsiaWQiOjQsImFkbWluX25hbWUiOiJzYWppdGgiLCJlbWFpbCI6InNhaml0aHRoaWxhbmdhOTRAZ21haWwuY29tIiwic3RhdHVzIjoiQURNSU4ifSwiaWF0IjoxNjc3MjU1MzI0MjYxLCJleHAiOjE2NzcyNTY1MzM4NjF9.SDG0zFeP2BuyPc5v1-1meoJjIryKO2YKzp4DKHPfda8";
 
 export const API = axios.create({
-  baseURL: "http://ec2-3-13-56-127.us-east-2.compute.amazonaws.com:8000/",
+  // baseURL: "http://ec2-3-13-56-127.us-east-2.compute.amazonaws.com:8000/",
+  baseURL: "https://backend.micqui.com/",
   timeout: 30000,
   headers: {
     "Access-Control-Allow-Origin": "*",
@@ -13,7 +14,7 @@ export const API = axios.create({
   },
 });
 export const ImgAPI = axios.create({
-  baseURL: "http://ec2-3-13-56-127.us-east-2.compute.amazonaws.com:8000/",
+  baseURL: "https://backend.micqui.com/",
   timeout: 30000,
   headers: {
     "Access-Control-Allow-Origin": "*",
@@ -22,10 +23,10 @@ export const ImgAPI = axios.create({
   },
 });
 export const ImageAPI = axios.create({
-  baseURL: "http://ec2-3-13-56-127.us-east-2.compute.amazonaws.com:8000/",
+  baseURL: "https://backend.micqui.com/",
 });
 export const registerAPI = axios.create({
-  baseURL: "http://ec2-3-13-56-127.us-east-2.compute.amazonaws.com:8000/",
+  baseURL: "https://backend.micqui.com/",
 });
 export const createAdmin = async (formData) => {
   const res = await ImageAPI.post(`admin/register`, formData);
